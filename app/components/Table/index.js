@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import _ from 'lodash';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-// import TableCell from '@material-ui/core/TableCell';
+import TableCell from '@material-ui/core/TableCell';
 import TablePagination from '@material-ui/core/TablePagination';
-// import TableRow from '@material-ui/core/TableRow';
+import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import uuidv1 from 'uuid';
 import TableHead from './TableHead';
 import styles from './styles';
-
 // let counter = 0;
 // function createData(name, calories, fat, carbs, protein) {
 //   counter += 1;
@@ -25,7 +26,7 @@ import styles from './styles';
 //   }
 //   return 0;
 // }
-//
+
 // function stableSort(array, cmp) {
 //   const stabilizedThis = array.map((el, index) => [el, index]);
 //   stabilizedThis.sort((a, b) => {
@@ -61,9 +62,9 @@ class EnhancedTable extends React.Component {
     this.setState({ order, orderBy });
   };
 
-  // handleClick = (event, id) => {
-  //   console.log('Clicked');
-  // };
+  handleClick = () => {
+    console.log('Clicked');
+  };
 
   handleChangePage = (event, page) => {
     this.setState({ page });
@@ -74,10 +75,12 @@ class EnhancedTable extends React.Component {
   };
 
   render() {
-    const { classes, data } = this.props;
+    const { classes, tableBody, tableHead } = this.props;
     const { order, orderBy, rowsPerPage, page } = this.state;
-    // const emptyRows =
-    //   rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+    const emptyRows =
+      rowsPerPage -
+      Math.min(rowsPerPage, tableBody.length - page * rowsPerPage);
+
     return (
       <Paper className={classes.root}>
         <div className={classes.tableWrapper}>
@@ -85,45 +88,39 @@ class EnhancedTable extends React.Component {
             <TableHead
               order={order}
               orderBy={orderBy}
-              data={data.keys}
+              data={tableHead}
               onRequestSort={this.handleRequestSort}
             />
             <TableBody>
-              {/* {stableSort(data, getSorting(order, orderBy)) */}
-              {/* .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) */}
-              {/* .map(n => { */}
-              {/* const isSelected = this.isSelected(n.id); */}
-              {/* return ( */}
-              {/* <TableRow */}
-              {/* hover */}
-              {/* onClick={event => this.handleClick(event, n.id)} */}
-              {/* role="checkbox" */}
-              {/* aria-checked={isSelected} */}
-              {/* tabIndex={-1} */}
-              {/* key={n.id} */}
-              {/* > */}
-              {/* <TableCell component="th" scope="row" padding="none"> */}
-              {/* {n.name} */}
-              {/* </TableCell> */}
-              {/* <TableCell align="right">{n.calories}</TableCell> */}
-              {/* <TableCell align="right">{n.fat}</TableCell> */}
-              {/* <TableCell align="right">{n.carbs}</TableCell> */}
-              {/* <TableCell align="right">{n.protein}</TableCell> */}
-              {/* </TableRow> */}
-              {/* ); */}
-              {/* })} */}
-              {/* {emptyRows > 0 && ( */}
-              {/* <TableRow style={{ height: 49 * emptyRows }}> */}
-              {/* <TableCell colSpan={6} /> */}
-              {/* </TableRow> */}
-              {/* )} */}
+              {_.orderBy(tableBody, orderBy, order)
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map(n => (
+                  <TableRow
+                    hover
+                    onClick={event => this.handleClick(event, n.id)}
+                    role="checkbox"
+                    tabIndex={-1}
+                    key={uuidv1.v1()}
+                  >
+                    {_.map(n, val => (
+                      <TableCell key={uuidv1.v1()} align="left">
+                        {val.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 49 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </div>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={data.length}
+          count={tableBody.length || 0}
           rowsPerPage={rowsPerPage}
           page={page}
           backIconButtonProps={{
@@ -142,7 +139,8 @@ class EnhancedTable extends React.Component {
 
 EnhancedTable.propTypes = {
   classes: PropTypes.object.isRequired,
-  data: PropTypes.object.isRequired,
+  tableBody: PropTypes.array,
+  tableHead: PropTypes.array,
 };
 
 export default withStyles(styles)(EnhancedTable);

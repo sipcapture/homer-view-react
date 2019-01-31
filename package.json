@@ -75,8 +75,9 @@
     "invariant": "2.2.4",
     "ip": "1.1.5",
     "loadable-components": "2.2.3",
-    "lodash": "4.17.11",
+    "lodash": "^4.17.11",
     "minimist": "1.2.0",
+    "moment": "^2.24.0",
     "prop-types": "15.6.2",
     "query-string": "^6.2.0",
     "react": "16.6.0",
@@ -91,6 +92,7 @@
     "reselect": "4.0.0",
     "sanitize.css": "4.1.0",
     "styled-components": "4.0.2",
+    "uuid": "^3.3.2",
     "warning": "4.0.2"
   },
   "devDependencies": {
