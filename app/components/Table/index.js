@@ -9,46 +9,35 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import uuidv1 from 'uuid';
-import TableHead from './TableHead';
+import TableFooter from '@material-ui/core/TableFooter';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import Cookies from 'universal-cookie';
 import styles from './styles';
-// let counter = 0;
-// function createData(name, calories, fat, carbs, protein) {
-//   counter += 1;
-//   return { id: counter, name, calories, fat, carbs, protein };
-// }
-//
-// function desc(a, b, orderBy) {
-//   if (b[orderBy] < a[orderBy]) {
-//     return -1;
-//   }
-//   if (b[orderBy] > a[orderBy]) {
-//     return 1;
-//   }
-//   return 0;
-// }
+import TableHead from './TableHead';
 
-// function stableSort(array, cmp) {
-//   const stabilizedThis = array.map((el, index) => [el, index]);
-//   stabilizedThis.sort((a, b) => {
-//     const order = cmp(a[0], b[0]);
-//     if (order !== 0) return order;
-//     return a[1] - b[1];
-//   });
-//   return stabilizedThis.map(el => el[0]);
-// }
-//
-// function getSorting(order, orderBy) {
-//   return order === 'desc'
-//     ? (a, b) => desc(a, b, orderBy)
-//     : (a, b) => -desc(a, b, orderBy);
-// }
+/* eslint-disable */
 
 class EnhancedTable extends React.Component {
   state = {
-    order: 'asc',
+    order: 'desc',
     orderBy: 'id',
     page: 0,
     rowsPerPage: 5,
+    checkedTheme: false,
+  };
+
+  componentDidMount() {
+    const cookies = new Cookies();
+    const themeDark = cookies.get('theme');
+    this.setState({ checkedTheme: String(themeDark) === 'true' });
+  }
+
+  handleChangeTheme = () => {
+    this.setState({ checkedTheme: !this.state.checkedTheme }, () => {
+      const cookies = new Cookies();
+      cookies.set('theme', this.state.checkedTheme);
+    });
   };
 
   handleRequestSort = (event, property) => {
@@ -59,11 +48,13 @@ class EnhancedTable extends React.Component {
       order = 'asc';
     }
 
-    this.setState({ order, orderBy });
+    this.setState({ order, orderBy }, () => {});
   };
 
-  handleClick = () => {
-    console.log('Clicked');
+  handleClick = (event, id) => {
+    const { rowOnClick } = this.props;
+
+    rowOnClick(event, id);
   };
 
   handleChangePage = (event, page) => {
@@ -74,13 +65,20 @@ class EnhancedTable extends React.Component {
     this.setState({ rowsPerPage: event.target.value });
   };
 
+  sortData(data, order, orderBy) {
+    return _.orderBy(
+      data,
+      row => _.find(row, el => el.key === orderBy).label,
+      order,
+    );
+  }
+
   render() {
     const { classes, tableBody, tableHead } = this.props;
-    const { order, orderBy, rowsPerPage, page } = this.state;
+    const { order, orderBy, rowsPerPage, page, checkedTheme } = this.state;
     const emptyRows =
       rowsPerPage -
       Math.min(rowsPerPage, tableBody.length - page * rowsPerPage);
-
     return (
       <Paper className={classes.root}>
         <div className={classes.tableWrapper}>
@@ -92,12 +90,12 @@ class EnhancedTable extends React.Component {
               onRequestSort={this.handleRequestSort}
             />
             <TableBody>
-              {_.orderBy(tableBody, orderBy, order)
+              {this.sortData(tableBody, order, orderBy)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => (
                   <TableRow
                     hover
-                    onClick={event => this.handleClick(event, n.id)}
+                    onClick={event => this.handleClick(event, n)}
                     role="checkbox"
                     tabIndex={-1}
                     key={uuidv1.v1()}
@@ -111,27 +109,48 @@ class EnhancedTable extends React.Component {
                 ))}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={6} />
+                  <TableCell colSpan={tableHead.length} />
                 </TableRow>
               )}
             </TableBody>
           </Table>
+          <Table>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={1}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={checkedTheme}
+                        onChange={this.handleChangeTheme}
+                        value="checkedB"
+                        color="primary"
+                      />
+                    }
+                    label="Dark theme"
+                  />
+                </TableCell>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25]}
+                  count={tableBody.length || 0}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  backIconButtonProps={{
+                    'aria-label': 'Previous Page',
+                  }}
+                  nextIconButtonProps={{
+                    'aria-label': 'Next Page',
+                  }}
+                  SelectProps={{
+                    native: true,
+                  }}
+                  onChangePage={this.handleChangePage}
+                  onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
         </div>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={tableBody.length || 0}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          backIconButtonProps={{
-            'aria-label': 'Previous Page',
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'Next Page',
-          }}
-          onChangePage={this.handleChangePage}
-          onChangeRowsPerPage={this.handleChangeRowsPerPage}
-        />
       </Paper>
     );
   }
@@ -141,6 +160,7 @@ EnhancedTable.propTypes = {
   classes: PropTypes.object.isRequired,
   tableBody: PropTypes.array,
   tableHead: PropTypes.array,
+  rowOnClick: PropTypes.func,
 };
 
 export default withStyles(styles)(EnhancedTable);

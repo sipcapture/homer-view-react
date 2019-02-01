@@ -45,12 +45,14 @@ export class Tabs extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" color="default">
           <MaterialTabs
             value={value}
             onChange={this.handleChange}
             variant="fullWidth"
             scrollButtons="auto"
+            indicatorColor="primary"
+            textColor="primary"
           >
             <Tab label="Messages" />
             <Tab label="Flow" />
@@ -61,8 +63,11 @@ export class Tabs extends React.Component {
           </MaterialTabs>
         </AppBar>
         {value === 0 ? <MessagesTab /> : null}
-        {value === 1 ? <TabContainer>Item Two</TabContainer> : null}
-        {value === 2 ? <TabContainer>Item Three</TabContainer> : null}
+        {value === 1 ? <TabContainer>Flow</TabContainer> : null}
+        {value === 2 ? <TabContainer>QoS</TabContainer> : null}
+        {value === 3 ? <TabContainer>Logs</TabContainer> : null}
+        {value === 4 ? <TabContainer>Loki</TabContainer> : null}
+        {value === 5 ? <TabContainer>Export</TabContainer> : null}
       </div>
     );
   }

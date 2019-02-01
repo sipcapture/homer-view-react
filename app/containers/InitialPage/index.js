@@ -32,7 +32,6 @@ export class InitialPage extends React.PureComponent {
 
   render() {
     /* Comment some props to disable eslint errors */
-    // const { loading, error, repos } = this.props;
     // const reposListProps = {
     //   loading,
     //   error,
