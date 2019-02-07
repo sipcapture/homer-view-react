@@ -17,6 +17,7 @@ import MaterialTabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TabContainer from 'components/TabContainer';
 import MessagesTab from 'containers/MessagesTab/Loadable';
+import QoS from 'containers/QoS/Loadable';
 import makeSelectTabs from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -32,7 +33,7 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 export class Tabs extends React.Component {
   state = {
-    value: 0,
+    value: 2,
   };
 
   handleChange = (event, value) => {
@@ -64,7 +65,7 @@ export class Tabs extends React.Component {
         </AppBar>
         {value === 0 ? <MessagesTab /> : null}
         {value === 1 ? <TabContainer>Flow</TabContainer> : null}
-        {value === 2 ? <TabContainer>QoS</TabContainer> : null}
+        {value === 2 ? <QoS /> : null}
         {value === 3 ? <TabContainer>Logs</TabContainer> : null}
         {value === 4 ? <TabContainer>Loki</TabContainer> : null}
         {value === 5 ? <TabContainer>Export</TabContainer> : null}

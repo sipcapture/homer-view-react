@@ -28,7 +28,7 @@ export class MessagesTab extends React.Component {
     modalOpen: false,
   };
 
-  componentDidMount() {
+  componentWillMount() {
     if (!this.props.messagesTab.loaded) {
       // Put here parsed data
       this.props.getTransactionMessages();
