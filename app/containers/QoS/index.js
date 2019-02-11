@@ -13,20 +13,13 @@ import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import LoadingIndicator from 'components/LoadingIndicator';
-import {
-  XAxis,
-  YAxis,
-  FlexibleXYPlot,
-  VerticalBarSeries,
-  VerticalBarSeriesCanvas,
-  DiscreteColorLegend,
-} from 'react-vis';
+
 import _ from 'lodash';
 import uuidv1 from 'uuid';
-import moment from 'moment';
-import * as d3 from 'd3-format';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import { TimeSeries } from 'pondjs';
+
 import makeSelectQoS from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -41,9 +34,7 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class QoS extends React.Component {
-  state = {
-    useCanvas: false,
-  };
+  state = {};
 
   componentDidMount() {
     if (!this.props.qoS.loaded) {
@@ -51,34 +42,58 @@ export class QoS extends React.Component {
     } else if (this.props.qoS.loaded) {
       const qoS = _.cloneDeep(this.props.qoS.data);
       const sortedData = _.orderBy(qoS.data, 'create_date', 'asc');
-      this.setState(formateQoSApiResponse(sortedData), () => {});
+      const formatedData = formateQoSApiResponse(sortedData);
+      this.setState(
+        { ...formatedData, series: this.createSeries(formatedData) },
+        () => {
+          console.log(this.state);
+        },
+      );
     }
+  }
+
+  componentDidCatch(error, info) {
+    // You can also log the error to an error reporting service
+    console.log(error, info);
   }
 
   componentWillReceiveProps(nextProps) {
     const qoS = _.cloneDeep(nextProps.qoS.data);
     const sortedData = _.orderBy(qoS.data, 'create_date', 'asc');
-    this.setState(formateQoSApiResponse(sortedData));
+    const formatedData = formateQoSApiResponse(sortedData);
+    this.setState({ ...formatedData, series: this.createSeries(formatedData) });
   }
 
-  LegendClickItem = obj => {
-    const data = _.cloneDeep(this.state.reportData);
+  createSeries(data) {
+    return new TimeSeries({
+      name: 'Qos',
+      columns: ['time', ..._.map(data, el => el.color)],
+      points: this.formatePoints(data),
+    });
+  }
 
-    const filter = _.mapValues(
-      data,
-      o =>
-        o.key === obj.title
-          ? { ...o, values: _.map(o.values, val => ({ ...val, y: 0 })) }
-          : o,
-    );
-    this.setState({ reportData: filter }, () => {});
-  };
+  formatePoints(data) {
+    const clonedData = _.cloneDeep(data.reportData);
+    const points = [];
+
+    _.map(clonedData, type => {
+      _.map(type.values, values => {
+        if (!_.find(points, point => point[0] === values.x)) {
+          points.push([values.x, values.y]);
+        } else {
+          points[_.findIndex(points, point => point[0] === values.x)].push(
+            parseInt(values.y, 10),
+          );
+        }
+      });
+    });
+    return points;
+  }
 
   render() {
-    const { useCanvas, _labels, reportData, _stats } = this.state;
+    const { _stats } = this.state;
     const { classes } = this.props;
-    const BarSeries = useCanvas ? VerticalBarSeriesCanvas : VerticalBarSeries;
-    const reportDataCloned = _.cloneDeep(reportData);
+
     return (
       <div style={{ textAlign: 'center' }}>
         {this.props.qoS.loaded ? (
@@ -89,44 +104,27 @@ export class QoS extends React.Component {
               position: 'relative',
             }}
           >
-            <FlexibleXYPlot
-              style={{ overflow: 'visible' }}
-              xType="ordinal"
-              stackBy="y"
-              width={window.innerWidth - 400}
-              height={400}
-              animation="wobbly"
-            >
-              <DiscreteColorLegend
-                style={{
-                  position: 'absolute',
-                  right: '-100px',
-                  top: '50%',
-                  textAlign: 'left',
-                  transform: 'translateY(-50%)',
-                }}
-                orientation="horizontal"
-                colorType="literal"
-                onItemClick={this.LegendClickItem}
-                items={_labels}
-              />
-              <XAxis
-                tickFormat={value =>
-                  moment(new Date(+value)).format('HH:mm:ss')
-                }
-              />
-              <YAxis tickFormat={d3.format('.01f')} />
+            {/* <ChartContainer> */}
+            {/* <ChartRow height="150"> */}
+            {/* <YAxis */}
+            {/* id="traffic-volume" */}
+            {/* label="Traffic (B)" */}
+            {/* classed="traffic-in" */}
+            {/* min={0} */}
+            {/* width="70" */}
+            {/* type="linear" */}
+            {/* /> */}
+            {/* <Charts> */}
+            {/* <BarChart */}
+            {/* size={10} */}
+            {/* offset={5.5} */}
+            {/* series={series} */}
+            {/* infoTimeFormat="%m/%d/%y" */}
+            {/* /> */}
+            {/* </Charts> */}
+            {/* </ChartRow> */}
+            {/* </ChartContainer> */}
 
-              {_.map(reportDataCloned, (el, key) => (
-                <BarSeries
-                  animation={{ wobbly: 3000 }}
-                  key={uuidv1.v1()}
-                  cluster={reportData[key].key}
-                  color={reportData[key].color}
-                  data={reportData[key].values}
-                />
-              ))}
-            </FlexibleXYPlot>
             {_.map(_stats, (el, key) =>
               _.map(el, (e, k) => (
                 <Button
