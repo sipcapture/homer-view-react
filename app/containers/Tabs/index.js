@@ -33,7 +33,7 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 export class Tabs extends React.Component {
   state = {
-    value: 2,
+    value: 0,
   };
 
   handleChange = (event, value) => {
