@@ -16,6 +16,8 @@ import AppBar from '@material-ui/core/AppBar';
 import MaterialTabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TabContainer from 'components/TabContainer';
+import MessagesTab from 'containers/MessagesTab/Loadable';
+import QoS from 'containers/QoS/Loadable';
 import makeSelectTabs from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -24,6 +26,7 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
+    width: '100%',
   },
 });
 
@@ -43,16 +46,29 @@ export class Tabs extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
-          <MaterialTabs value={value} onChange={this.handleChange}>
-            <Tab label="Item One" />
-            <Tab label="Item Two" />
-            <Tab label="Item Three" href="#basic-tabs" />
+        <AppBar position="static" color="default">
+          <MaterialTabs
+            value={value}
+            onChange={this.handleChange}
+            variant="fullWidth"
+            scrollButtons="auto"
+            indicatorColor="primary"
+            textColor="primary"
+          >
+            <Tab label="Messages" />
+            <Tab label="Flow" />
+            <Tab label="QoS" />
+            <Tab label="Logs" />
+            <Tab label="Loki" />
+            <Tab label="Export" />
           </MaterialTabs>
         </AppBar>
-        {value === 0 && <TabContainer>Item One</TabContainer>}
-        {value === 1 && <TabContainer>Item Two</TabContainer>}
-        {value === 2 && <TabContainer>Item Three</TabContainer>}
+        {value === 0 ? <MessagesTab /> : null}
+        {value === 1 ? <TabContainer>Flow</TabContainer> : null}
+        {value === 2 ? <QoS /> : null}
+        {value === 3 ? <TabContainer>Logs</TabContainer> : null}
+        {value === 4 ? <TabContainer>Loki</TabContainer> : null}
+        {value === 5 ? <TabContainer>Export</TabContainer> : null}
       </div>
     );
   }
