@@ -1,21 +1,21 @@
 import { takeEvery, put, call } from "redux-saga/effects";
-import { getMessages, getMessagesSuccess, getMessagesFail } from "../actions";
+import { getMessagesAsync } from "../actions";
 import mocketData from '../../../utils/mockData/transaction';
 
-export function* getMessagesData() {
+export function* getMessagesDataSaga() {
   // Select username from store
 
   try {
     console.log('get')
     // Call our request helper (see 'utils/request')
     // const repos = yield call(request, requestURL);
-    yield put({ type: 'GET_MESSAGES_SUCCESS', data: mocketData });
+    yield put(getMessagesAsync.success(mocketData));
   } catch (err) {
-    yield put({ type: 'GET_MESSAGES_FAIL', error: err });
+    yield put(getMessagesAsync.fail(err));
   }
 }
 
 export default function* handleGetDocumentSaga() {
-  yield takeEvery('GET_MESSAGES', getMessagesData);
+  yield takeEvery(getMessagesAsync.request.toString(), getMessagesDataSaga);
 }
 

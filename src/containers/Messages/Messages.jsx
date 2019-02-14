@@ -26,27 +26,13 @@ class Messages extends React.Component {
   static propTypes = propTypes;
 
   state = {
-    dataTable: [],
-    dataHead: [],
     modalOpen: false,
   };
 
-  componentWillMount() {
-    console.log(this.props)
-    if (!this.props.messagesTab.loaded) {
-      this.props.getTransactionMessages({});
-    } else if (this.props.messagesTab.loaded) {
-      this.setState(formatMessagesResponse(this.props));
-    }
+  componentDidMount() {
+    this.props.getTransactionMessages({});
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.messagesTab.loaded
-    ) {
-      this.setState(formatMessagesResponse(nextProps));
-    }
-  }
 
   handleClickRow = (event, element) => {
     const { data } = this.props.messagesTab.data;
@@ -65,12 +51,12 @@ class Messages extends React.Component {
   };
 
   render() {
-    const { dataTable, dataHead, modalOpen, msgDetailedData } = this.state;
-    console.log(this.state);
-    console.log(this.props);
+    const { messagesTab: { dataTable, dataHead }, isLoaded } = this.props;
+    console.log('data', this.props);
+    const { modalOpen, msgDetailedData } = this.state;
     return (
       <div>
-        {this.props.messagesTab.loaded ? (
+        {isLoaded ? (
           <Table
             tableBody={dataTable}
             tableHead={dataHead}

@@ -1,11 +1,10 @@
 import _ from 'lodash';
 import moment from 'moment';
-import maybe from '../../../helpers/maybe';
+import maybe from '../helpers/maybe';
 
-/* eslint-disable */
-export function formatMessagesResponse(rawData){
+export default function formatMessagesResponse(rawData){
   const data = _.cloneDeep(
-    maybe(rawData.messagesTab, tab => tab.data, data => data.data, data => data.messages) || []
+    maybe(rawData.data, data => data.messages) || []
   );
 
   const dataTable = _.map(data, (val, index) => [
@@ -26,13 +25,13 @@ export function formatMessagesResponse(rawData){
     { key: 'msgSize', label: val.raw.length },
     {
       key: 'srcIp',
-      label: checkAlias(val, rawData.messagesTab.data.data.alias)
+      label: checkAlias(val, rawData.data.alias)
         .srcAlias,
     },
     { key: 'srcPort', label: val.srcPort },
     {
       key: 'dstIp',
-      label: checkAlias(val, rawData.messagesTab.data.data.alias)
+      label: checkAlias(val, rawData.data.alias)
         .dstAlias,
     },
     { key: 'dstPort', label: val.dstPort },
@@ -125,7 +124,6 @@ function checkAlias(address, aliasObj) {
   };
 }
 
-/* eslint-enable */
 function protoCheck(type) {
   if (parseInt(type, 10) === 2) return 'UDP';
   if (parseInt(type, 10) === 1) return 'TCP';
