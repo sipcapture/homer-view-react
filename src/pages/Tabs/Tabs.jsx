@@ -3,7 +3,7 @@ import AppBar from '@material-ui/core/AppBar';
 import MaterialTabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TabContainer from '../../components/TabContainer';
-import Messages from '../Messages';
+import Messages from '../../containers/Messages';
 import "./styles.scss";
 
 const bc = "tabs";

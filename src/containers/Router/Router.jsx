@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import routes from "config/routes";
 import Home from "../../pages/Home"
-import Tabs from "../../containers/Tabs"
+import Tabs from "../../pages/Tabs"
 import "./styles.scss";
 
 const bc = "app";
