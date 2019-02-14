@@ -1,0 +1,60 @@
+2.2 Changelog
+
+26/11/2017:  
+	- Updated Panels Dropdown Icons for consistence
+	- Reduced Options in Widget Selection
+	- Fixed Horizontal Type Column, removed other odd options
+	- Modified CSS to display smooth lines in D3 Line Chart
+	- Improved Media Reports display output D3 MultiBarChart
+	- Experimental/Best-Effort SDP origin lookup against Media Report IP:PORT
+	- Implemented Auto-Save option for UI-Grid results (user profile)
+	- Attached UI-Grid Columns Size and Column Selection to AutoSave
+	- Restructured default Registration column overlay
+	- Implemented Filtering on Registration CSEQ, SPORT, DPORT
+	- Implemented Status Selection on Registration Results
+	- Implemented basic IP Graph tab (active when selecting multiple sessions only)
+	- Refactored transactionCallController order to prepare migration of blocks
+
+27/11/2017:  
+	- Implemented preferences for GeoMap display in Session Details
+	- Implemented basic view for IP Lookup in Call Info (hostsinfo in transaction)
+	- Corrected Clock to use same Timezones available in Time-Range
+	- Fixed Form size autodetection, notifying user of hidden fields
+	- Extended the size of the SH dragster corner size in css
+	- Refactored Logs tab to display logs and cascading JSON object (uses less)
+
+28/11/2017:  
+	- Fixed Timeline mapping of IP Aliased entries
+	- Changed tab "Logs" to generic "Events" title
+	- Implemented Auto-Save for Widgets Quicksearch, Sipcapture (eventbus)
+	- Changed Export PNG to local view to avoid Chrome bugs (temporary solution)
+
+29/11/2017:  
+	- Moved DTMF to Timeline, disabled custom Tab (suspended in code)
+	- Implemented artificial removal of DTMF logs from Event display
+	- Implemented workaround to avoid QOS Charts overlapping, shifting microseconds
+	- Fixed Export icons display order
+	- Custom Header, SRD, RRD columns in Results
+
+01/12/2017:
+	- Implemented UI-Grid message for no results in Search (all)
+	- Implemented Buttons to toggle QoS series by Source in Media Reports
+	- Implemented Time Diff between messages in Session Message View
+	- Implemented preference for IP Graph display (can users do this?)
+	- Split of Session Details Preferences from Admin Gloabal
+
+04/12/2017:
+	- Fixed auto-save options in searc Call + Registration controllers
+	- Adjusted Dashboards forms w/ reduced options
+	- Implemented download Dashboard JSON button
+	- Cleaned up Defaults for search/home panels
+
+13/12/2017:
+	- Mist UI Fixes
+	- Adjust Diff in SIP MSG to display hours when needed
+	- Fixes for Reset Modes
+	- Fix for Panel Preferences not showing shared mode
+
+14/12/2017:
+	- Elasticsearch/Kibana frame is time syncronized (one way)
+	- Implemented tranlation and options for QuickSeach Field Index Type from Translations

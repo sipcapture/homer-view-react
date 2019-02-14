@@ -1,14 +1,37 @@
-# homer-view-react
-Experimental React Viewer for HEP APIs
+# HOMER / HEPIC UI in REACT
 
+## Getting Started
 
-1. `git clone https://github.com/QXIP/homer-view-react.git <YOUR_PROJECT_NAME>`
-2. `cd <YOUR_PROJECT_NAME>` .
-3. Run `npm install` to install dependencies.
-4. Run `npm run start` to run app at http://localhost:3000/ .
+Frontend requires [node.js](http://nodejs.org). Make sure your have `v0.10` or higher installed before proceeding.
 
+**Install dependencies:**
 
-If you need to build app `npm run build` - it create `build` folder in the root of directory.
+```
+$ npm install
+```
 
-To run app at production mode `npm run start:production`
+**Start the local development environment:**
 
+```
+$ npm start
+```
+
+### Development Environment Features
+
+- Live preview sever (using [BrowserSync](http://www.browsersync.io/))
+- CSS Autoprefixing
+- Sass compilation
+- Browserify bundling
+- Image optimization
+
+## Build
+
+**Build for release:**
+
+```
+$ npm run build
+```
+
+Fabricator builds both a static documentation site and optimized CSS and JS toolkit files.
+
+The build artifacts output to the `dist` directory. This can be deployed to any static hosting environment - no language runtime or database is required.
