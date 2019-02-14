@@ -14,3 +14,8 @@ export const isMessagesLoaded = createSelector(
   messages,
   msgs => msgs.loaded
 );
+
+export const makeSelectMessages = createSelector(
+  messages,
+  msgs => msgs
+);

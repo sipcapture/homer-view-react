@@ -1,12 +1,13 @@
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { makeSelectMessagesTab, isMessagesLoaded } from "./selectors";
+import { makeSelectMessagesTab, isMessagesLoaded, makeSelectMessages } from "./selectors";
 import Messages from "./Messages";
 import { getMessagesAsync } from "./actions";
 
 const mapStateToProps = createStructuredSelector({
   messagesTab: makeSelectMessagesTab,
-  isLoaded: isMessagesLoaded
+  isLoaded: isMessagesLoaded,
+  messages: makeSelectMessages
 });
 
 const mapDispatchToProps = {

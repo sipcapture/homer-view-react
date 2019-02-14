@@ -35,7 +35,9 @@ class Messages extends React.Component {
 
 
   handleClickRow = (event, element) => {
-    const { data } = this.props.messagesTab.data;
+    const { messages: { data } } = this.props;
+
+    console.log(this.props)
 
     this.setState(
       {
