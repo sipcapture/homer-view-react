@@ -11,7 +11,7 @@ const Router = () => (
   <div className={bc}>
     <Switch>
       <Route path={routes.root} component={Tabs} />
-      <Route path={routes.dashboard} component={Tabs} />
+      <Route path={routes.dashboard} component={Home} />
     </Switch>
   </div>
 );

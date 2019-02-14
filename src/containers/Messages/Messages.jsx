@@ -4,6 +4,9 @@ import "./styles.scss";
 import PropTypes from "prop-types";
 import { formatMessagesResponse } from './helpers/formatApiResponse';
 import _ from 'lodash';
+import Table from '../../components/Table';
+import MessageModal from '../../components/MessageModal';
+import LoadingIndicator from 'components/LoadingIndicator';
 
 const defaultProps = {
   messagesTab: {},
@@ -31,8 +34,6 @@ class Messages extends React.Component {
   componentWillMount() {
     console.log(this.props)
     if (!this.props.messagesTab.loaded) {
-      // Put here parsed data
-      console.log(this.props);
       this.props.getTransactionMessages({});
     } else if (this.props.messagesTab.loaded) {
       this.setState(formatMessagesResponse(this.props));
@@ -40,12 +41,10 @@ class Messages extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
     if (
       nextProps.messagesTab.loaded
     ) {
       this.setState(formatMessagesResponse(nextProps));
-      console.log(this.state);
     }
   }
 
@@ -67,9 +66,26 @@ class Messages extends React.Component {
 
   render() {
     const { dataTable, dataHead, modalOpen, msgDetailedData } = this.state;
+    console.log(this.state);
+    console.log(this.props);
     return (
       <div>
-        test
+        {this.props.messagesTab.loaded ? (
+          <Table
+            tableBody={dataTable}
+            tableHead={dataHead}
+            rowOnClick={this.handleClickRow}
+          />
+        ) : (
+          <LoadingIndicator />
+        )}
+        {modalOpen ? (
+          <MessageModal
+            open={modalOpen}
+            onClose={this.onCloseModal}
+            msgDetailedData={msgDetailedData}
+          />
+        ) : null}
       </div>
     );
   }

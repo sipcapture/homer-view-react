@@ -13,20 +13,20 @@ const initialState = {
 
 const handleGetMessages = (state, payload) => {
   state.loading = true;
-  state.lodaded = false;
+  state.loaded = false;
   return Object.assign({}, state);
 };
 
 const handleGetMessagesSuccess = (state, payload) => {
   state.loading = false;
-  state.lodaded = true;
+  state.loaded = true;
   state.data = payload.data;
   return Object.assign({}, state);
 };
 
 const handleGetMessagesFail = (state, payload) => {
   state.loading = false;
-  state.lodaded = false;
+  state.loaded = false;
   state.error = payload.error;
   return Object.assign({}, state);
 };

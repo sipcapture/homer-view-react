@@ -1,6 +1,6 @@
 const routes = {
-  login: "/login",
   root: "/",
+  login: "/login",
   dashboard: "/dashboard"
 };
 
