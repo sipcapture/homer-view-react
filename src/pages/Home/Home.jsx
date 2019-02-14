@@ -17,6 +17,8 @@ class Home extends React.PureComponent<Props, State> {
 
   render() {
 
+
+
     let data = [
       ["2017-01-24T00:00", 0.01],
       ["2017-01-24T01:00", 0.13],
