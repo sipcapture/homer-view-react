@@ -1,5 +1,5 @@
 import { handleActions } from "redux-actions";
-import { getMessagesAsync, getMessagesSuccess, getMessagesFail } from "./actions";
+import { getQOSAsync, getQOSFail, getQOSSuccess } from "./actions";
 import { Record } from "immutable";
 
 
@@ -10,22 +10,23 @@ const initialState = {
   error: null,
 };
 
-const handleGetMessages = (state, { payload }) => {
+const handleGetQOSMessages = (state, { payload }) => {
   return Object.assign({}, ...state, { loading: true, loaded: false});
 };
 
-const handleGetMessagesSuccess = (state, { payload }) => {
+const handleGetQOSSuccess = (state, { payload }) => {
+  console.log('PAY', payload);
   return Object.assign({}, ...state, { loading: false, loaded: true, data: payload.data });
 };
 
-const handleGetMessagesFail = (state, { payload }) => {
+const handleGetQOSFail = (state, { payload }) => {
   return Object.assign({}, ...state, { loading: false, loaded: false, error: payload.data });
 };
 
 export default handleActions(
   {
-    [getMessagesAsync.success]: handleGetMessagesSuccess,
-    [getMessagesAsync.fail]: handleGetMessagesFail,
+    [getQOSAsync.success]: handleGetQOSSuccess,
+    [getQOSAsync.fail]: handleGetQOSFail,
   },
   initialState
 );

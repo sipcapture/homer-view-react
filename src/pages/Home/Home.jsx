@@ -55,8 +55,6 @@ class Home extends React.PureComponent<Props, State> {
       ])
     });
 
-    console.log(series)
-
     return (
       <React.Fragment>
         <div>

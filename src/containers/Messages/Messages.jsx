@@ -33,11 +33,8 @@ class Messages extends React.Component {
     this.props.getTransactionMessages({});
   }
 
-
   handleClickRow = (event, element) => {
     const { messages: { data } } = this.props;
-
-    console.log(this.props)
 
     this.setState(
       {
@@ -54,7 +51,6 @@ class Messages extends React.Component {
 
   render() {
     const { messagesTab: { dataTable, dataHead }, isLoaded } = this.props;
-    console.log('data', this.props);
     const { modalOpen, msgDetailedData } = this.state;
     return (
       <div>
