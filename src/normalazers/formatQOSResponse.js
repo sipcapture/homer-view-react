@@ -6,6 +6,7 @@ const _labels = [];
 const _reports = {};
 const _stats = {};
 const reportData = [];
+const bySid = {};
 
 function _prepare(label) {
   if (!_reports[label.title]) {
@@ -15,13 +16,23 @@ function _prepare(label) {
 }
 
 export default (rawData) => {
-
   const data = _.cloneDeep(maybe(rawData));
+
   try {
     data.forEach((report, i) => {
       const rtcp = JSON.parse(report.raw) || {};
       const label = `${report.srcIp}->${report.dstIp}`;
       const sid = report.sid;
+
+      if (bySid[report.sid]) {
+        bySid[report.sid].values.push(report)
+      } else {
+        bySid[report.sid] = {
+          dstIp: report.dstIp,
+          srcId: report.srcIp,
+          values: [report]
+        }
+      }
 
       if (rtcp.sender_information) {
         if (rtcp.sender_information.packets) {
@@ -120,7 +131,7 @@ export default (rawData) => {
       }
     });
     _aggregateAllStats();
-    return { _reports, _labels, _stats, reportData };
+    return { _reports, _labels, _stats, reportData, bySid };
   } catch (err) {
     this.$log.error(
       ['CallDetailQos'],
