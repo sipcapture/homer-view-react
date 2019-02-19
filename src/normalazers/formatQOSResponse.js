@@ -130,7 +130,7 @@ export default (rawData) => {
 };
 
 function _aggregateAllStats() {
-  const banlist = ['packets', 'octets', 'highest_seq_no'];
+  const banlist = [];
   _labels.forEach(label => {
     reportData.push({ color: label.color, ..._reports[label.title][0] });
     if (banlist.includes(label.title)) return;

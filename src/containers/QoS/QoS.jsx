@@ -27,7 +27,8 @@ import {
   YAxis,
   Resizable,
   LineChart,
-  Baseline
+  Baseline,
+  Legend
 } from "react-timeseries-charts";
 
 import { TimeSeries, Index } from "pondjs";
@@ -53,6 +54,10 @@ const style = {
   value: {
     stroke: "#a02c2c",
     opacity: 0.2
+  },
+  line: {
+    stroke: "#a02c2c",
+    strokeWidth: 2
   }
 };
 
@@ -110,6 +115,8 @@ const statBlockValue = {
 
 class CrossHairs extends React.Component {
   render() {
+    console.log(this.props)
+
     const { x, y } = this.props;
     const style = { pointerEvents: "none", stroke: "#ccc" };
     if (!_.isNull(x) && !_.isNull(y)) {
@@ -146,7 +153,9 @@ class QOS extends React.Component {
   static propTypes = propTypes;
 
   componentDidMount() {
-    this.props.getQOSData({});
+    if (!this.props.isLoaded) {
+      this.props.getQOSData({});
+    }
   }
 
   handleInputChange(event) {
@@ -347,9 +356,12 @@ class QOS extends React.Component {
       }
     }
 
+
     const listForRender = statsList.map((stat) => {
      return (
-       <Grid item xs>
+       <Grid
+         key={stat.parentKey + stat.key}
+         item xs={4}>
          <Paper style={statBlock}>
            <div style={statBlockTitle}>
              {`${stat.key} ${stat.parentKey.toUpperCase()}`}
