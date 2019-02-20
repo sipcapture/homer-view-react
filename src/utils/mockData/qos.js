@@ -143,7 +143,7 @@ export default {
       protocolFamily: 2,
       create_date: 1549445379001,
       raw:
-        '{"type":200,"ssrc":1814766290,"report_count":1,"report_blocks":[{"source_ssrc":-1640316609,"fraction_lost":0,"packets_lost":0,"highest_seq_no":992,"lsr":"0","ia_jitter":44,"dlsr":0}],"sender_information":{"packets":588,"ntp_timestamp_sec":"3373905471","ntp_timestamp_usec":"4285752605","rtp_timestamp":-210739271,"octets":11760}}',
+        '{"type":200,"ssrc":1814766290,"report_count":1,"report_blocks":[{"source_ssrc":-1640316609,"fraction_lost":0,"packets_lost":0,"highest_seq_no":992,"lsr":4,"ia_jitter":44,"dlsr":0}],"sender_information":{"packets":588,"ntp_timestamp_sec":"3373905471","ntp_timestamp_usec":"4285752605","rtp_timestamp":-210739271,"octets":11760}}',
     },
   ],
 };

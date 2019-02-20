@@ -1,21 +1,21 @@
 import React from "react";
 import { render } from "react-dom";
 import PropTypes from "prop-types";
-import { hot } from "react-hot-loader"
+import { hot } from "react-hot-loader";
 
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Checkbox from '@material-ui/core/Checkbox';
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import FormLabel from "@material-ui/core/FormLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Checkbox from "@material-ui/core/Checkbox";
 
 import "./styles.css";
 import _ from "lodash";
@@ -47,7 +47,7 @@ const propTypes = {
 };
 
 const chartContainer = {
-  padding: '50px',
+  padding: "50px"
 };
 
 const style = {
@@ -97,37 +97,45 @@ const baselineStyleExtraLite = {
 };
 
 const statBlock = {
-  width: '200px',
-  height: '200px'
+  width: "200px",
+  height: "200px"
 };
 
 const statBlockTitle = {
-  textAlign: 'center',
-  padding: '16px',
-  fontSize: '20px'
+  textAlign: "center",
+  padding: "16px",
+  fontSize: "20px"
 };
 
 const statBlockValue = {
-  textAlign: 'center',
-  padding: '50px',
-  fontSize: '24px'
+  textAlign: "center",
+  padding: "50px",
+  fontSize: "24px"
 };
 
 class CrossHairs extends React.Component {
   render() {
-    console.log(this.props)
-
     const { x, y } = this.props;
     const style = { pointerEvents: "none", stroke: "#ccc" };
     if (!_.isNull(x) && !_.isNull(y)) {
       return (
         <g>
-          <line style={style} x1={0} y1={y} x2={this.props.width} y2={y} />
-          <line style={style} x1={x} y1={0} x2={x} y2={this.props.height} />
+          <line
+            style={style}
+            x1={0}
+            y1={y}
+            x2={this.props.width}
+            y2={y}/>
+          <line
+            style={style}
+            x1={x}
+            y1={0}
+            x2={x}
+            y2={this.props.height}/>
         </g>
       );
     } else {
-      return <g />;
+      return <g/>;
     }
   }
 }
@@ -160,7 +168,7 @@ class QOS extends React.Component {
 
   handleInputChange(event) {
     const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
     this.setState({
@@ -168,10 +176,13 @@ class QOS extends React.Component {
     });
   }
 
-
   renderCharts() {
-    const { _reports, _labels, reportData, _stats } = this.props.data;
+    const { _reports, _labels, reportData, _stats, bySid } = this.props.data;
     const { isPackets, isIaJitters, isHighestSeq, isOcters, isLsr } = this.state;
+
+    let chartData = [];
+
+    let maxValue = 0;
 
     let packetsPoints = [];
     let octersPoints = [];
@@ -179,10 +190,8 @@ class QOS extends React.Component {
     let IaJitterPoints = [];
     let lsrPoints = [];
 
-    let maxValue = 0;
-
     if (reportData[0] && reportData[0].values) {
-      reportData[0].values.forEach((data)=> {
+      reportData[0].values.forEach((data) => {
         packetsPoints.push([data.x, data.y]);
         if (isPackets && data.y > maxValue) {
           maxValue = data.y;
@@ -191,7 +200,7 @@ class QOS extends React.Component {
     }
 
     if (reportData[1] && reportData[1].values) {
-      reportData[1].values.forEach((data)=> {
+      reportData[1].values.forEach((data) => {
         octersPoints.push([data.x, data.y]);
         if (isOcters && data.y > maxValue) {
           maxValue = data.y;
@@ -200,7 +209,7 @@ class QOS extends React.Component {
     }
 
     if (reportData[2] && reportData[2].values) {
-      reportData[2].values.forEach((data)=> {
+      reportData[2].values.forEach((data) => {
         highestSeqNoPoints.push([data.x, data.y]);
         if (isHighestSeq && data.y > maxValue) {
           maxValue = data.y;
@@ -209,7 +218,7 @@ class QOS extends React.Component {
     }
 
     if (reportData[3] && reportData[3].values) {
-      reportData[3].values.forEach((data)=> {
+      reportData[3].values.forEach((data) => {
         IaJitterPoints.push([data.x, data.y]);
         if (isIaJitters && data.y > maxValue) {
           maxValue = data.y;
@@ -218,7 +227,7 @@ class QOS extends React.Component {
     }
 
     if (reportData[4] && reportData[4].values) {
-      reportData[4].values.forEach((data)=> {
+      reportData[4].values.forEach((data) => {
         lsrPoints.push([data.x, data.y]);
         if (isLsr && data.y > maxValue) {
           maxValue = data.y;
@@ -275,22 +284,49 @@ class QOS extends React.Component {
               width="60"
             />
             <Charts>
-              <CrossHairs x={this.state.x} y={this.state.y} />
+              <CrossHairs
+                x={this.state.x}
+                y={this.state.y}/>
               {isPackets
-                ? <LineChart axis="value" series={packetsSeries} style={style} />
-                : <Baseline axis="value" visible={false}/>}
+                ? <LineChart
+                  axis="value"
+                  series={packetsSeries}
+                  style={style}/>
+                : <Baseline
+                  axis="value"
+                  visible={false}/>}
               {isOcters
-                ? <LineChart axis="value" series={octersSeries} style={style} />
-                : <Baseline axis="value" visible={false}/>}
+                ? <LineChart
+                  axis="value"
+                  series={octersSeries}
+                  style={style}/>
+                : <Baseline
+                  axis="value"
+                  visible={false}/>}
               {isHighestSeq
-                ? <LineChart axis="value" series={highestSeqNoSeries} style={style} />
-                : <Baseline axis="value" visible={false}/>}
+                ? <LineChart
+                  axis="value"
+                  series={highestSeqNoSeries}
+                  style={style}/>
+                : <Baseline
+                  axis="value"
+                  visible={false}/>}
               {isIaJitters
-                ? <LineChart axis="value" series={IaJitterSeries} style={style} />
-                : <Baseline axis="value" visible={false}/>}
+                ? <LineChart
+                  axis="value"
+                  series={IaJitterSeries}
+                  style={style}/>
+                : <Baseline
+                  axis="value"
+                  visible={false}/>}
               {isLsr
-                ? <LineChart axis="value" series={lsrSeries} style={style} />
-                : <Baseline axis="value" visible={false}/>}
+                ? <LineChart
+                  axis="value"
+                  series={lsrSeries}
+                  style={style}/>
+                : <Baseline
+                  axis="value"
+                  visible={false}/>}
             </Charts>
           </ChartRow>
         </ChartContainer>
@@ -299,46 +335,58 @@ class QOS extends React.Component {
   }
 
   renderForm() {
+    const { bySid } = this.props.data;
     const { isPackets, isIaJitters, isHighestSeq, isOcters, isLsr } = this.state;
 
-    return (
-      <FormControl component="fieldset">
-        <FormLabel component="legend">Graphs</FormLabel>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox checked={isPackets} onChange={this.handleInputChange} name="isPackets" />
-            }
-            label="packets"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox checked={isOcters} onChange={this.handleInputChange} name="isOcters" />
-            }
-            label="octers"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox checked={isHighestSeq} onChange={this.handleInputChange} name="isHighestSeq" />
-            }
-            label="highest seq"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox checked={isIaJitters} onChange={this.handleInputChange} name="isIaJitters" />
-            }
-            label="ia jitters"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox checked={isLsr} onChange={this.handleInputChange} name="isLsr" />
-            }
-            label="lsr"
-          />
-        </FormGroup>
-        <FormHelperText>Check graphs</FormHelperText>
-      </FormControl>
-    )
+    console.log(bySid);
+
+    const graphsForms = [];
+
+    for (let key in bySid) {
+      let newData = {
+        label: bySid[key].label,
+        values: []
+      };
+
+      newData.values = bySid[key].values;
+
+      graphsForms.push(newData);
+    }
+
+    const renderData = graphsForms.map((item, index) => {
+      console.log(item)
+      return (
+        <Card key={index}>
+          <CardContent>
+            <FormControl>
+              <FormLabel component="legend">{item.label}</FormLabel>
+              <FormGroup>
+                {
+                  Object.keys(item.values).map((option, i) => {
+                    return (
+                      <FormControlLabel
+                        key={option}
+                        control={
+                          <Checkbox
+                            checked={item.values[option].selected}
+                            onChange={this.handleInputChange}
+                            name={option}/>
+                        }
+                        label={option}
+                      />
+                    );
+                  })
+                }
+              </FormGroup>
+            </FormControl>
+          </CardContent>
+        </Card>
+      );
+    });
+
+    console.log(renderData);
+
+    return (renderData);
   }
 
   renderStats() {
@@ -352,25 +400,26 @@ class QOS extends React.Component {
           parentKey: key,
           key: statKey,
           value: _stats[key][statKey]
-        })
+        });
       }
     }
 
 
     const listForRender = statsList.map((stat) => {
-     return (
-       <Grid
-         key={stat.parentKey + stat.key}
-         item xs={4}>
-         <Paper style={statBlock}>
-           <div style={statBlockTitle}>
-             {`${stat.key} ${stat.parentKey.toUpperCase()}`}
-           </div>
-           <div style={statBlockValue}>
-             {`${stat.value}`}
-           </div>
-         </Paper>
-       </Grid>)
+      return (
+        <Grid
+          key={stat.parentKey + stat.key}
+          item
+          xs={4}>
+          <Paper style={statBlock}>
+            <div style={statBlockTitle}>
+              {`${stat.key} ${stat.parentKey.toUpperCase()}`}
+            </div>
+            <div style={statBlockValue}>
+              {`${stat.value}`}
+            </div>
+          </Paper>
+        </Grid>);
     });
 
     return listForRender;
@@ -379,22 +428,28 @@ class QOS extends React.Component {
   render() {
     const { _reports, _labels, reportData, _stats } = this.props.data;
 
-    console.log(_stats)
-
     return (
       <div
         style={chartContainer}
         className="chart-container">
 
-        <Grid container spacing={24}>
-          <Grid item xs>
+        <Grid
+          container
+          spacing={24}>
+          <Grid
+            item
+            xs>
 
-            <Grid container spacing={24}>
+            <Grid
+              container
+              spacing={24}>
               {this.renderStats()}
             </Grid>
 
           </Grid>
-          <Grid item xs>
+          <Grid
+            item
+            xs>
             <Card>
               <CardContent>
                 {this.renderCharts()}
@@ -403,11 +458,7 @@ class QOS extends React.Component {
 
             <br/>
 
-            <Card>
-              <CardContent>
-                {this.renderForm()}
-              </CardContent>
-            </Card>
+            {this.renderForm()}
           </Grid>
         </Grid>
 

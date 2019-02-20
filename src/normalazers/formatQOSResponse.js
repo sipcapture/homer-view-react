@@ -24,16 +24,6 @@ export default (rawData) => {
       const label = `${report.srcIp}->${report.dstIp}`;
       const sid = report.sid;
 
-      if (bySid[report.sid]) {
-        bySid[report.sid].values.push(report)
-      } else {
-        bySid[report.sid] = {
-          dstIp: report.dstIp,
-          srcId: report.srcIp,
-          values: [report]
-        }
-      }
-
       if (rtcp.sender_information) {
         if (rtcp.sender_information.packets) {
           const ts = {
@@ -131,6 +121,7 @@ export default (rawData) => {
       }
     });
     _aggregateAllStats();
+    const bySid = createMultipleData(reportData)
     return { _reports, _labels, _stats, reportData, bySid };
   } catch (err) {
     this.$log.error(
@@ -139,6 +130,38 @@ export default (rawData) => {
     );
   }
 };
+
+function createMultipleData(reportData) {
+  let result = {};
+
+  reportData.forEach((data) => {
+
+    data.values.forEach((value) => {
+      if (result[value.sid]) {
+      } else {
+        result[value.sid] = {
+          key: value.sid,
+          label: value.label,
+          values: {}
+        };
+      }
+
+      if (result[value.sid].values[data.key] &&
+        result[value.sid].values[data.key].values) {
+        result[value.sid].values[data.key].values.push([value.x, value.y]);
+      } else {
+        result[value.sid].values[data.key] = {
+          seleted: false,
+          key: data.key,
+          values: [[value.x, value.y]]
+        }
+      }
+    });
+
+  });
+
+  return result;
+}
 
 function _aggregateAllStats() {
   const banlist = [];
