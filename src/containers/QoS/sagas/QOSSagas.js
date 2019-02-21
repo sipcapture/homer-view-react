@@ -45,8 +45,8 @@ function fetchQOS() {
 export function* getQOSDataSaga() {
   try {
     const response = yield call(fetchQOS);
-    const QoS = response.data;
-    yield put(getQOSAsync.success(QoS));
+    const qosdata = response.data;
+    yield put(getQOSAsync.success(qosdata));
   } catch (err) {
     yield put(getQOSAsync.fail(err));
   }

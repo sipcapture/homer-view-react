@@ -151,7 +151,7 @@ function createMultipleData(reportData) {
         result[value.sid].values[data.key].values.push([value.x, value.y]);
       } else {
         result[value.sid].values[data.key] = {
-          seleted: false,
+          selected: true,
           key: data.key,
           values: [[value.x, value.y]]
         }

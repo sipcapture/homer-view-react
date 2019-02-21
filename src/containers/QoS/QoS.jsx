@@ -166,8 +166,11 @@ class QOS extends React.Component {
     }
   }
 
-  handleInputChange(event) {
+  handleInputChange(sid, option, event) {
     const target = event.target;
+
+    console.log(sid, option, event.target);
+
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
@@ -176,21 +179,66 @@ class QOS extends React.Component {
     });
   }
 
+
+  renderLineList() {
+    const { bySid } = this.props.data;
+
+    let chartData = [];
+
+    for (let key in bySid) {
+
+      for (let stat in bySid[key].values) {
+
+        let chart = {
+          name: key + ' ' + bySid[key].values[stat].key,
+          selected: bySid[key].values[stat].selected,
+          series: new TimeSeries({
+            name: key + ' ' + bySid[key].values[stat].key,
+            columns: ["time", "value"],
+            points: bySid[key].values[stat].values
+          })
+        };
+
+        chartData.push(chart);
+      }
+    }
+
+    const lineCharts = chartData.map((chart)=>{
+      if (chart.selected && chart.series) {
+        return (
+          <LineChart
+            key={chart.name}
+            axis="value"
+            series={chart.series}
+            style={style}
+          />
+        )
+      } else {
+        return (
+          <Baseline
+            axis="value"
+            visible={false}/>
+        )
+      }
+    });
+
+    return (
+      <Charts>
+        <CrossHairs
+          x={this.state.x}
+          y={this.state.y}/>
+        {lineCharts}
+      </Charts>
+    );
+  }
+
   renderCharts() {
     const { _reports, _labels, reportData, _stats, bySid } = this.props.data;
     const { isPackets, isIaJitters, isHighestSeq, isOcters, isLsr } = this.state;
 
-    let chartData = [];
-
-
-
-    let maxValue = 0;
+    let maxValue = 30000;
 
     let packetsPoints = [];
-    let octersPoints = [];
-    let highestSeqNoPoints = [];
-    let IaJitterPoints = [];
-    let lsrPoints = [];
 
     if (reportData[0] && reportData[0].values) {
       reportData[0].values.forEach((data) => {
@@ -201,70 +249,10 @@ class QOS extends React.Component {
       });
     }
 
-    if (reportData[1] && reportData[1].values) {
-      reportData[1].values.forEach((data) => {
-        octersPoints.push([data.x, data.y]);
-        if (isOcters && data.y > maxValue) {
-          maxValue = data.y;
-        }
-      });
-    }
-
-    if (reportData[2] && reportData[2].values) {
-      reportData[2].values.forEach((data) => {
-        highestSeqNoPoints.push([data.x, data.y]);
-        if (isHighestSeq && data.y > maxValue) {
-          maxValue = data.y;
-        }
-      });
-    }
-
-    if (reportData[3] && reportData[3].values) {
-      reportData[3].values.forEach((data) => {
-        IaJitterPoints.push([data.x, data.y]);
-        if (isIaJitters && data.y > maxValue) {
-          maxValue = data.y;
-        }
-      });
-    }
-
-    if (reportData[4] && reportData[4].values) {
-      reportData[4].values.forEach((data) => {
-        lsrPoints.push([data.x, data.y]);
-        if (isLsr && data.y > maxValue) {
-          maxValue = data.y;
-        }
-      });
-    }
-
     const packetsSeries = new TimeSeries({
       name: "Packets",
       columns: ["time", "value"],
       points: packetsPoints
-    });
-
-    const octersSeries = new TimeSeries({
-      name: "Octers",
-      columns: ["time", "value"],
-      points: octersPoints
-    });
-
-    const highestSeqNoSeries = new TimeSeries({
-      name: "Highest Seq No",
-      columns: ["time", "value"],
-      points: highestSeqNoPoints
-    });
-
-    const IaJitterSeries = new TimeSeries({
-      name: "Ia Jitter",
-      columns: ["time", "value"],
-      points: IaJitterPoints
-    });
-
-    const lsrSeries = new TimeSeries({
-      name: "Lsr",
-      columns: ["time", "value"],
-      points: lsrPoints
     });
 
     return (
@@ -285,51 +273,7 @@ class QOS extends React.Component {
               showGrid={true}
               width="60"
             />
-            <Charts>
-              <CrossHairs
-                x={this.state.x}
-                y={this.state.y}/>
-              {isPackets
-                ? <LineChart
-                  axis="value"
-                  series={packetsSeries}
-                  style={style}/>
-                : <Baseline
-                  axis="value"
-                  visible={false}/>}
-              {isOcters
-                ? <LineChart
-                  axis="value"
-                  series={octersSeries}
-                  style={style}/>
-                : <Baseline
-                  axis="value"
-                  visible={false}/>}
-              {isHighestSeq
-                ? <LineChart
-                  axis="value"
-                  series={highestSeqNoSeries}
-                  style={style}/>
-                : <Baseline
-                  axis="value"
-                  visible={false}/>}
-              {isIaJitters
-                ? <LineChart
-                  axis="value"
-                  series={IaJitterSeries}
-                  style={style}/>
-                : <Baseline
-                  axis="value"
-                  visible={false}/>}
-              {isLsr
-                ? <LineChart
-                  axis="value"
-                  series={lsrSeries}
-                  style={style}/>
-                : <Baseline
-                  axis="value"
-                  visible={false}/>}
-            </Charts>
+            {this.renderLineList()}
           </ChartRow>
         </ChartContainer>
       </Resizable>
@@ -340,13 +284,12 @@ class QOS extends React.Component {
     const { bySid } = this.props.data;
     const { isPackets, isIaJitters, isHighestSeq, isOcters, isLsr } = this.state;
 
-    console.log(bySid);
-
     const graphsForms = [];
 
     for (let key in bySid) {
       let newData = {
         label: bySid[key].label,
+        sid: key,
         values: []
       };
 
@@ -356,7 +299,6 @@ class QOS extends React.Component {
     }
 
     const renderData = graphsForms.map((item, index) => {
-      console.log(item)
       return (
         <Card key={index}>
           <CardContent>
@@ -371,7 +313,7 @@ class QOS extends React.Component {
                         control={
                           <Checkbox
                             checked={item.values[option].selected}
-                            onChange={this.handleInputChange}
+                            onChange={(e) => this.handleInputChange(item.sid, option, e)}
                             name={option}/>
                         }
                         label={option}
@@ -385,8 +327,6 @@ class QOS extends React.Component {
         </Card>
       );
     });
-
-    console.log(renderData);
 
     return (renderData);
   }

@@ -1,5 +1,5 @@
 import { handleActions } from "redux-actions";
-import { getMessagesAsync, getMessagesSuccess, getMessagesFail } from "./actions";
+import { getMessagesAsync, getMessagesSuccess, getMessagesFail, updateSidValue } from "./actions";
 import { Record } from "immutable";
 
 
@@ -22,10 +22,15 @@ const handleGetMessagesFail = (state, { payload }) => {
   return Object.assign({}, ...state, { loading: false, loaded: false, error: payload.data });
 };
 
+const handleUpdateSidValue = (state, { payload }) => {
+  return Object.assign({}, ...state, { loading: false, loaded: false, error: payload.data });
+};
+
 export default handleActions(
   {
     [getMessagesAsync.success]: handleGetMessagesSuccess,
     [getMessagesAsync.fail]: handleGetMessagesFail,
+    updateSidValue: handleUpdateSidValue
   },
   initialState
 );
