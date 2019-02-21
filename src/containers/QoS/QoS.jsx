@@ -182,6 +182,8 @@ class QOS extends React.Component {
 
     let chartData = [];
 
+
+
     let maxValue = 0;
 
     let packetsPoints = [];
