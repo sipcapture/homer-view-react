@@ -4,6 +4,8 @@ import MaterialTabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TabContainer from '../../components/TabContainer';
 import Messages from '../../containers/Messages';
+import QOS from '../../containers/QoS';
+import Logs from '../../containers/Logs';
 import "./styles.scss";
 
 const bc = "tabs";
@@ -42,8 +44,8 @@ class Tabs extends PureComponent {
         </AppBar>
         {value === 0 ? <Messages/> : null}
         {value === 1 ? <TabContainer>Flow</TabContainer> : null}
-        {value === 2 ? <TabContainer>Flow</TabContainer> : null}
-        {value === 3 ? <TabContainer>Logs</TabContainer> : null}
+        {value === 2 ? <QOS/> : null}
+        {value === 3 ? <Logs/> : null}
         {value === 4 ? <TabContainer>Loki</TabContainer> : null}
         {value === 5 ? <TabContainer>Export</TabContainer> : null}
       </div>
