@@ -1,10 +1,9 @@
 import { takeEvery, put, call } from "redux-saga/effects";
 import { getFlowAsync } from "../actions";
-import mocketData from '../../../utils/mockData/transaction';
 
 import axios from "axios"
 
-function fetchMessages() {
+function fetchFlow() {
   const payload = {
     "timestamp":{
       "from":1550707199000,
@@ -46,9 +45,9 @@ function fetchMessages() {
 export function* getFlowDataSaga() {
 
   try {
-    // const response = yield call(fetchMessages);
-    // const message = response.data;
-    yield put(getFlowAsync.success(mocketData));
+    const response = yield call(fetchFlow);
+    const flow = response.data;
+    yield put(getFlowAsync.success(flow));
   } catch (err) {
     yield put(getFlowAsync.fail(err));
   }

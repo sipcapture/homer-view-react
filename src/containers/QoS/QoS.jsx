@@ -139,8 +139,6 @@ class QOS extends React.Component {
   handleInputChange(sid, option, event) {
     const target = event.target;
 
-    console.log(sid, option, event.target);
-
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 

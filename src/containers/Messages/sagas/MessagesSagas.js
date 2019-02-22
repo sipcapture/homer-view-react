@@ -1,6 +1,5 @@
 import { takeEvery, put, call } from "redux-saga/effects";
 import { getMessagesAsync } from "../actions";
-import mocketData from '../../../utils/mockData/transaction';
 
 import axios from "axios"
 
@@ -46,9 +45,9 @@ function fetchMessages() {
 export function* getMessagesDataSaga() {
 
   try {
-    // const response = yield call(fetchMessages);
-    // const message = response.data;
-    yield put(getMessagesAsync.success(mocketData));
+    const response = yield call(fetchMessages);
+    const message = response.data;
+    yield put(getMessagesAsync.success(message));
   } catch (err) {
     yield put(getMessagesAsync.fail(err));
   }

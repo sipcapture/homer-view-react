@@ -1,6 +1,5 @@
 import { takeEvery, put, call } from "redux-saga/effects";
 import { getLogsAsync } from "../actions";
-import mocketData from '../../../utils/mockData/log';
 
 import axios from "axios"
 
@@ -40,14 +39,14 @@ function fetchLogs() {
     }
   }
 
-  return axios.post('/api/v3/call/logs', payload);
+  return axios.post('/api/v3/call/report/log', payload);
 }
 
 export function* getLogsDataSaga() {
   try {
-    // const response = yield call(fetchMessages);
-    // const message = response.data;
-    yield put(getLogsAsync.success(mocketData));
+    const response = yield call(fetchLogs);
+    const logs = response.data;
+    yield put(getLogsAsync.success(logs));
   } catch (err) {
     yield put(getLogsAsync.fail(err));
   }

@@ -1,6 +1,5 @@
 import { takeEvery, put, call } from "redux-saga/effects";
 import { getQOSAsync } from "../actions";
-import mocketData from '../../../utils/mockData/qos';
 import axios from "axios";
 
 function fetchQOS() {
@@ -44,9 +43,9 @@ function fetchQOS() {
 
 export function* getQOSDataSaga() {
   try {
-    // const response = yield call(fetchQOS);
-    // const qosdata = response.data;
-    yield put(getQOSAsync.success(mocketData));
+    const response = yield call(fetchQOS);
+    const qosdata = response.data;
+    yield put(getQOSAsync.success(qosdata));
   } catch (err) {
     yield put(getQOSAsync.fail(err));
   }

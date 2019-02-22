@@ -42,8 +42,6 @@ class Logs extends React.Component {
   showJson() {
     const { logs } = this.props;
 
-    debugger;
-
     let info = logs.map((data, index)=> {
       return(
         <div style={paddingBottom}>
