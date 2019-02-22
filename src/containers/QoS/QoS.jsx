@@ -68,14 +68,14 @@ const statBlock = {};
 
 const statBlockTitle = {
   textAlign: "center",
-  padding: "25px",
+  padding: "25px 0",
   minHeight: "35px",
   fontSize: "12px"
 };
 
 const statBlockValue = {
   textAlign: "center",
-  padding: "50px",
+  padding: "50px 0",
   fontSize: "16px"
 };
 
@@ -325,10 +325,10 @@ class QOS extends React.Component {
         <Grid
           key={stat.parentKey + stat.key}
           item
-          lg={3}
-          md={6}
+          lg={4}
+          md={4}
           sm={4}
-          xs={6}>
+          xs={4}>
           <Paper style={statBlock}>
             <Typography style={statBlockTitle}>
               {`${stat.key} ${stat.parentKey.toUpperCase()}`}
@@ -356,7 +356,10 @@ class QOS extends React.Component {
             spacing={24}>
             <Grid
               item
-              xs>
+              lg={4}
+              md={4}
+              sm={12}
+              xs={12}>
               <Grid
                 container
                 spacing={24}>
@@ -365,7 +368,7 @@ class QOS extends React.Component {
             </Grid>
             <Grid
               item
-              lg={6}
+              lg={8}
               md={8}
               sm
               xs>
