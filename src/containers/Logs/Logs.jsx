@@ -40,11 +40,11 @@ class Logs extends React.Component {
   }
 
   showJson() {
-    const { logs } = this.props.logs;
+    const { logs } = this.props;
 
     debugger;
 
-    let info = logs.data.map((data, index)=> {
+    let info = logs.map((data, index)=> {
       return(
         <div style={paddingBottom}>
           <JsonViewer
@@ -53,7 +53,7 @@ class Logs extends React.Component {
           />
         </div>
       )
-    })
+    });
 
     return (
       <div>

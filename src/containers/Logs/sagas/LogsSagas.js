@@ -40,11 +40,10 @@ function fetchLogs() {
     }
   }
 
-  return axios.post('/api/v3/call/transaction', payload);
+  return axios.post('/api/v3/call/logs', payload);
 }
 
 export function* getLogsDataSaga() {
-
   try {
     // const response = yield call(fetchMessages);
     // const message = response.data;
