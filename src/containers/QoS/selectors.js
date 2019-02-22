@@ -24,3 +24,8 @@ export const getQOSData = createSelector(
   qos,
   data => data
 );
+
+export const getGraphsData = createSelector(
+  qos,
+  data => data.graphs
+);

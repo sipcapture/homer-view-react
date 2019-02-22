@@ -16,6 +16,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Checkbox from "@material-ui/core/Checkbox";
+import LoadingIndicator from "components/LoadingIndicator";
 
 import "./styles.css";
 import _ from "lodash";
@@ -33,17 +34,19 @@ import {
 
 import { TimeSeries, Index } from "pondjs";
 
-
 const defaultProps = {
   qosTab: {},
   getQOSData: {},
-  data: []
+  data: [],
+  graphs: {}
 };
 
 const propTypes = {
   qosTab: PropTypes.object,
   getQOSData: PropTypes.func,
-  data: PropTypes.object
+  toggleSelection: PropTypes.func,
+  data: PropTypes.object,
+  graphs: PropTypes.object
 };
 
 const chartContainer = {
@@ -58,41 +61,6 @@ const style = {
   line: {
     stroke: "#a02c2c",
     strokeWidth: 2
-  }
-};
-
-const baselineStyle = {
-  line: {
-    stroke: "steelblue",
-    strokeWidth: 1,
-    opacity: 0.4,
-    strokeDasharray: "none"
-  },
-  label: {
-    fill: "steelblue"
-  }
-};
-
-const baselineStyleLite = {
-  line: {
-    stroke: "steelblue",
-    strokeWidth: 1,
-    opacity: 0.5
-  },
-  label: {
-    fill: "steelblue"
-  }
-};
-
-const baselineStyleExtraLite = {
-  line: {
-    stroke: "steelblue",
-    strokeWidth: 1,
-    opacity: 0.2,
-    strokeDasharray: "1,1"
-  },
-  label: {
-    fill: "steelblue"
   }
 };
 
@@ -174,6 +142,11 @@ class QOS extends React.Component {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
+    this.props.toggleSelection({
+      sid,
+      option
+    });
+
     this.setState({
       [name]: value
     });
@@ -181,21 +154,21 @@ class QOS extends React.Component {
 
 
   renderLineList() {
-    const { bySid } = this.props.data;
+    const { graphs } = this.props;
 
     let chartData = [];
 
-    for (let key in bySid) {
+    for (let key in graphs) {
 
-      for (let stat in bySid[key].values) {
+      for (let stat in graphs[key].values) {
 
         let chart = {
-          name: key + ' ' + bySid[key].values[stat].key,
-          selected: bySid[key].values[stat].selected,
+          name: key + " " + graphs[key].values[stat].key,
+          selected: graphs[key].values[stat].selected,
           series: new TimeSeries({
-            name: key + ' ' + bySid[key].values[stat].key,
+            name: key + " " + graphs[key].values[stat].key,
             columns: ["time", "value"],
-            points: bySid[key].values[stat].values
+            points: graphs[key].values[stat].values
           })
         };
 
@@ -203,7 +176,7 @@ class QOS extends React.Component {
       }
     }
 
-    const lineCharts = chartData.map((chart)=>{
+    const lineCharts = chartData.map((chart) => {
       if (chart.selected && chart.series) {
         return (
           <LineChart
@@ -212,13 +185,13 @@ class QOS extends React.Component {
             series={chart.series}
             style={style}
           />
-        )
+        );
       } else {
         return (
           <Baseline
             axis="value"
             visible={false}/>
-        )
+        );
       }
     });
 
@@ -233,17 +206,16 @@ class QOS extends React.Component {
   }
 
   renderCharts() {
-    const { _reports, _labels, reportData, _stats, bySid } = this.props.data;
-    const { isPackets, isIaJitters, isHighestSeq, isOcters, isLsr } = this.state;
+    const { reportData } = this.props.data;
 
-    let maxValue = 30000;
+    let maxValue = 15000;
 
     let packetsPoints = [];
 
     if (reportData[0] && reportData[0].values) {
       reportData[0].values.forEach((data) => {
         packetsPoints.push([data.x, data.y]);
-        if (isPackets && data.y > maxValue) {
+        if (data.y > maxValue) {
           maxValue = data.y;
         }
       });
@@ -281,20 +253,17 @@ class QOS extends React.Component {
   }
 
   renderForm() {
-    const { bySid } = this.props.data;
-    const { isPackets, isIaJitters, isHighestSeq, isOcters, isLsr } = this.state;
+    const { graphs } = this.props;
 
     const graphsForms = [];
 
-    for (let key in bySid) {
+    for (let key in graphs) {
       let newData = {
-        label: bySid[key].label,
+        label: graphs[key].label,
         sid: key,
         values: []
       };
-
-      newData.values = bySid[key].values;
-
+      newData.values = graphs[key].values;
       graphsForms.push(newData);
     }
 
@@ -368,42 +337,40 @@ class QOS extends React.Component {
   }
 
   render() {
-    const { _reports, _labels, reportData, _stats } = this.props.data;
+    const { isLoaded } = this.props;
 
     return (
       <div
         style={chartContainer}
         className="chart-container">
-
-        <Grid
-          container
-          spacing={24}>
+        {isLoaded ? (
           <Grid
-            item
-            xs>
-
+            container
+            spacing={24}>
             <Grid
-              container
-              spacing={24}>
-              {this.renderStats()}
+              item
+              xs>
+              <Grid
+                container
+                spacing={24}>
+                {this.renderStats()}
+              </Grid>
             </Grid>
-
+            <Grid
+              item
+              xs>
+              <Card>
+                <CardContent>
+                  {this.renderCharts()}
+                </CardContent>
+              </Card>
+              <br/>
+              {this.renderForm()}
+            </Grid>
           </Grid>
-          <Grid
-            item
-            xs>
-            <Card>
-              <CardContent>
-                {this.renderCharts()}
-              </CardContent>
-            </Card>
-
-            <br/>
-
-            {this.renderForm()}
-          </Grid>
-        </Grid>
-
+        ) : (
+          <LoadingIndicator/>
+        )}
       </div>
     );
   }

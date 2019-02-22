@@ -2,11 +2,11 @@ import _ from 'lodash';
 import moment from 'moment';
 import maybe from '../helpers/maybe';
 
-const _labels = [];
-const _reports = {};
-const _stats = {};
-const reportData = [];
-const bySid = {};
+let _labels = [];
+let _reports = {};
+let _stats = {};
+let reportData = [];
+let bySid = {};
 
 function _prepare(label) {
   if (!_reports[label.title]) {
@@ -16,6 +16,13 @@ function _prepare(label) {
 }
 
 export default (rawData) => {
+
+  _labels = [];
+  _reports = {};
+  _stats = {};
+  reportData = [];
+  bySid = {};
+
   const data = _.cloneDeep(maybe(rawData));
 
   try {
