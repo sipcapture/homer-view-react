@@ -1,10 +1,9 @@
 import { takeEvery, put, call } from "redux-saga/effects";
-import { getMessagesAsync } from "../actions";
-import mocketData from '../../../utils/mockData/transaction';
+import { getQOSAsync } from "../actions";
+import mocketData from '../../../utils/mockData/qos';
+import axios from "axios";
 
-import axios from "axios"
-
-function fetchMessages() {
+function fetchQOS() {
   const payload = {
     "timestamp":{
       "from":1550707199000,
@@ -40,21 +39,20 @@ function fetchMessages() {
     }
   }
 
-  return axios.post('/api/v3/call/transaction', payload);
+  return axios.post('/api/v3/call/report/qos', payload);
 }
 
-export function* getMessagesDataSaga() {
-
+export function* getQOSDataSaga() {
   try {
-    // const response = yield call(fetchMessages);
-    // const message = response.data;
-    yield put(getMessagesAsync.success(mocketData));
+    // const response = yield call(fetchQOS);
+    // const qosdata = response.data;
+    yield put(getQOSAsync.success(mocketData));
   } catch (err) {
-    yield put(getMessagesAsync.fail(err));
+    yield put(getQOSAsync.fail(err));
   }
 }
 
 export default function* handleGetDocumentSaga() {
-  yield takeEvery(getMessagesAsync.request.toString(), getMessagesDataSaga);
+  yield takeEvery(getQOSAsync.request.toString(), getQOSDataSaga);
 }
 
