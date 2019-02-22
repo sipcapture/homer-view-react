@@ -1,9 +1,9 @@
 import { takeEvery, put, call } from "redux-saga/effects";
-import { getMessagesAsync } from "../actions";
+import { getFlowAsync } from "../actions";
 
 import axios from "axios"
 
-function fetchMessages() {
+function fetchFlow() {
   const payload = {
     "timestamp":{
       "from":1550707199000,
@@ -42,18 +42,18 @@ function fetchMessages() {
   return axios.post('/api/v3/call/transaction', payload);
 }
 
-export function* getMessagesDataSaga() {
+export function* getFlowDataSaga() {
 
   try {
-    const response = yield call(fetchMessages);
-    const message = response.data;
-    yield put(getMessagesAsync.success(message));
+    const response = yield call(fetchFlow);
+    const flow = response.data;
+    yield put(getFlowAsync.success(flow));
   } catch (err) {
-    yield put(getMessagesAsync.fail(err));
+    yield put(getFlowAsync.fail(err));
   }
 }
 
 export default function* handleGetDocumentSaga() {
-  yield takeEvery(getMessagesAsync.request.toString(), getMessagesDataSaga);
+  yield takeEvery(getFlowAsync.request.toString(), getFlowDataSaga);
 }
 

@@ -64,21 +64,23 @@ const style = {
   }
 };
 
-const statBlock = {
-  width: "200px",
-  height: "200px"
-};
+const statBlock = {};
 
 const statBlockTitle = {
   textAlign: "center",
-  padding: "16px",
-  fontSize: "20px"
+  padding: "25px 0",
+  minHeight: "35px",
+  fontSize: "12px"
 };
 
 const statBlockValue = {
   textAlign: "center",
-  padding: "50px",
-  fontSize: "24px"
+  padding: "50px 0",
+  fontSize: "16px"
+};
+
+const widthLegend = {
+  width: "49%"
 };
 
 class CrossHairs extends React.Component {
@@ -136,8 +138,6 @@ class QOS extends React.Component {
 
   handleInputChange(sid, option, event) {
     const target = event.target;
-
-    console.log(sid, option, event.target);
 
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
@@ -269,7 +269,9 @@ class QOS extends React.Component {
 
     const renderData = graphsForms.map((item, index) => {
       return (
-        <Card key={index}>
+        <Card
+          key={index}
+          style={widthLegend}>
           <CardContent>
             <FormControl>
               <FormLabel component="legend">{item.label}</FormLabel>
@@ -321,14 +323,17 @@ class QOS extends React.Component {
         <Grid
           key={stat.parentKey + stat.key}
           item
+          lg={4}
+          md={4}
+          sm={4}
           xs={4}>
           <Paper style={statBlock}>
-            <div style={statBlockTitle}>
+            <Typography style={statBlockTitle}>
               {`${stat.key} ${stat.parentKey.toUpperCase()}`}
-            </div>
-            <div style={statBlockValue}>
+            </Typography>
+            <Typography style={statBlockValue}>
               {`${stat.value}`}
-            </div>
+            </Typography>
           </Paper>
         </Grid>);
     });
@@ -349,7 +354,10 @@ class QOS extends React.Component {
             spacing={24}>
             <Grid
               item
-              xs>
+              lg={4}
+              md={4}
+              sm={12}
+              xs={12}>
               <Grid
                 container
                 spacing={24}>
@@ -358,6 +366,9 @@ class QOS extends React.Component {
             </Grid>
             <Grid
               item
+              lg={8}
+              md={8}
+              sm
               xs>
               <Card>
                 <CardContent>
@@ -365,7 +376,14 @@ class QOS extends React.Component {
                 </CardContent>
               </Card>
               <br/>
-              {this.renderForm()}
+              <Grid
+                container
+                direction="row"
+                alignItems="center"
+                justify="space-between"
+              >
+                {this.renderForm()}
+              </Grid>
             </Grid>
           </Grid>
         ) : (

@@ -1,9 +1,9 @@
 import { takeEvery, put, call } from "redux-saga/effects";
-import { getMessagesAsync } from "../actions";
+import { getLogsAsync } from "../actions";
 
 import axios from "axios"
 
-function fetchMessages() {
+function fetchLogs() {
   const payload = {
     "timestamp":{
       "from":1550707199000,
@@ -39,21 +39,20 @@ function fetchMessages() {
     }
   }
 
-  return axios.post('/api/v3/call/transaction', payload);
+  return axios.post('/api/v3/call/report/log', payload);
 }
 
-export function* getMessagesDataSaga() {
-
+export function* getLogsDataSaga() {
   try {
-    const response = yield call(fetchMessages);
-    const message = response.data;
-    yield put(getMessagesAsync.success(message));
+    const response = yield call(fetchLogs);
+    const logs = response.data;
+    yield put(getLogsAsync.success(logs));
   } catch (err) {
-    yield put(getMessagesAsync.fail(err));
+    yield put(getLogsAsync.fail(err));
   }
 }
 
 export default function* handleGetDocumentSaga() {
-  yield takeEvery(getMessagesAsync.request.toString(), getMessagesDataSaga);
+  yield takeEvery(getLogsAsync.request.toString(), getLogsDataSaga);
 }
 
