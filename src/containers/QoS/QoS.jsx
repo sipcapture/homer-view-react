@@ -65,8 +65,6 @@ const style = {
 };
 
 const statBlock = {
-  width: "200px",
-  height: "200px"
 };
 
 const statBlockTitle = {
@@ -236,7 +234,7 @@ class QOS extends React.Component {
           format="%H:%M:%S"
           timeAxisTickCount={5}
         >
-          <ChartRow height="300">
+          <ChartRow height="500">
             <YAxis
               id="value"
               label="Count"

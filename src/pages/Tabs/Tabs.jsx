@@ -7,6 +7,7 @@ import Messages from '../../containers/Messages';
 import QOS from '../../containers/QoS';
 import Logs from '../../containers/Logs';
 import "./styles.scss";
+import Flow from "../../containers/Flow";
 
 const bc = "tabs";
 
@@ -43,7 +44,7 @@ class Tabs extends PureComponent {
           </MaterialTabs>
         </AppBar>
         {value === 0 ? <Messages/> : null}
-        {value === 1 ? <TabContainer>Flow</TabContainer> : null}
+        {value === 1 ? <Flow/> : null}
         {value === 2 ? <QOS/> : null}
         {value === 3 ? <Logs/> : null}
         {value === 4 ? <TabContainer>Loki</TabContainer> : null}

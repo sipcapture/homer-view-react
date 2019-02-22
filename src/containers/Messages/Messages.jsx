@@ -2,7 +2,6 @@
 import * as React from "react";
 import "./styles.scss";
 import PropTypes from "prop-types";
-import { formatMessagesResponse } from './helpers/formatApiResponse';
 import _ from 'lodash';
 import Table from '../../components/Table';
 import MessageModal from '../../components/MessageModal';
@@ -10,7 +9,6 @@ import LoadingIndicator from 'components/LoadingIndicator';
 
 const defaultProps = {
   messagesTab: {},
-  getTransactionMessages: {},
 };
 
 const propTypes = {
