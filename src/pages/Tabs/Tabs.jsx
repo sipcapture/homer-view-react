@@ -39,8 +39,6 @@ class Tabs extends PureComponent {
             <Tab label="Flow" />
             <Tab label="QoS" />
             <Tab label="Logs" />
-            <Tab label="Loki" />
-            <Tab label="Export" />
           </MaterialTabs>
         </AppBar>
         {value === 0 ? <Messages/> : null}
