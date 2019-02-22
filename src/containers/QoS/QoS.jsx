@@ -69,15 +69,20 @@ const statBlock = {
 
 const statBlockTitle = {
   textAlign: "center",
-  padding: "16px",
-  fontSize: "20px"
+  padding: "25px",
+  minHeight: "35px",
+  fontSize: "12px"
 };
 
 const statBlockValue = {
   textAlign: "center",
   padding: "50px",
-  fontSize: "24px"
+  fontSize: "16px"
 };
+
+const widthLegend = {
+    width: "49%"
+}
 
 class CrossHairs extends React.Component {
   render() {
@@ -234,7 +239,7 @@ class QOS extends React.Component {
           format="%H:%M:%S"
           timeAxisTickCount={5}
         >
-          <ChartRow height="500">
+          <ChartRow height="300">
             <YAxis
               id="value"
               label="Count"
@@ -267,7 +272,7 @@ class QOS extends React.Component {
 
     const renderData = graphsForms.map((item, index) => {
       return (
-        <Card key={index}>
+        <Card key={index} style={widthLegend}>
           <CardContent>
             <FormControl>
               <FormLabel component="legend">{item.label}</FormLabel>
@@ -318,15 +323,18 @@ class QOS extends React.Component {
       return (
         <Grid
           key={stat.parentKey + stat.key}
-          item
-          xs={4}>
+		  item
+		  lg={3}
+		  md={6}
+		  sm={4}
+          xs={6}>
           <Paper style={statBlock}>
-            <div style={statBlockTitle}>
+            <Typography  style={statBlockTitle}>
               {`${stat.key} ${stat.parentKey.toUpperCase()}`}
-            </div>
-            <div style={statBlockValue}>
+            </Typography >
+            <Typography  style={statBlockValue}>
               {`${stat.value}`}
-            </div>
+            </Typography>
           </Paper>
         </Grid>);
     });
@@ -355,15 +363,25 @@ class QOS extends React.Component {
               </Grid>
             </Grid>
             <Grid
-              item
-              xs>
+			  item
+			  lg={6}
+			  md={8}
+              sm
+			  xs>
               <Card>
                 <CardContent>
                   {this.renderCharts()}
                 </CardContent>
               </Card>
               <br/>
-              {this.renderForm()}
+			  <Grid
+				container
+	            direction="row"
+	            alignItems="center"
+				justify="space-between"
+			  >
+				{this.renderForm()}
+			  </Grid>
             </Grid>
           </Grid>
         ) : (
