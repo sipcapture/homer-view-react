@@ -64,8 +64,7 @@ const style = {
   }
 };
 
-const statBlock = {
-};
+const statBlock = {};
 
 const statBlockTitle = {
   textAlign: "center",
@@ -81,8 +80,8 @@ const statBlockValue = {
 };
 
 const widthLegend = {
-    width: "49%"
-}
+  width: "49%"
+};
 
 class CrossHairs extends React.Component {
   render() {
@@ -272,7 +271,9 @@ class QOS extends React.Component {
 
     const renderData = graphsForms.map((item, index) => {
       return (
-        <Card key={index} style={widthLegend}>
+        <Card
+          key={index}
+          style={widthLegend}>
           <CardContent>
             <FormControl>
               <FormLabel component="legend">{item.label}</FormLabel>
@@ -323,16 +324,16 @@ class QOS extends React.Component {
       return (
         <Grid
           key={stat.parentKey + stat.key}
-		  item
-		  lg={3}
-		  md={6}
-		  sm={4}
+          item
+          lg={3}
+          md={6}
+          sm={4}
           xs={6}>
           <Paper style={statBlock}>
-            <Typography  style={statBlockTitle}>
+            <Typography style={statBlockTitle}>
               {`${stat.key} ${stat.parentKey.toUpperCase()}`}
-            </Typography >
-            <Typography  style={statBlockValue}>
+            </Typography>
+            <Typography style={statBlockValue}>
               {`${stat.value}`}
             </Typography>
           </Paper>
@@ -363,25 +364,25 @@ class QOS extends React.Component {
               </Grid>
             </Grid>
             <Grid
-			  item
-			  lg={6}
-			  md={8}
+              item
+              lg={6}
+              md={8}
               sm
-			  xs>
+              xs>
               <Card>
                 <CardContent>
                   {this.renderCharts()}
                 </CardContent>
               </Card>
               <br/>
-			  <Grid
-				container
-	            direction="row"
-	            alignItems="center"
-				justify="space-between"
-			  >
-				{this.renderForm()}
-			  </Grid>
+              <Grid
+                container
+                direction="row"
+                alignItems="center"
+                justify="space-between"
+              >
+                {this.renderForm()}
+              </Grid>
             </Grid>
           </Grid>
         ) : (
