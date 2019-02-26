@@ -17,7 +17,6 @@ import styles from './styles';
 import TableHead from './TableHead';
 
 /* eslint-disable */
-
 class EnhancedTable extends React.Component {
   state = {
     order: 'desc',
@@ -62,7 +61,7 @@ class EnhancedTable extends React.Component {
   };
 
   handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
+    this.setState({ rowsPerPage: Number(event.target.value)});
   };
 
   sortData(data, order, orderBy) {

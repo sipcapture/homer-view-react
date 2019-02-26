@@ -42,12 +42,12 @@ class Logs extends React.Component {
   showJson() {
     const { logs } = this.props;
 
+
     let info = logs.map((data, index)=> {
       return(
-        <div style={paddingBottom}>
+        <div style={paddingBottom} key={data.id}>
           <JsonViewer
-            json={data}
-            key={data.id}
+            json={data}     
           />
         </div>
       )
@@ -64,7 +64,7 @@ class Logs extends React.Component {
     const { isLoaded } = this.props;
 
     return (
-        <Grid>
+        <Grid style = {{paddingTop : 10}}>
           {isLoaded ? (
             <Paper>
               <div style={padding}>

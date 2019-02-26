@@ -13,10 +13,11 @@ const styles = theme => ({
   },
 });
 
+
 function DetailedMSG(props) {
   const { detailedData } = props;
   return (
-    <div>
+    <div style = {{padding: 20}}>
       {_.map(detailedData.raw.split('\n'), (el, i) => (
         <div key={uuidv1.v1()}>
           <Typography component="p" key={i}>
