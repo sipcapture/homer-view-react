@@ -13,7 +13,6 @@ const propTypes = {
   getFlowMessages: PropTypes.func,
 };
 
-
 function formatData(messages = []) {
   messages.sort(function(a, b) {
     return parseInt(a.micro_ts) - parseInt(b.micro_ts);

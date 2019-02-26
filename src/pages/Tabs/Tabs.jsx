@@ -6,6 +6,7 @@ import TabContainer from '../../components/TabContainer';
 import Messages from '../../containers/Messages';
 import QOS from '../../containers/QoS';
 import Logs from '../../containers/Logs';
+import Export from '../../containers/Export';
 import "./styles.scss";
 import Flow from "../../containers/Flow";
 
@@ -39,14 +40,14 @@ class Tabs extends PureComponent {
             <Tab label="Flow" />
             <Tab label="QoS" />
             <Tab label="Logs" />
+            <Tab label="Export" />
           </MaterialTabs>
         </AppBar>
         {value === 0 ? <Messages/> : null}
         {value === 1 ? <Flow/> : null}
         {value === 2 ? <QOS/> : null}
         {value === 3 ? <Logs/> : null}
-        {value === 4 ? <TabContainer>Loki</TabContainer> : null}
-        {value === 5 ? <TabContainer>Export</TabContainer> : null}
+        {value === 4 ? <Export/> : null}
       </div>
     );
   }

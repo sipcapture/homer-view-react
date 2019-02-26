@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import formatMessagesResponse from '../../normalazers/formatMessagesResponse';
 
 const logs = store => {
   return store.get("logs");
