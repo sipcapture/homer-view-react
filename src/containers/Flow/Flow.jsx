@@ -13,6 +13,7 @@ const propTypes = {
   getFlowMessages: PropTypes.func,
 };
 
+
 function formatData(messages = []) {
   messages.sort(function(a, b) {
     return parseInt(a.micro_ts) - parseInt(b.micro_ts);
@@ -51,7 +52,6 @@ class Flow extends React.Component {
     return (
       <div>
         {isLoaded ? (
-
           <div>
             <Mermaid
               id="test"

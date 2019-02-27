@@ -51,7 +51,7 @@ class Messages extends React.Component {
     const { messagesTab: { dataTable, dataHead }, isLoaded } = this.props;
     const { modalOpen, msgDetailedData } = this.state;
     return (
-      <div>
+      <div style = {{paddingTop : 10}}>
         {isLoaded ? (
           <Table
             tableBody={dataTable}

@@ -14,6 +14,10 @@ import { Rnd } from 'react-rnd';
 import DetailedMessage from './_compoents/DetailedMessage';
 import Details from './_compoents/Details';
 
+import AppBar from '@material-ui/core/AppBar';
+import MaterialTabs from '@material-ui/core/Tabs';
+
+
 const RootModalStyles = {};
 
 const style = {
@@ -25,8 +29,6 @@ const style = {
 };
 
 const swipeableViewsStyle = {
-  overflowX: 'hidden',
-  overflowY: 'scroll',
   overflow: 'hidden scroll',
   height: 'calc(100% - 104px)',
   marginTop: '104px',
@@ -36,7 +38,7 @@ const modalHeaderMenu = {
   position: 'absolute',
   top: '0',
   width: '100%',
-  padding: '12px',
+  padding: '12px 0',
   cursor: 'grabbing',
   borderBottom: '1px solid #cccccc',
 };
@@ -47,6 +49,10 @@ const modalTabsSelector = {
   top: '58px',
   width: '100%',
 };
+
+const marginLeft = {
+  marginLeft: '15px'
+}
 
 const DialogTitle = withStyles(theme => ({
   root: {
@@ -68,7 +74,7 @@ const DialogTitle = withStyles(theme => ({
       className='modal-title'
       style={modalHeaderMenu}
       disableTypography>
-      <Typography variant="h6">{children}</Typography>
+      <Typography variant="h6" style={marginLeft}>{children}</Typography>
       {onClose ? (
         <IconButton
           aria-label="Close"
@@ -112,7 +118,7 @@ class Modal extends React.Component {
       msgDetailedData,
       ...other
     } = this.props;
-
+    const { value } = this.state;
     return (
       <Rnd
         style={style}
@@ -136,29 +142,31 @@ class Modal extends React.Component {
           onClose={this.handleClose}>
           ID
         </DialogTitle>
-        <Tabs
-          style={modalTabsSelector}
-          value={this.state.value}
-          onChange={this.handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="fullWidth"
-        >
-          <Tab label="Message"/>
-          <Tab label="Details"/>
-        </Tabs>
-        <SwipeableViews
-          index={this.state.value}
-          onChangeIndex={this.handleChangeIndex}
-          style={swipeableViewsStyle}
-        >
-          <TabContainer key={uuidv1.v1()}>
-            <DetailedMessage detailedData={msgDetailedData}/>
-          </TabContainer>
-          <TabContainer key={uuidv1.v1()}>
-            <Details tableData={msgDetailedData}/>
-          </TabContainer>
-        </SwipeableViews>
+        <AppBar>
+          <MaterialTabs
+            style={modalTabsSelector}
+            value={this.state.value}
+            onChange={this.handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            variant="fullWidth"
+          >
+            <Tab label="Message"/>
+            <Tab label="Details"/>
+          </MaterialTabs>
+        </AppBar>
+          <div
+            index={this.state.value}
+            onChangeIndex={this.handleChangeIndex}
+            style={swipeableViewsStyle}
+          >
+            {value === 0 ? <TabContainer key={uuidv1.v1()} >
+                              <DetailedMessage detailedData={msgDetailedData}/>
+                            </TabContainer> : null}
+            {value === 1 ? <TabContainer key={uuidv1.v1()}>
+                              <Details tableData={msgDetailedData}/>
+                            </TabContainer> : null}
+          </div>
       </Rnd>
     );
   }

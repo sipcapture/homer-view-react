@@ -18,6 +18,8 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import Checkbox from "@material-ui/core/Checkbox";
 import LoadingIndicator from "components/LoadingIndicator";
 
+import { styler } from "react-timeseries-charts";
+
 import "./styles.css";
 import _ from "lodash";
 
@@ -45,6 +47,7 @@ const propTypes = {
   qosTab: PropTypes.object,
   getQOSData: PropTypes.func,
   toggleSelection: PropTypes.func,
+  toggleSidSelection: PropTypes.func,
   data: PropTypes.object,
   graphs: PropTypes.object
 };
@@ -75,7 +78,7 @@ const statBlockTitle = {
 
 const statBlockValue = {
   textAlign: "center",
-  padding: "50px 0",
+  padding: "20px 0",
   fontSize: "16px"
 };
 
@@ -139,12 +142,31 @@ class QOS extends React.Component {
   handleInputChange(sid, option, event) {
     const target = event.target;
 
+    console.log(sid, option, event.target);
+
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
     this.props.toggleSelection({
       sid,
       option
+    });
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleSidChange(sid, event) {
+    const target = event.target;
+
+    console.log(sid , event.target);
+
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    this.props.toggleSidSelection({
+      sid,
     });
 
     this.setState({
@@ -165,6 +187,7 @@ class QOS extends React.Component {
         let chart = {
           name: key + " " + graphs[key].values[stat].key,
           selected: graphs[key].values[stat].selected,
+          color: graphs[key].values[stat].color,
           series: new TimeSeries({
             name: key + " " + graphs[key].values[stat].key,
             columns: ["time", "value"],
@@ -178,9 +201,15 @@ class QOS extends React.Component {
 
     const lineCharts = chartData.map((chart) => {
       if (chart.selected && chart.series) {
+
+        const style = styler([
+          { key: "value", color: chart.color, width: 3 }
+        ]);
+
         return (
           <LineChart
-            key={chart.name}
+            key="value"
+            columns={["value"]}
             axis="value"
             series={chart.series}
             style={style}
@@ -207,17 +236,14 @@ class QOS extends React.Component {
 
   renderCharts() {
     const { reportData } = this.props.data;
+    const { graphs } = this.props;
 
-    let maxValue = 15000;
-
+    let maxValue = 0;
     let packetsPoints = [];
 
     if (reportData[0] && reportData[0].values) {
       reportData[0].values.forEach((data) => {
         packetsPoints.push([data.x, data.y]);
-        if (data.y > maxValue) {
-          maxValue = data.y;
-        }
       });
     }
 
@@ -226,6 +252,17 @@ class QOS extends React.Component {
       columns: ["time", "value"],
       points: packetsPoints
     });
+
+    for (let key in graphs) {
+
+      for (let stat in graphs[key].values) {
+        graphs[key].values[stat].values.forEach((value) => {
+          if (graphs[key].values[stat].selected && value[1] > maxValue) {
+            maxValue = value[1]
+          }
+        })
+      }
+    }
 
     return (
       <Resizable>
@@ -261,6 +298,7 @@ class QOS extends React.Component {
       let newData = {
         label: graphs[key].label,
         sid: key,
+        selected: graphs[key].selected,
         values: []
       };
       newData.values = graphs[key].values;
@@ -274,7 +312,17 @@ class QOS extends React.Component {
           style={widthLegend}>
           <CardContent>
             <FormControl>
-              <FormLabel component="legend">{item.label}</FormLabel>
+              <FormLabel component="legend">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={item.selected}
+                      onChange={(e) => this.handleSidChange(item.sid, e)}
+                      name={item.label}/>
+                  }
+                  label={item.label}
+                />
+              </FormLabel>
               <FormGroup>
                 {
                   Object.keys(item.values).map((option, i) => {
@@ -282,10 +330,24 @@ class QOS extends React.Component {
                       <FormControlLabel
                         key={option}
                         control={
-                          <Checkbox
-                            checked={item.values[option].selected}
-                            onChange={(e) => this.handleInputChange(item.sid, option, e)}
-                            name={option}/>
+                          <div>
+                            <Checkbox
+                              checked={item.values[option].selected}
+                              onChange={(e) => this.handleInputChange(item.sid, option, e)}
+                              name={option}/>
+                            <div
+                              style={{
+                                background: item.values[option].color,
+                                borderRadius: "4px",
+                                display: "inline-block",
+                                height: 3,
+                                marginRight: 2,
+                                verticalAlign: "middle",
+                                width: 20
+                              }}
+                              >
+                            </div>
+                          </div>
                         }
                         label={option}
                       />
@@ -354,18 +416,6 @@ class QOS extends React.Component {
             spacing={24}>
             <Grid
               item
-              lg={4}
-              md={4}
-              sm={12}
-              xs={12}>
-              <Grid
-                container
-                spacing={24}>
-                {this.renderStats()}
-              </Grid>
-            </Grid>
-            <Grid
-              item
               lg={8}
               md={8}
               sm
@@ -383,6 +433,18 @@ class QOS extends React.Component {
                 justify="space-between"
               >
                 {this.renderForm()}
+              </Grid>
+            </Grid>
+            <Grid
+              item
+              lg={4}
+              md={4}
+              sm={12}
+              xs={12}>
+              <Grid
+                container
+                spacing={24}>
+                {this.renderStats()}
               </Grid>
             </Grid>
           </Grid>
