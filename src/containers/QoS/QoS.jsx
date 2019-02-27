@@ -201,11 +201,18 @@ class QOS extends React.Component {
 
     const lineCharts = chartData.map((chart) => {
       if (chart.selected && chart.series) {
+
+        const style = styler([
+          { key: "value", color: chart.color, width: 3 }
+        ]);
+
         return (
           <LineChart
-            key={chart.name}
+            key="value"
+            columns={["value"]}
             axis="value"
             series={chart.series}
+            style={style}
           />
         );
       } else {
@@ -256,8 +263,6 @@ class QOS extends React.Component {
         })
       }
     }
-
-    console.log(packetsSeries.range())
 
     return (
       <Resizable>
@@ -330,14 +335,18 @@ class QOS extends React.Component {
                               checked={item.values[option].selected}
                               onChange={(e) => this.handleInputChange(item.sid, option, e)}
                               name={option}/>
-                            {/*<div*/}
-                              {/*style={{*/}
-                                {/*color: item.values[option].color,*/}
-                                {/*display: 'inline-block'*/}
-                              {/*}}*/}
-                              {/*>*/}
-                              {/*Color*/}
-                            {/*</div>*/}
+                            <div
+                              style={{
+                                background: item.values[option].color,
+                                borderRadius: "4px",
+                                display: "inline-block",
+                                height: 3,
+                                marginRight: 2,
+                                verticalAlign: "middle",
+                                width: 20
+                              }}
+                              >
+                            </div>
                           </div>
                         }
                         label={option}
