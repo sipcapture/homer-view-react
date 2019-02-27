@@ -1,3 +1,5 @@
+import config from "../config";
+
 import axios from "axios";
 
 function getAllUrlParams(url) {
@@ -67,10 +69,8 @@ function getAllUrlParams(url) {
 
 export default function fetchData(params) {
   const { url } = params;
-
+  const { apiUrl } = config;
   const { from, to, callid } = getAllUrlParams(window.location.href);
-
-  console.log(callid)
 
   const ids = typeof callid === "object" ? callid : [callid];
 
@@ -110,5 +110,5 @@ export default function fetchData(params) {
     }
   }
 
-  return axios.post(url, payload);
+  return axios.post(apiUrl + url, payload);
 }

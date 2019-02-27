@@ -52,7 +52,6 @@ class Flow extends React.Component {
     return (
       <div>
         {isLoaded ? (
-
           <div>
             <Mermaid
               id="test"

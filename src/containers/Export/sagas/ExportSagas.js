@@ -6,7 +6,7 @@ export function* getExportPcapDataSaga() {
   try {
 
     const response = yield call(fetchData, {
-      url: "/api/v3/export/call/messages/pcap"
+      url: "export/call/messages/pcap"
     });
     const pcap = response.data;
     yield put(getExportPcapAsync.success(pcap));
@@ -18,7 +18,7 @@ export function* getExportPcapDataSaga() {
 export function* getExportTxtDataSaga() {
   try {
     const response = yield call(fetchData, {
-      url: "/api/v3/export/call/messages/text"
+      url: "export/call/messages/text"
     });
     const text = response.data;
     yield put(getExportTxtAsync.success(text));
