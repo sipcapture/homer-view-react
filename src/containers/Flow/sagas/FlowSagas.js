@@ -5,7 +5,7 @@ import fetchData from "../../../utils/api";
 export function* getFlowDataSaga() {
   try {
     const response = yield call(fetchData, {
-      url: "/api/v3/call/transaction"
+      url: "call/transaction"
     });
     const flow = response.data;
     yield put(getFlowAsync.success(flow));

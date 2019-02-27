@@ -5,7 +5,7 @@ import fetchData from "../../../utils/api";
 export function* getLogsDataSaga() {
   try {
     const response = yield call(fetchData, {
-      url: "/api/v3/call/report/log"
+      url: "call/report/log"
     });
     const logs = response.data;
     yield put(getLogsAsync.success(logs));

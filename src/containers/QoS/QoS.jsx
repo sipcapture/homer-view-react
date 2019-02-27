@@ -78,7 +78,7 @@ const statBlockTitle = {
 
 const statBlockValue = {
   textAlign: "center",
-  padding: "50px 0",
+  padding: "20px 0",
   fontSize: "16px"
 };
 
@@ -416,18 +416,6 @@ class QOS extends React.Component {
             spacing={24}>
             <Grid
               item
-              lg={4}
-              md={4}
-              sm={12}
-              xs={12}>
-              <Grid
-                container
-                spacing={24}>
-                {this.renderStats()}
-              </Grid>
-            </Grid>
-            <Grid
-              item
               lg={8}
               md={8}
               sm
@@ -445,6 +433,18 @@ class QOS extends React.Component {
                 justify="space-between"
               >
                 {this.renderForm()}
+              </Grid>
+            </Grid>
+            <Grid
+              item
+              lg={4}
+              md={4}
+              sm={12}
+              xs={12}>
+              <Grid
+                container
+                spacing={24}>
+                {this.renderStats()}
               </Grid>
             </Grid>
           </Grid>

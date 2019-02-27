@@ -5,7 +5,7 @@ import fetchData from "../../../utils/api"
 export function* getQOSDataSaga() {
   try {
     const response = yield call(fetchData, {
-      url: "/api/v3/call/report/qos"
+      url: "call/report/qos"
     });
     const qosdata = response.data;
     yield put(getQOSAsync.success(qosdata));
