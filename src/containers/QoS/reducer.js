@@ -33,7 +33,10 @@ const handleToggleSelection = (state, { payload }) => {
 };
 
 const handleSidSelection = (state, { payload }) => {
-  state.graphs[payload.sid].values[payload.option].selected = !state.graphs[payload.sid].values[payload.option].selected;
+  state.graphs[payload.sid].selected = !state.graphs[payload.sid].selected;
+  for (let key in state.graphs[payload.sid].values) {
+    state.graphs[payload.sid].values[key].selected = state.graphs[payload.sid].selected;
+  }
   return Object.assign({}, state);
 };
 

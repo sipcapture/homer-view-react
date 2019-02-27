@@ -128,8 +128,8 @@ export default (rawData) => {
       }
     });
     _aggregateAllStats();
-    const bySid = createMultipleData(reportData)
-    return { _reports, _labels, _stats, reportData, bySid };
+    const { bySid, maxValue  } = createMultipleData(reportData)
+    return { _reports, _labels, _stats, reportData, bySid,  maxValue };
   } catch (err) {
     this.$log.error(
       ['CallDetailQos'],
@@ -140,6 +140,7 @@ export default (rawData) => {
 
 function createMultipleData(reportData) {
   let result = {};
+  let maxValue = 0;
 
   reportData.forEach((data) => {
 
@@ -148,6 +149,7 @@ function createMultipleData(reportData) {
       } else {
         result[value.sid] = {
           key: value.sid,
+          selected: true,
           label: value.label,
           values: {}
         };
@@ -160,15 +162,30 @@ function createMultipleData(reportData) {
         result[value.sid].values[data.key] = {
           selected: true,
           key: data.key,
-          values: [[value.x, value.y]]
+          values: [[value.x, value.y]],
+          color: getRandomColor()
         }
+      }
+
+      if (value.y > maxValue) {
+        maxValue = value.y;
       }
     });
 
   });
 
-  return result;
+  return { bySid: result, maxValue };
 }
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 
 function _aggregateAllStats() {
   const banlist = [];

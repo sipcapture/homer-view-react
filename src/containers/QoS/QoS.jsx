@@ -18,6 +18,8 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import Checkbox from "@material-ui/core/Checkbox";
 import LoadingIndicator from "components/LoadingIndicator";
 
+import { styler } from "react-timeseries-charts";
+
 import "./styles.css";
 import _ from "lodash";
 
@@ -45,6 +47,7 @@ const propTypes = {
   qosTab: PropTypes.object,
   getQOSData: PropTypes.func,
   toggleSelection: PropTypes.func,
+  toggleSidSelection: PropTypes.func,
   data: PropTypes.object,
   graphs: PropTypes.object
 };
@@ -154,6 +157,23 @@ class QOS extends React.Component {
     });
   }
 
+  handleSidChange(sid, event) {
+    const target = event.target;
+
+    console.log(sid , event.target);
+
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    this.props.toggleSidSelection({
+      sid,
+    });
+
+    this.setState({
+      [name]: value
+    });
+  }
+
 
   renderLineList() {
     const { graphs } = this.props;
@@ -167,6 +187,7 @@ class QOS extends React.Component {
         let chart = {
           name: key + " " + graphs[key].values[stat].key,
           selected: graphs[key].values[stat].selected,
+          color: graphs[key].values[stat].color,
           series: new TimeSeries({
             name: key + " " + graphs[key].values[stat].key,
             columns: ["time", "value"],
@@ -185,7 +206,6 @@ class QOS extends React.Component {
             key={chart.name}
             axis="value"
             series={chart.series}
-            style={style}
           />
         );
       } else {
@@ -209,17 +229,14 @@ class QOS extends React.Component {
 
   renderCharts() {
     const { reportData } = this.props.data;
+    const { graphs } = this.props;
 
-    let maxValue = 15000;
-
+    let maxValue = 0;
     let packetsPoints = [];
 
     if (reportData[0] && reportData[0].values) {
       reportData[0].values.forEach((data) => {
         packetsPoints.push([data.x, data.y]);
-        if (data.y > maxValue) {
-          maxValue = data.y;
-        }
       });
     }
 
@@ -228,6 +245,19 @@ class QOS extends React.Component {
       columns: ["time", "value"],
       points: packetsPoints
     });
+
+    for (let key in graphs) {
+
+      for (let stat in graphs[key].values) {
+        graphs[key].values[stat].values.forEach((value) => {
+          if (graphs[key].values[stat].selected && value[1] > maxValue) {
+            maxValue = value[1]
+          }
+        })
+      }
+    }
+
+    console.log(packetsSeries.range())
 
     return (
       <Resizable>
@@ -263,6 +293,7 @@ class QOS extends React.Component {
       let newData = {
         label: graphs[key].label,
         sid: key,
+        selected: graphs[key].selected,
         values: []
       };
       newData.values = graphs[key].values;
@@ -276,7 +307,17 @@ class QOS extends React.Component {
           style={widthLegend}>
           <CardContent>
             <FormControl>
-              <FormLabel component="legend">{item.label}</FormLabel>
+              <FormLabel component="legend">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={item.selected}
+                      onChange={(e) => this.handleSidChange(item.sid, e)}
+                      name={item.label}/>
+                  }
+                  label={item.label}
+                />
+              </FormLabel>
               <FormGroup>
                 {
                   Object.keys(item.values).map((option, i) => {
@@ -284,10 +325,20 @@ class QOS extends React.Component {
                       <FormControlLabel
                         key={option}
                         control={
-                          <Checkbox
-                            checked={item.values[option].selected}
-                            onChange={(e) => this.handleInputChange(item.sid, option, e)}
-                            name={option}/>
+                          <div>
+                            <Checkbox
+                              checked={item.values[option].selected}
+                              onChange={(e) => this.handleInputChange(item.sid, option, e)}
+                              name={option}/>
+                            {/*<div*/}
+                              {/*style={{*/}
+                                {/*color: item.values[option].color,*/}
+                                {/*display: 'inline-block'*/}
+                              {/*}}*/}
+                              {/*>*/}
+                              {/*Color*/}
+                            {/*</div>*/}
+                          </div>
                         }
                         label={option}
                       />
