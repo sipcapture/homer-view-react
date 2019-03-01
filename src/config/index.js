@@ -5,11 +5,11 @@ const configs = {
   DEV: {
     env: "DEV",
     debugging: DEBUGGING,
-    serverUrl: "127.0.0.1",
-    endpoint(suffix) {
-      return `/api/v1${suffix}`;
-    }
+    serverUrl: "http://localhost:8080/api/v3/"
+  },
+  UI: {
+    availableTabs: ["messages", "flow", "qos", "logs", "export"]
   }
 };
 
-export default configs[ENV];
+export default configs;

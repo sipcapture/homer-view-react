@@ -11,13 +11,14 @@ import "./styles.scss";
 import Flow from "../../containers/Flow";
 
 import getAllUrlParams from "../../utils/urlParams";
+import config from "../../config";
 
 const bc = "tabs";
 
 class Tabs extends PureComponent {
   state = {
     value: "messages",
-    availableTabs: ["messages", "flow", "qos", "logs", "export"]
+    availableTabs: config['UI'].availableTabs
   };
 
   componentDidMount(): void {
@@ -42,6 +43,18 @@ class Tabs extends PureComponent {
     this.setState({ value });
   };
 
+  renderAvailableTabs() {
+    const tabs = this.state.availableTabs.map((tabName) => {
+      if (this.isShowTab(tabName)) {
+        return (<Tab value={tabName} label={tabName}/>)
+      }
+
+      return null
+    });
+
+    return tabs;
+  }
+
   render() {
     const { classes } = this.props;
     const { value } = this.state;
@@ -57,15 +70,7 @@ class Tabs extends PureComponent {
             indicatorColor="primary"
             textColor="primary"
           >
-            {this.isShowTab("messages") ? (
-              <Tab value="messages" label="Messages" />
-            ) : null}
-            {this.isShowTab("flow") ? <Tab value="flow" label="Flow" /> : null}
-            {this.isShowTab("qos") ? <Tab value="qos" label="QoS" /> : null}
-            {this.isShowTab("logs") ? <Tab value="logs" label="Logs" /> : null}
-            {this.isShowTab("export") ? (
-              <Tab value="export" label="Export" />
-            ) : null}
+            {this.renderAvailableTabs()}
           </MaterialTabs>
         </AppBar>
         {value === "messages" ? <Messages /> : null}

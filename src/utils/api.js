@@ -6,7 +6,7 @@ import axios from "axios";
 
 export default function fetchData(params) {
   const { url } = params;
-  const { apiUrl } = config;
+  const { serverUrl } = config['DEV'];
   const { from, to, callid } = getAllUrlParams(window.location.href);
 
   const ids = typeof callid === "object" ? callid : [callid];
@@ -42,5 +42,5 @@ export default function fetchData(params) {
     }
   };
 
-  return axios.post(apiUrl + url, payload);
+  return axios.post(serverUrl + url, payload);
 }
