@@ -352,8 +352,6 @@ class QOS extends React.Component {
   renderStats() {
     const { _stats } = this.props.data;
 
-    debugger;
-
     const statsList = [];
 
     for (let key in _stats) {
