@@ -17,4 +17,3 @@ export function* getLogsDataSaga() {
 export default function* handleGetDocumentSaga() {
   yield takeEvery(getLogsAsync.request.toString(), getLogsDataSaga);
 }
-

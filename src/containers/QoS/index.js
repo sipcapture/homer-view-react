@@ -1,6 +1,11 @@
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { getQOSData, getGraphsData, isQOSLoaded, makeSelectQOSTab } from "./selectors";
+import {
+  getQOSData,
+  getGraphsData,
+  isQOSLoaded,
+  makeSelectQOSTab
+} from "./selectors";
 import QoS from "./QoS";
 import { getQOSAsync, toggleSelection, toggleSidSelection } from "./actions";
 
@@ -17,9 +22,7 @@ const mapDispatchToProps = {
   toggleSidSelection
 };
 
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(QoS);
-

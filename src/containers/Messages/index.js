@@ -1,6 +1,10 @@
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { makeSelectMessagesTab, isMessagesLoaded, makeSelectMessages } from "./selectors";
+import {
+  makeSelectMessagesTab,
+  isMessagesLoaded,
+  makeSelectMessages
+} from "./selectors";
 import Messages from "./Messages";
 import { getMessagesAsync } from "./actions";
 
@@ -14,9 +18,7 @@ const mapDispatchToProps = {
   getTransactionMessages: getMessagesAsync.request
 };
 
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Messages);
-

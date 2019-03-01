@@ -1,22 +1,22 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import React from "react";
+import { mount } from "enzyme";
 
-import Circle from '../Circle';
+import Circle from "../Circle";
 
-describe('<Circle />', () => {
-  it('should render an <div> tag', () => {
+describe("<Circle />", () => {
+  it("should render an <div> tag", () => {
     const renderedComponent = mount(<Circle />);
-    expect(renderedComponent.find('div')).toHaveLength(1);
+    expect(renderedComponent.find("div")).toHaveLength(1);
   });
 
-  it('should have a className attribute', () => {
+  it("should have a className attribute", () => {
     const renderedComponent = mount(<Circle />);
-    expect(renderedComponent.find('div').prop('className')).toBeDefined();
+    expect(renderedComponent.find("div").prop("className")).toBeDefined();
   });
 
-  it('should not adopt attributes', () => {
-    const id = 'test';
+  it("should not adopt attributes", () => {
+    const id = "test";
     const renderedComponent = mount(<Circle id={id} />);
-    expect(renderedComponent.find('div').prop('id')).toBeUndefined();
+    expect(renderedComponent.find("div").prop("id")).toBeUndefined();
   });
 });

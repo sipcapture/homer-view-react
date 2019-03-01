@@ -2,9 +2,9 @@
  * Test injectors
  */
 
-import checkStore from '../checkStore';
+import checkStore from "../checkStore";
 
-describe('checkStore', () => {
+describe("checkStore", () => {
   let store;
 
   beforeEach(() => {
@@ -15,15 +15,15 @@ describe('checkStore', () => {
       replaceReducer: () => {},
       runSaga: () => {},
       injectedReducers: {},
-      injectedSagas: {},
+      injectedSagas: {}
     };
   });
 
-  it('should not throw if passed valid store shape', () => {
+  it("should not throw if passed valid store shape", () => {
     expect(() => checkStore(store)).not.toThrow();
   });
 
-  it('should throw if passed invalid store shape', () => {
+  it("should throw if passed invalid store shape", () => {
     expect(() => checkStore({})).toThrow();
     expect(() => checkStore({ ...store, injectedSagas: null })).toThrow();
     expect(() => checkStore({ ...store, injectedReducers: null })).toThrow();

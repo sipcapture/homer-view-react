@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector } from "reselect";
 
 const exports = store => {
   return store.get("exports");
@@ -9,12 +9,12 @@ export const makeSelectExport = createSelector(
   exp => exp
 );
 
-export const makeSelectTxt= createSelector(
+export const makeSelectTxt = createSelector(
   exports,
   exp => exp.txt
 );
 
-export const makeSelectPcap= createSelector(
+export const makeSelectPcap = createSelector(
   exports,
   exp => exp.pcap
 );

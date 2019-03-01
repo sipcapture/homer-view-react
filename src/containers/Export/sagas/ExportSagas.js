@@ -4,7 +4,6 @@ import fetchData from "../../../utils/api";
 
 export function* getExportPcapDataSaga() {
   try {
-
     const response = yield call(fetchData, {
       url: "export/call/messages/pcap"
     });
@@ -31,4 +30,3 @@ export default function* handleGetDocumentSaga() {
   yield takeEvery(getExportPcapAsync.request.toString(), getExportPcapDataSaga);
   yield takeEvery(getExportTxtAsync.request.toString(), getExportTxtDataSaga);
 }
-
