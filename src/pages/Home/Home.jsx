@@ -16,9 +16,6 @@ class Home extends React.PureComponent<Props, State> {
   static displayName = "Home";
 
   render() {
-
-
-
     let data = [
       ["2017-01-24T00:00", 0.01],
       ["2017-01-24T01:00", 0.13],
@@ -67,7 +64,7 @@ class Home extends React.PureComponent<Props, State> {
           <div className="row">
             <div className="col-md-12">
               <Resizable>
-                <ChartContainer timeRange={series.range()} >
+                <ChartContainer timeRange={series.range()}>
                   <ChartRow height="150">
                     <YAxis
                       id="rain"

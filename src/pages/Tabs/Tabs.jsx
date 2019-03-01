@@ -1,25 +1,68 @@
 import React, { PureComponent } from "react";
-import AppBar from '@material-ui/core/AppBar';
-import MaterialTabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import TabContainer from '../../components/TabContainer';
-import Messages from '../../containers/Messages';
-import QOS from '../../containers/QoS';
-import Logs from '../../containers/Logs';
-import Export from '../../containers/Export';
+import AppBar from "@material-ui/core/AppBar";
+import MaterialTabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import TabContainer from "../../components/TabContainer";
+import Messages from "../../containers/Messages";
+import QOS from "../../containers/QoS";
+import Logs from "../../containers/Logs";
+import Export from "../../containers/Export";
 import "./styles.scss";
 import Flow from "../../containers/Flow";
+
+import getAllUrlParams from "../../utils/urlParams";
+import config from "../../config";
 
 const bc = "tabs";
 
 class Tabs extends PureComponent {
   state = {
-    value: 0,
+    value: "messages",
+    availableTabs: config['UI'].availableTabs
   };
+
+  componentDidMount(): void {
+    this.detectTabs();
+  }
+
+  detectTabs() {
+    let tabs = getAllUrlParams()["tabs"];
+
+    if (tabs) {
+      tabs = tabs
+        .split(',')
+        .map((tabName) => {
+          return tabName.trim().toLowerCase();
+        })
+        .filter((tabName) => {
+          return tabName.length
+        });
+
+      this.setState({
+        availableTabs: tabs
+      });
+    }
+  }
+
+  isShowTab(tabName) {
+    return this.state.availableTabs.indexOf(tabName) !== -1;
+  }
 
   handleChange = (event, value) => {
     this.setState({ value });
   };
+
+  renderAvailableTabs() {
+    const tabs = this.state.availableTabs.map((tabName) => {
+      if (this.isShowTab(tabName)) {
+        return (<Tab value={tabName} label={tabName}/>)
+      }
+
+      return null
+    });
+
+    return tabs;
+  }
 
   render() {
     const { classes } = this.props;
@@ -36,18 +79,14 @@ class Tabs extends PureComponent {
             indicatorColor="primary"
             textColor="primary"
           >
-            <Tab label="Messages" />
-            <Tab label="Flow" />
-            <Tab label="QoS" />
-            <Tab label="Logs" />
-            <Tab label="Export" />
+            {this.renderAvailableTabs()}
           </MaterialTabs>
         </AppBar>
-        {value === 0 ? <Messages/> : null}
-        {value === 1 ? <Flow/> : null}
-        {value === 2 ? <QOS/> : null}
-        {value === 3 ? <Logs/> : null}
-        {value === 4 ? <Export/> : null}
+        {value === "messages" ? <Messages /> : null}
+        {value === "flow" ? <Flow /> : null}
+        {value === "qos" ? <QOS /> : null}
+        {value === "logs" ? <Logs /> : null}
+        {value === "export" ? <Export /> : null}
       </div>
     );
   }

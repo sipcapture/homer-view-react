@@ -2,29 +2,46 @@ import { handleActions } from "redux-actions";
 import { getExportPcapAsync, getExportTxtAsync } from "./actions";
 import { Record } from "immutable";
 
-
 const initialState = {
   pcap: "",
   txt: "",
   loading: false,
   loaded: false,
-  error: null,
+  error: null
 };
 
 const handleGetExportTxtAsyncSuccess = (state, { payload }) => {
-  return Object.assign({}, ...state, { loading: false, loaded: true, txt: payload, pcap: state.pcap });
+  return Object.assign({}, ...state, {
+    loading: false,
+    loaded: true,
+    txt: payload,
+    pcap: state.pcap
+  });
 };
 
 const handleGetExportPcapAsyncSuccess = (state, { payload }) => {
-  return Object.assign({}, ...state, { loading: false, loaded: true, pcap: payload, txt: state.txt });
+  return Object.assign({}, ...state, {
+    loading: false,
+    loaded: true,
+    pcap: payload,
+    txt: state.txt
+  });
 };
 
 const handleGetExportTxtAsyncFail = (state, { payload }) => {
-  return Object.assign({}, ...state, { loading: false, loaded: false, error: payload.data });
+  return Object.assign({}, ...state, {
+    loading: false,
+    loaded: false,
+    error: payload.data
+  });
 };
 
 const handleGetExportPcapAsyncFail = (state, { payload }) => {
-  return Object.assign({}, ...state, { loading: false, loaded: false, error: payload.data });
+  return Object.assign({}, ...state, {
+    loading: false,
+    loaded: false,
+    error: payload.data
+  });
 };
 
 export default handleActions(

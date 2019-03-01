@@ -56,6 +56,8 @@ const chartContainer = {
   padding: "50px"
 };
 
+
+
 const style = {
   value: {
     stroke: "#a02c2c",
@@ -67,19 +69,21 @@ const style = {
   }
 };
 
-const statBlock = {};
+const statBlock = {
+
+};
 
 const statBlockTitle = {
   textAlign: "center",
-  padding: "25px 0",
-  minHeight: "35px",
+  padding: "6px 0",
   fontSize: "12px"
 };
 
 const statBlockValue = {
   textAlign: "center",
-  padding: "20px 0",
-  fontSize: "16px"
+  padding: "5px 0 10px 0px",
+  fontSize: "18px",
+  fontWeight: "bold"
 };
 
 const widthLegend = {
@@ -93,22 +97,12 @@ class CrossHairs extends React.Component {
     if (!_.isNull(x) && !_.isNull(y)) {
       return (
         <g>
-          <line
-            style={style}
-            x1={0}
-            y1={y}
-            x2={this.props.width}
-            y2={y}/>
-          <line
-            style={style}
-            x1={x}
-            y1={0}
-            x2={x}
-            y2={this.props.height}/>
+          <line style={style} x1={0} y1={y} x2={this.props.width} y2={y} />
+          <line style={style} x1={x} y1={0} x2={x} y2={this.props.height} />
         </g>
       );
     } else {
-      return <g/>;
+      return <g />;
     }
   }
 }
@@ -141,9 +135,6 @@ class QOS extends React.Component {
 
   handleInputChange(sid, option, event) {
     const target = event.target;
-
-    console.log(sid, option, event.target);
-
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
@@ -159,14 +150,11 @@ class QOS extends React.Component {
 
   handleSidChange(sid, event) {
     const target = event.target;
-
-    console.log(sid , event.target);
-
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
     this.props.toggleSidSelection({
-      sid,
+      sid
     });
 
     this.setState({
@@ -174,16 +162,13 @@ class QOS extends React.Component {
     });
   }
 
-
   renderLineList() {
     const { graphs } = this.props;
 
     let chartData = [];
 
     for (let key in graphs) {
-
       for (let stat in graphs[key].values) {
-
         let chart = {
           name: key + " " + graphs[key].values[stat].key,
           selected: graphs[key].values[stat].selected,
@@ -199,12 +184,9 @@ class QOS extends React.Component {
       }
     }
 
-    const lineCharts = chartData.map((chart) => {
+    const lineCharts = chartData.map(chart => {
       if (chart.selected && chart.series) {
-
-        const style = styler([
-          { key: "value", color: chart.color, width: 3 }
-        ]);
+        const style = styler([{ key: "value", color: chart.color, width: 3 }]);
 
         return (
           <LineChart
@@ -216,19 +198,13 @@ class QOS extends React.Component {
           />
         );
       } else {
-        return (
-          <Baseline
-            axis="value"
-            visible={false}/>
-        );
+        return <Baseline axis="value" visible={false} />;
       }
     });
 
     return (
       <Charts>
-        <CrossHairs
-          x={this.state.x}
-          y={this.state.y}/>
+        <CrossHairs x={this.state.x} y={this.state.y} />
         {lineCharts}
       </Charts>
     );
@@ -242,7 +218,7 @@ class QOS extends React.Component {
     let packetsPoints = [];
 
     if (reportData[0] && reportData[0].values) {
-      reportData[0].values.forEach((data) => {
+      reportData[0].values.forEach(data => {
         packetsPoints.push([data.x, data.y]);
       });
     }
@@ -254,20 +230,18 @@ class QOS extends React.Component {
     });
 
     for (let key in graphs) {
-
       for (let stat in graphs[key].values) {
-        graphs[key].values[stat].values.forEach((value) => {
+        graphs[key].values[stat].values.forEach(value => {
           if (graphs[key].values[stat].selected && value[1] > maxValue) {
-            maxValue = value[1]
+            maxValue = value[1];
           }
-        })
+        });
       }
     }
 
     return (
       <Resizable>
         <ChartContainer
-          title="QoS"
           titleStyle={{ fill: "#555", fontWeight: 500 }}
           timeRange={packetsSeries.range()}
           format="%H:%M:%S"
@@ -276,11 +250,10 @@ class QOS extends React.Component {
           <ChartRow height="300">
             <YAxis
               id="value"
-              label="Count"
               min={0}
               max={maxValue}
               showGrid={true}
-              width="60"
+              width="20"
             />
             {this.renderLineList()}
           </ChartRow>
@@ -307,9 +280,7 @@ class QOS extends React.Component {
 
     const renderData = graphsForms.map((item, index) => {
       return (
-        <Card
-          key={index}
-          style={widthLegend}>
+        <Card key={index} style={widthLegend}>
           <CardContent>
             <FormControl>
               <FormLabel component="legend">
@@ -317,43 +288,44 @@ class QOS extends React.Component {
                   control={
                     <Checkbox
                       checked={item.selected}
-                      onChange={(e) => this.handleSidChange(item.sid, e)}
-                      name={item.label}/>
+                      onChange={e => this.handleSidChange(item.sid, e)}
+                      name={item.label}
+                    />
                   }
                   label={item.label}
                 />
               </FormLabel>
               <FormGroup>
-                {
-                  Object.keys(item.values).map((option, i) => {
-                    return (
-                      <FormControlLabel
-                        key={option}
-                        control={
-                          <div>
-                            <Checkbox
-                              checked={item.values[option].selected}
-                              onChange={(e) => this.handleInputChange(item.sid, option, e)}
-                              name={option}/>
-                            <div
-                              style={{
-                                background: item.values[option].color,
-                                borderRadius: "4px",
-                                display: "inline-block",
-                                height: 3,
-                                marginRight: 2,
-                                verticalAlign: "middle",
-                                width: 20
-                              }}
-                              >
-                            </div>
-                          </div>
-                        }
-                        label={option}
-                      />
-                    );
-                  })
-                }
+                {Object.keys(item.values).map((option, i) => {
+                  return (
+                    <FormControlLabel
+                      key={option}
+                      control={
+                        <div>
+                          <Checkbox
+                            checked={item.values[option].selected}
+                            onChange={e =>
+                              this.handleInputChange(item.sid, option, e)
+                            }
+                            name={option}
+                          />
+                          <div
+                            style={{
+                              background: item.values[option].color,
+                              borderRadius: "4px",
+                              display: "inline-block",
+                              height: 3,
+                              marginRight: 2,
+                              verticalAlign: "middle",
+                              width: 20
+                            }}
+                          />
+                        </div>
+                      }
+                      label={option}
+                    />
+                  );
+                })}
               </FormGroup>
             </FormControl>
           </CardContent>
@@ -361,7 +333,31 @@ class QOS extends React.Component {
       );
     });
 
-    return (renderData);
+    return renderData;
+  }
+
+  getStatColor(key) {
+    let color = "#e8eaf6";
+
+    if (key.toLowerCase()  === "packets") {
+      color = "#ede7f6"
+    }
+
+    if (key.toLowerCase()  === "octets") {
+      color = "#e1f5fe"
+    }
+
+    if (key.toLowerCase()  === "ia_jitter") {
+      color = "#e0f2f1"
+    }
+
+    if (key.toLowerCase() === "highest_seq_no") {
+      color = "#f3e5f5"
+    }
+
+    return {
+      backgroundColor: color
+    };
   }
 
   renderStats() {
@@ -374,30 +370,22 @@ class QOS extends React.Component {
         statsList.push({
           parentKey: key,
           key: statKey,
-          value: _stats[key][statKey]
+          value: _stats[key][statKey],
         });
       }
     }
 
-
-    const listForRender = statsList.map((stat) => {
+    const listForRender = statsList.map(stat => {
       return (
-        <Grid
-          key={stat.parentKey + stat.key}
-          item
-          lg={4}
-          md={4}
-          sm={4}
-          xs={4}>
-          <Paper style={statBlock}>
+        <Grid key={stat.parentKey + stat.key} item lg={4} md={4} sm={4} xs={4}>
+          <Paper style={this.getStatColor(stat.parentKey)}>
             <Typography style={statBlockTitle}>
               {`${stat.key} ${stat.parentKey.toUpperCase()}`}
             </Typography>
-            <Typography style={statBlockValue}>
-              {`${stat.value}`}
-            </Typography>
+            <Typography style={statBlockValue}>{`${stat.value}`}</Typography>
           </Paper>
-        </Grid>);
+        </Grid>
+      );
     });
 
     return listForRender;
@@ -407,54 +395,30 @@ class QOS extends React.Component {
     const { isLoaded } = this.props;
 
     return (
-      <div
-        style={chartContainer}
-        className="chart-container">
+      <div style={chartContainer} className="chart-container">
         {isLoaded ? (
-          <Grid
-            container
-            spacing={24}>
-            <Grid
-              item
-              lg={8}
-              md={8}
-              sm
-              xs>
+          <Grid container spacing={24}>
+            <Grid item lg={7} md={7} sm xs>
               <Card>
-                <CardContent>
-                  {this.renderCharts()}
-                </CardContent>
+                <CardContent>{this.renderCharts()}</CardContent>
               </Card>
-              <br/>
-              <Grid
-                container
-                direction="row"
-                alignItems="center"
-                justify="space-between"
-              >
+              <br />
+              <Grid container>
                 {this.renderForm()}
               </Grid>
             </Grid>
-            <Grid
-              item
-              lg={4}
-              md={4}
-              sm={12}
-              xs={12}>
-              <Grid
-                container
-                spacing={24}>
+            <Grid item lg={5} md={5} sm={12} xs={12}>
+              <Grid container spacing={24}>
                 {this.renderStats()}
               </Grid>
             </Grid>
           </Grid>
         ) : (
-          <LoadingIndicator/>
+          <LoadingIndicator />
         )}
       </div>
     );
   }
 }
-
 
 export default hot(module)(QOS);

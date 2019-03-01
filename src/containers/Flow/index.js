@@ -14,9 +14,7 @@ const mapDispatchToProps = {
   getFlowMessages: getFlowAsync.request
 };
 
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Flow);
-

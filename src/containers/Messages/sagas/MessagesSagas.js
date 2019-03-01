@@ -17,4 +17,3 @@ export function* getMessagesDataSaga() {
 export default function* handleGetDocumentSaga() {
   yield takeEvery(getMessagesAsync.request.toString(), getMessagesDataSaga);
 }
-

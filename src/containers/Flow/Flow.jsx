@@ -1,18 +1,17 @@
 // @flow
 import * as React from "react";
-import Mermaid from "../../components/Mermaid"
+import Mermaid from "../../components/Mermaid";
 import PropTypes from "prop-types";
-import LoadingIndicator from 'components/LoadingIndicator';
+import LoadingIndicator from "components/LoadingIndicator";
 
 const defaultProps = {
-  messagesTab: {},
+  messagesTab: {}
 };
 
 const propTypes = {
   messagesTab: PropTypes.object,
-  getFlowMessages: PropTypes.func,
+  getFlowMessages: PropTypes.func
 };
-
 
 function formatData(messages = []) {
   messages.sort(function(a, b) {
@@ -20,22 +19,39 @@ function formatData(messages = []) {
   });
 
   // Create a mermaid diagram
-  let output = 'sequenceDiagram\n'
+  let output = "sequenceDiagram\n";
 
   // Convert HEP events to mermaid rows
   messages.forEach(set => {
-    if (set.method||set.event) {
-      output+= set.srcIp+"/"+set.srcPort+"->>" +set.dstIp+ "/"+set.dstPort+": "+(set.method||set.event)+"\n";
+    if (set.method || set.event) {
+      output +=
+        set.srcIp +
+        "/" +
+        set.srcPort +
+        "->>" +
+        set.dstIp +
+        "/" +
+        set.dstPort +
+        ": " +
+        (set.method || set.event) +
+        "\n";
     } else {
-      output+= set.srcIp+"/"+set.srcPort+"->>" +set.dstIp+ "/"+set.dstPort+": UNKNOWN\n";
+      output +=
+        set.srcIp +
+        "/" +
+        set.srcPort +
+        "->>" +
+        set.dstIp +
+        "/" +
+        set.dstPort +
+        ": UNKNOWN\n";
     }
-  })
+  });
 
   return output;
 }
 
 class Flow extends React.Component {
-
   static defaultProps = defaultProps;
 
   static propTypes = propTypes;
@@ -45,7 +61,12 @@ class Flow extends React.Component {
   }
 
   render() {
-    const { messages: { data: { messages }}, isLoaded } = this.props;
+    const {
+      messages: {
+        data: { messages }
+      },
+      isLoaded
+    } = this.props;
 
     const content = formatData(messages);
 
@@ -53,13 +74,11 @@ class Flow extends React.Component {
       <div>
         {isLoaded ? (
           <div>
-            <Mermaid
-              id="test"
-              content={content}/>
+            <Mermaid id="test" content={content} />
           </div>
-          ) : (
-            <LoadingIndicator />
-          )}
+        ) : (
+          <LoadingIndicator />
+        )}
       </div>
     );
   }

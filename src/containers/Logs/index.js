@@ -14,9 +14,7 @@ const mapDispatchToProps = {
   getLogs: getLogsAsync.request
 };
 
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Logs);
-
