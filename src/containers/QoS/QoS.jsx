@@ -70,18 +70,20 @@ const style = {
 };
 
 const statBlock = {
+
 };
 
 const statBlockTitle = {
   textAlign: "center",
-  padding: "10px 0",
+  padding: "6px 0",
   fontSize: "12px"
 };
 
 const statBlockValue = {
   textAlign: "center",
-  padding: "10px 0",
-  fontSize: "16px"
+  padding: "5px 0 10px 0px",
+  fontSize: "18px",
+  fontWeight: "bold"
 };
 
 const widthLegend = {
@@ -334,6 +336,30 @@ class QOS extends React.Component {
     return renderData;
   }
 
+  getStatColor(key) {
+    let color = "#e8eaf6";
+
+    if (key.toLowerCase()  === "packets") {
+      color = "#ede7f6"
+    }
+
+    if (key.toLowerCase()  === "octets") {
+      color = "#e1f5fe"
+    }
+
+    if (key.toLowerCase()  === "ia_jitter") {
+      color = "#e0f2f1"
+    }
+
+    if (key.toLowerCase() === "highest_seq_no") {
+      color = "#f3e5f5"
+    }
+
+    return {
+      backgroundColor: color
+    };
+  }
+
   renderStats() {
     const { _stats } = this.props.data;
 
@@ -344,7 +370,7 @@ class QOS extends React.Component {
         statsList.push({
           parentKey: key,
           key: statKey,
-          value: _stats[key][statKey]
+          value: _stats[key][statKey],
         });
       }
     }
@@ -352,7 +378,7 @@ class QOS extends React.Component {
     const listForRender = statsList.map(stat => {
       return (
         <Grid key={stat.parentKey + stat.key} item lg={4} md={4} sm={4} xs={4}>
-          <Paper style={statBlock}>
+          <Paper style={this.getStatColor(stat.parentKey)}>
             <Typography style={statBlockTitle}>
               {`${stat.key} ${stat.parentKey.toUpperCase()}`}
             </Typography>
