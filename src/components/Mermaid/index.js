@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import mermaid from "mermaid";
+import "./style.scss";
 
 class Mermaid extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class Mermaid extends Component {
 
     return (
       <div
-        style={this.props.diagramStyle}
+        className={"mermaid-diagram"}
         dangerouslySetInnerHTML={{ __html: this.state.svg }}
       />
     );

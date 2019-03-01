@@ -10,12 +10,33 @@ import Export from "../../containers/Export";
 import "./styles.scss";
 import Flow from "../../containers/Flow";
 
+import getAllUrlParams from "../../utils/urlParams";
+
 const bc = "tabs";
 
 class Tabs extends PureComponent {
   state = {
-    value: 0
+    value: "messages",
+    availableTabs: ["messages", "flow", "qos", "logs", "export"]
   };
+
+  componentDidMount(): void {
+    this.detectTabs();
+  }
+
+  detectTabs() {
+    const tabs = getAllUrlParams()["tabs"];
+
+    if (tabs) {
+      this.setState({
+        availableTabs: tabs.split(",")
+      });
+    }
+  }
+
+  isShowTab(tabName) {
+    return this.state.availableTabs.indexOf(tabName) !== -1;
+  }
 
   handleChange = (event, value) => {
     this.setState({ value });
@@ -36,18 +57,22 @@ class Tabs extends PureComponent {
             indicatorColor="primary"
             textColor="primary"
           >
-            <Tab label="Messages" />
-            <Tab label="Flow" />
-            <Tab label="QoS" />
-            <Tab label="Logs" />
-            <Tab label="Export" />
+            {this.isShowTab("messages") ? (
+              <Tab value="messages" label="Messages" />
+            ) : null}
+            {this.isShowTab("flow") ? <Tab value="flow" label="Flow" /> : null}
+            {this.isShowTab("qos") ? <Tab value="qos" label="QoS" /> : null}
+            {this.isShowTab("logs") ? <Tab value="logs" label="Logs" /> : null}
+            {this.isShowTab("export") ? (
+              <Tab value="export" label="Export" />
+            ) : null}
           </MaterialTabs>
         </AppBar>
-        {value === 0 ? <Messages /> : null}
-        {value === 1 ? <Flow /> : null}
-        {value === 2 ? <QOS /> : null}
-        {value === 3 ? <Logs /> : null}
-        {value === 4 ? <Export /> : null}
+        {value === "messages" ? <Messages /> : null}
+        {value === "flow" ? <Flow /> : null}
+        {value === "qos" ? <QOS /> : null}
+        {value === "logs" ? <Logs /> : null}
+        {value === "export" ? <Export /> : null}
       </div>
     );
   }
