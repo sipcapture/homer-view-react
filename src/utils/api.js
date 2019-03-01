@@ -7,9 +7,9 @@ import axios from "axios";
 export default function fetchData(params) {
   const { url } = params;
   const { serverUrl } = config['DEV'];
-  const { from, to, callid } = getAllUrlParams(window.location.href);
+  const { from, to, callid } = getAllUrlParams();
 
-  const ids = typeof callid === "object" ? callid : [callid];
+  const ids = callid.split(',');
 
   const payload = {
     // "timestamp":{

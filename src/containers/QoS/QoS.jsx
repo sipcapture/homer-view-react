@@ -237,7 +237,6 @@ class QOS extends React.Component {
     return (
       <Resizable>
         <ChartContainer
-          title="QoS"
           titleStyle={{ fill: "#555", fontWeight: 500 }}
           timeRange={packetsSeries.range()}
           format="%H:%M:%S"
@@ -246,11 +245,10 @@ class QOS extends React.Component {
           <ChartRow height="300">
             <YAxis
               id="value"
-              label="Count"
               min={0}
               max={maxValue}
               showGrid={true}
-              width="60"
+              width="20"
             />
             {this.renderLineList()}
           </ChartRow>

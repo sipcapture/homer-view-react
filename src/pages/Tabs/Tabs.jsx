@@ -26,11 +26,20 @@ class Tabs extends PureComponent {
   }
 
   detectTabs() {
-    const tabs = getAllUrlParams()["tabs"];
+    let tabs = getAllUrlParams()["tabs"];
 
     if (tabs) {
+      tabs = tabs
+        .split(',')
+        .map((tabName) => {
+          return tabName.trim().toLowerCase();
+        })
+        .filter((tabName) => {
+          return tabName.length
+        });
+
       this.setState({
-        availableTabs: tabs.split(",")
+        availableTabs: tabs
       });
     }
   }
