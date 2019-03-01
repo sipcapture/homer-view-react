@@ -2,29 +2,27 @@
 import * as React from "react";
 import "./styles.scss";
 import PropTypes from "prop-types";
-import _ from 'lodash';
-import Table from '../../components/Table';
-import MessageModal from '../../components/MessageModal';
-import LoadingIndicator from 'components/LoadingIndicator';
+import _ from "lodash";
+import Table from "../../components/Table";
+import MessageModal from "../../components/MessageModal";
+import LoadingIndicator from "components/LoadingIndicator";
 
 const defaultProps = {
-  messagesTab: {},
+  messagesTab: {}
 };
 
 const propTypes = {
   messagesTab: PropTypes.object,
-  getTransactionMessages: PropTypes.func,
+  getTransactionMessages: PropTypes.func
 };
 
 class Messages extends React.Component {
-
-
   static defaultProps = defaultProps;
 
   static propTypes = propTypes;
 
   state = {
-    modalOpen: false,
+    modalOpen: false
   };
 
   componentDidMount() {
@@ -32,14 +30,16 @@ class Messages extends React.Component {
   }
 
   handleClickRow = (event, element) => {
-    const { messages: { data } } = this.props;
+    const {
+      messages: { data }
+    } = this.props;
 
     this.setState(
       {
         modalOpen: true,
-        msgDetailedData: _.find(data.messages, el => element[0].id === el.id),
+        msgDetailedData: _.find(data.messages, el => element[0].id === el.id)
       },
-      () => {},
+      () => {}
     );
   };
 
@@ -48,10 +48,13 @@ class Messages extends React.Component {
   };
 
   render() {
-    const { messagesTab: { dataTable, dataHead }, isLoaded } = this.props;
+    const {
+      messagesTab: { dataTable, dataHead },
+      isLoaded
+    } = this.props;
     const { modalOpen, msgDetailedData } = this.state;
     return (
-      <div style = {{paddingTop : 10}}>
+      <div style={{ paddingTop: 10 }}>
         {isLoaded ? (
           <Table
             tableBody={dataTable}

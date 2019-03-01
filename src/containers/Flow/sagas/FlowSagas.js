@@ -17,4 +17,3 @@ export function* getFlowDataSaga() {
 export default function* handleGetDocumentSaga() {
   yield takeEvery(getFlowAsync.request.toString(), getFlowDataSaga);
 }
-

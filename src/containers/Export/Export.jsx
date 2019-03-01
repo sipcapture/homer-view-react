@@ -55,11 +55,10 @@ const propTypes = {
   pcap: PropTypes.string,
   txt: PropTypes.string,
   getExportProc: PropTypes.func,
-  getExportTxt: PropTypes.func,
+  getExportTxt: PropTypes.func
 };
 
 class Export extends React.Component {
-
   static defaultProps = defaultProps;
 
   static propTypes = propTypes;
@@ -73,8 +72,10 @@ class Export extends React.Component {
   getFileName() {
     const transaction = "call-";
     const tsHms = new Date();
-    const date = (tsHms.getMonth() + 1) + "/" + tsHms.getDate() + "/" + tsHms.getFullYear();
-    const time = tsHms.getHours() + ":" + tsHms.getMinutes() + ":" + tsHms.getSeconds();
+    const date =
+      tsHms.getMonth() + 1 + "/" + tsHms.getDate() + "/" + tsHms.getFullYear();
+    const time =
+      tsHms.getHours() + ":" + tsHms.getMinutes() + ":" + tsHms.getSeconds();
     return `HEPIC-${date} ${time}`;
   }
 
@@ -84,7 +85,9 @@ class Export extends React.Component {
   }
 
   async downloadPcap() {
-    let blob = new Blob([this.props.pcap], { type: "text/plain;charset=utf-8" });
+    let blob = new Blob([this.props.pcap], {
+      type: "text/plain;charset=utf-8"
+    });
     FileSaver.saveAs(blob, `${this.getFileName()}.pcap`);
   }
 
@@ -94,7 +97,6 @@ class Export extends React.Component {
   }
 
   render() {
-
     return (
       <Grid>
         <Grid>
@@ -116,11 +118,17 @@ class Export extends React.Component {
             <Button
               variant="contained"
               style={greenBtn}
-              onClick={this.downloadPcap}>Export PCAP</Button>
+              onClick={this.downloadPcap}
+            >
+              Export PCAP
+            </Button>
             <Button
               variant="contained"
               style={greenBtn}
-              onClick={this.downloadTxt}>Export TEXT</Button>
+              onClick={this.downloadTxt}
+            >
+              Export TEXT
+            </Button>
           </Grid>
           <Grid
             container
@@ -129,14 +137,12 @@ class Export extends React.Component {
             alignItems="flex-start"
             style={widthBlockBtn}
           >
-            <Button
-              variant="contained"
-              style={greenBtnLight}
-              disabled>Share Cloud</Button>
-            <Button
-              variant="contained"
-              style={greenBtnLight}
-              disabled>Share Link</Button>
+            <Button variant="contained" style={greenBtnLight} disabled>
+              Share Cloud
+            </Button>
+            <Button variant="contained" style={greenBtnLight} disabled>
+              Share Link
+            </Button>
           </Grid>
         </Grid>
       </Grid>

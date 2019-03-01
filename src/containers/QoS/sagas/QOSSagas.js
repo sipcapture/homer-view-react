@@ -1,6 +1,6 @@
 import { takeEvery, put, call } from "redux-saga/effects";
 import { getQOSAsync } from "../actions";
-import fetchData from "../../../utils/api"
+import fetchData from "../../../utils/api";
 
 export function* getQOSDataSaga() {
   try {
@@ -17,4 +17,3 @@ export function* getQOSDataSaga() {
 export default function* handleGetDocumentSaga() {
   yield takeEvery(getQOSAsync.request.toString(), getQOSDataSaga);
 }
-

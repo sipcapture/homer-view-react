@@ -1,11 +1,11 @@
 export default () => ({
   root: {
-    width: '100%',
+    width: "100%"
   },
   table: {
-    minWidth: 1020,
+    minWidth: 1020
   },
   tableWrapper: {
-    overflowX: 'auto',
-  },
+    overflowX: "auto"
+  }
 });
