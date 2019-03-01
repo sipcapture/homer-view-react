@@ -13,12 +13,6 @@ const propTypes = {
   getFlowMessages: PropTypes.func
 };
 
-const flowDiagramStyle = {
-  height: "90vh",
-  width: "unset",
-  marginTop: "20"
-};
-
 function formatData(messages = []) {
   messages.sort(function(a, b) {
     return parseInt(a.micro_ts) - parseInt(b.micro_ts);
@@ -80,11 +74,7 @@ class Flow extends React.Component {
       <div>
         {isLoaded ? (
           <div>
-            <Mermaid
-              id="test"
-              diagramStyle={flowDiagramStyle}
-              content={content}
-            />
+            <Mermaid id="test" content={content} />
           </div>
         ) : (
           <LoadingIndicator />

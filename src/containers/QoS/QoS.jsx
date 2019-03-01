@@ -92,22 +92,12 @@ class CrossHairs extends React.Component {
     if (!_.isNull(x) && !_.isNull(y)) {
       return (
         <g>
-          <line
-            style={style}
-            x1={0}
-            y1={y}
-            x2={this.props.width}
-            y2={y}/>
-          <line
-            style={style}
-            x1={x}
-            y1={0}
-            x2={x}
-            y2={this.props.height}/>
+          <line style={style} x1={0} y1={y} x2={this.props.width} y2={y} />
+          <line style={style} x1={x} y1={0} x2={x} y2={this.props.height} />
         </g>
       );
     } else {
-      return <g/>;
+      return <g />;
     }
   }
 }
@@ -203,17 +193,13 @@ class QOS extends React.Component {
           />
         );
       } else {
-        return <Baseline
-          axis="value"
-          visible={false}/>;
+        return <Baseline axis="value" visible={false} />;
       }
     });
 
     return (
       <Charts>
-        <CrossHairs
-          x={this.state.x}
-          y={this.state.y}/>
+        <CrossHairs x={this.state.x} y={this.state.y} />
         {lineCharts}
       </Charts>
     );
@@ -291,9 +277,7 @@ class QOS extends React.Component {
 
     const renderData = graphsForms.map((item, index) => {
       return (
-        <Card
-          key={index}
-          style={widthLegend}>
+        <Card key={index} style={widthLegend}>
           <CardContent>
             <FormControl>
               <FormLabel component="legend">
@@ -366,13 +350,7 @@ class QOS extends React.Component {
 
     const listForRender = statsList.map(stat => {
       return (
-        <Grid
-          key={stat.parentKey + stat.key}
-          item
-          lg={4}
-          md={4}
-          sm={4}
-          xs={4}>
+        <Grid key={stat.parentKey + stat.key} item lg={4} md={4} sm={4} xs={4}>
           <Paper style={statBlock}>
             <Typography style={statBlockTitle}>
               {`${stat.key} ${stat.parentKey.toUpperCase()}`}
@@ -390,23 +368,14 @@ class QOS extends React.Component {
     const { isLoaded } = this.props;
 
     return (
-      <div
-        style={chartContainer}
-        className="chart-container">
+      <div style={chartContainer} className="chart-container">
         {isLoaded ? (
-          <Grid
-            container
-            spacing={24}>
-            <Grid
-              item
-              lg={7}
-              md={7}
-              sm
-              xs>
+          <Grid container spacing={24}>
+            <Grid item lg={7} md={7} sm xs>
               <Card>
                 <CardContent>{this.renderCharts()}</CardContent>
               </Card>
-              <br/>
+              <br />
               <Grid
                 container
                 direction="row"
@@ -416,21 +385,14 @@ class QOS extends React.Component {
                 {this.renderForm()}
               </Grid>
             </Grid>
-            <Grid
-              item
-              lg={5}
-              md={5}
-              sm={12}
-              xs={12}>
-              <Grid
-                container
-                spacing={24}>
+            <Grid item lg={5} md={5} sm={12} xs={12}>
+              <Grid container spacing={24}>
                 {this.renderStats()}
               </Grid>
             </Grid>
           </Grid>
         ) : (
-          <LoadingIndicator/>
+          <LoadingIndicator />
         )}
       </div>
     );

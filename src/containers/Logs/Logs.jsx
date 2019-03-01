@@ -38,10 +38,8 @@ class Logs extends React.Component {
 
     let info = logs.map((data, index) => {
       return (
-        <div
-          style={paddingBottom}
-          key={data.id}>
-          <JsonViewer json={data}/>
+        <div style={paddingBottom} key={data.id}>
+          <JsonViewer json={data} />
         </div>
       );
     });
@@ -57,7 +55,7 @@ class Logs extends React.Component {
         {isLoaded ? (
           <div style={padding}>{this.showJson()}</div>
         ) : (
-          <LoadingIndicator/>
+          <LoadingIndicator />
         )}
       </Grid>
     );
