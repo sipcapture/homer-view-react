@@ -56,6 +56,8 @@ const chartContainer = {
   padding: "50px"
 };
 
+
+
 const style = {
   value: {
     stroke: "#a02c2c",
@@ -67,7 +69,8 @@ const style = {
   }
 };
 
-const statBlock = {};
+const statBlock = {
+};
 
 const statBlockTitle = {
   textAlign: "center",
@@ -374,12 +377,7 @@ class QOS extends React.Component {
                 <CardContent>{this.renderCharts()}</CardContent>
               </Card>
               <br />
-              <Grid
-                container
-                direction="row"
-                alignItems="center"
-                justify="space-between"
-              >
+              <Grid container>
                 {this.renderForm()}
               </Grid>
             </Grid>

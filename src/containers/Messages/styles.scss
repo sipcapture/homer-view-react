@@ -1,0 +1,19 @@
+table {
+  thead {
+    span {
+      color: #3f51b5;
+    }
+  }
+
+  tbody {
+    tr:nth-of-type(odd) {
+      background-color: #e8eaf6;
+    }
+
+    tr {
+      &:hover {
+        background: #c5cae9 !important;
+      }
+    }
+  }
+}

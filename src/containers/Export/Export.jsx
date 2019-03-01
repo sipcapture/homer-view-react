@@ -26,15 +26,15 @@ const btnsCenter = {
   margin: "0 auto"
 };
 
-const greenBtn = {
-  background: "#1dc27c",
+const btnStyle = {
+  background: "#3f51b5",
   textAlign: "left",
   color: "#fff",
   marginBottom: "18px",
   width: "178px"
 };
-const greenBtnLight = {
-  background: "#1EC27C",
+const btnLightStyle = {
+  background: "#3f51b5",
   textAlign: "left",
   color: "#fff",
   marginBottom: "18px",
@@ -117,14 +117,14 @@ class Export extends React.Component {
           >
             <Button
               variant="contained"
-              style={greenBtn}
+              style={btnStyle}
               onClick={this.downloadPcap}
             >
               Export PCAP
             </Button>
             <Button
               variant="contained"
-              style={greenBtn}
+              style={btnStyle}
               onClick={this.downloadTxt}
             >
               Export TEXT
@@ -137,10 +137,10 @@ class Export extends React.Component {
             alignItems="flex-start"
             style={widthBlockBtn}
           >
-            <Button variant="contained" style={greenBtnLight} disabled>
+            <Button variant="contained" style={btnLightStyle} disabled>
               Share Cloud
             </Button>
-            <Button variant="contained" style={greenBtnLight} disabled>
+            <Button variant="contained" style={btnLightStyle} disabled>
               Share Link
             </Button>
           </Grid>
