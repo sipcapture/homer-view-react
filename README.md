@@ -3,8 +3,11 @@
 # homer-view-react
 Experimental React Viewer for HEP APIs
 
+![ezgif com-optimize 24](https://user-images.githubusercontent.com/1423657/53689632-673e5500-3d5a-11e9-88d8-a9216f84bf19.gif)
+
+
 ## Requirements
-* This Application requires a [HEP Auth Proxy](https://github.com/hepictel/hepic-export-proxy) to access the HOMER API
+* This Application requires a [HEP Auth Proxy](https://github.com/sipcapture/homer-view-react/master/proxy) to access the HOMER API
 
 ## Installation
 1. Clone this repository
@@ -14,7 +17,12 @@ Experimental React Viewer for HEP APIs
 5. Start the development server `npm run start`
 6. Access the application at http://localhost:3000/
 
-### Usage
+## Docker
+Inside the `example` folder:
+1. Configure your Proxy instance `proxy-config.js`
+2. Start with `docker-compose up`
+
+### URL Parameters
 The Application accepts the following URL parameters defining search settings:
 * `from`: start time in milliseconds
 * `to`: stop time in milliseconds

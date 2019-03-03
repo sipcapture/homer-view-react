@@ -3,6 +3,7 @@ import config from "../config";
 import getAllUrlParams from "./urlParams";
 
 import axios from "axios";
+import qs from 'qs';
 
 export default function fetchData(params) {
   const { url } = params;

@@ -1,0 +1,22 @@
+version: '2.1'
+
+services:
+  homer-proxy:
+    container_name: homer-proxy
+    image: sipcapture/homer-proxy
+    volumes:
+      - ./proxy-config.js:/app/config.js
+    expose:
+      - 8765
+    ports:
+      - "8765:8765"
+
+  homer-view:
+    container_name: homer-view
+    image: sipcapture/homer-view
+    volumes:
+      - ./view-config.js:/usr/src/app/src/config/index.js
+    ports:
+      - "9088:3000"
+    links:
+      - homer-proxy

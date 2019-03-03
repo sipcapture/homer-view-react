@@ -1,6 +1,6 @@
 {
-  "name": "homer-react-app",
-  "version": "0.1.0",
+  "name": "homer-view-react",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.2",
@@ -43,6 +43,7 @@
     "postcss-loader": "2.0.8",
     "promise": "8.0.1",
     "prop-types": "^15.6.2",
+    "qs": "^6.6.0",
     "raf": "3.4.0",
     "react": "^16.7.0",
     "react-dates": "^17.1.1",
