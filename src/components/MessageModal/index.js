@@ -30,8 +30,8 @@ const style = {
 const swipeableViewsStyle = {
   overflow: "auto",
   width: "100%",
-  maxHeight: "calc(100% - 104px)",
-  marginTop: "104px"
+  maxHeight: "calc(100% - 70px)",
+  marginTop: "70px"
 };
 
 const modalHeaderMenu = {
