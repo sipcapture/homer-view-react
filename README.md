@@ -7,7 +7,7 @@ Experimental Stand-Alone React Viewer for HOMER API 7.x
 
 
 ## Requirements
-* This Application requires a [HEP Auth Proxy](https://github.com/sipcapture/homer-view-react/master/proxy) to access the HOMER API
+* This Application requires a [HEP Auth Proxy](https://github.com/sipcapture/homer-view-react/tree/master/proxy) to access the HOMER API
 
 ## Installation
 1. Clone this repository
