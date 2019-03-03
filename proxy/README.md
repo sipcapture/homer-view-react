@@ -1,18 +1,15 @@
-<img src="https://avatars2.githubusercontent.com/u/27866033?s=200&v=4">
 
-# HEPIC Export Proxy
-HEPIC Export Proxy w/ Relay Authentication
+# HOMER Auth Proxy
+HOMER Proxy w/ Relay Authentication
 
 
 ## Instructions
-This simple, primitive proxy implementation allows UNAUTHORIZED ACCESS to an HEPIC Export route.
+This simple, primitive proxy implementation allows UNAUTHORIZED ACCESS to an HOMER 7.x API
 
-**NO WARRANTIES! USE AT YOUR OWN RISK!**  <br>
+**NO WARRANTIES! BRING YOUR OWN SECURITY MODEL! USE AT YOUR OWN RISK!**  <br>
 
 ### Setup
 ```
-git clone https://github.com/hepictel/hepic-export-proxy
-cd hepic-export-proxy
 npm install
 ```
 
@@ -25,4 +22,4 @@ npm start
 ```
 
 ### Usage
-Direct your client at the Proxy port using an `HEPIC EXPORT LINK`. Any other request will be rejected.
+Direct your unauthenticated client at the Proxy port.
