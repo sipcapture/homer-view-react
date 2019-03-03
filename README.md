@@ -1,7 +1,7 @@
 <img src="https://user-images.githubusercontent.com/1423657/39084356-c723a81e-4574-11e8-963c-d11717789fa3.png" width=200>
 
-# homer-view-react
-Experimental React Viewer for HEP APIs
+# HOMER-View
+Experimental Stand-Alone React Viewer for HOMER API 7.x
 
 ![ezgif com-optimize 24](https://user-images.githubusercontent.com/1423657/53689632-673e5500-3d5a-11e9-88d8-a9216f84bf19.gif)
 
@@ -18,9 +18,7 @@ Experimental React Viewer for HEP APIs
 6. Access the application at http://localhost:3000/
 
 ## Docker
-Inside the `example` folder:
-1. Configure your Proxy instance `proxy-config.js`
-2. Start with `docker-compose up`
+See the [example](https://github.com/sipcapture/homer-view-react/tree/master/example) folder for a working example
 
 ### URL Parameters
 The Application accepts the following URL parameters defining search settings:

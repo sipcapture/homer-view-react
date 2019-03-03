@@ -19,7 +19,7 @@ function DetailedMSG(props) {
   console.log(detailedData);
 
   return (
-    <div style={{ padding: 20, wordBreak: "break-word" }}>
+    <div style={{ padding: 20, wordBreak: "break-word", lineHeight: "0px" }}>
       {_.map(detailedData.raw.split("\n"), (el, i) => (
         <div key={uuidv1.v1()}>
           <Typography component="p" key={i}>
