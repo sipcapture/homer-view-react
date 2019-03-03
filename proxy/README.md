@@ -1,3 +1,4 @@
+<img src="https://user-images.githubusercontent.com/1423657/39084356-c723a81e-4574-11e8-963c-d11717789fa3.png" width=200>
 
 # HOMER Auth Proxy
 HOMER Proxy w/ Relay Authentication
