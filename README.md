@@ -25,7 +25,12 @@ The Application accepts the following URL parameters defining search settings:
 * `from`: start time in milliseconds
 * `to`: stop time in milliseconds
 * `callid`: callid string or array
-* `tabs`: tabs string or array (available tabs: `messages, qos, flow, logs, export`)
+* `tabs`: visibile tabs, options
+  * messages
+  * qos
+  * flow
+  * logs
+  * export
 
 #### Example
 * `http://localhost:3000/?from=1550706099000&to=1550707799000&callid=8afhjq@127.0.0.1&tabs=messages,qos`
