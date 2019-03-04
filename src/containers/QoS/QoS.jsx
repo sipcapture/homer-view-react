@@ -53,7 +53,7 @@ const propTypes = {
 };
 
 const chartContainer = {
-  padding: "50px"
+  padding: "25px"
 };
 
 
@@ -217,27 +217,35 @@ class QOS extends React.Component {
     let maxValue = 0;
     let packetsPoints = [];
 
-    if (reportData[0] && reportData[0].values) {
-      reportData[0].values.forEach(data => {
-        packetsPoints.push([data.x, data.y]);
-      });
+    let max = [0, 0];
+    let min = [0, 0];
+
+
+    for (let key in graphs) {
+      for (let stat in graphs[key].values) {
+        graphs[key].values[stat].values.forEach(value => {
+          if (graphs[key].values[stat].selected) {
+            if (value[1] > maxValue) {
+              maxValue = value[1];
+            }
+
+            if (min[0] == 0) {
+              min = value;
+            }
+
+            if (value[0] > max[0]) {
+              max = value;
+            }
+          }
+        });
+      }
     }
 
     const packetsSeries = new TimeSeries({
       name: "Packets",
       columns: ["time", "value"],
-      points: packetsPoints
+      points: [min, max]
     });
-
-    for (let key in graphs) {
-      for (let stat in graphs[key].values) {
-        graphs[key].values[stat].values.forEach(value => {
-          if (graphs[key].values[stat].selected && value[1] > maxValue) {
-            maxValue = value[1];
-          }
-        });
-      }
-    }
 
     return (
       <Resizable>
@@ -253,7 +261,7 @@ class QOS extends React.Component {
               min={0}
               max={maxValue}
               showGrid={true}
-              width="20"
+              width="50"
             />
             {this.renderLineList()}
           </ChartRow>
@@ -280,7 +288,10 @@ class QOS extends React.Component {
 
     const renderData = graphsForms.map((item, index) => {
       return (
-        <Card key={index} style={widthLegend}>
+        <Grid
+          item lg={6} md={6} sm={12} xs={12}
+          key={index} style={widthLegend}>
+          <Card>
           <CardContent>
             <FormControl>
               <FormLabel component="legend">
@@ -329,7 +340,8 @@ class QOS extends React.Component {
               </FormGroup>
             </FormControl>
           </CardContent>
-        </Card>
+          </Card>
+        </Grid>
       );
     });
 
@@ -398,12 +410,12 @@ class QOS extends React.Component {
       <div style={chartContainer} className="chart-container">
         {isLoaded ? (
           <Grid container spacing={24}>
-            <Grid item lg={7} md={7} sm xs>
+            <Grid item lg={7} md={7} sm xs spacing={24}>
               <Card>
                 <CardContent>{this.renderCharts()}</CardContent>
               </Card>
               <br />
-              <Grid container>
+              <Grid container spacing={24}>
                 {this.renderForm()}
               </Grid>
             </Grid>
