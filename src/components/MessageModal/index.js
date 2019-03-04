@@ -21,8 +21,6 @@ const RootModalStyles = {};
 
 const style = {
   display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
   border: "solid 1px #ddd",
   background: "#ffffff"
 };
@@ -30,8 +28,8 @@ const style = {
 const swipeableViewsStyle = {
   overflow: "auto",
   width: "100%",
-  maxHeight: "calc(100% - 70px)",
-  marginTop: "70px"
+  maxHeight: "calc(100% - 106px)",
+  marginTop: "106px"
 };
 
 const modalHeaderMenu = {
