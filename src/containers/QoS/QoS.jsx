@@ -210,9 +210,17 @@ class QOS extends React.Component {
     );
   }
 
+
+  handleTimeRangeChange = timerange => {
+    this.setState({
+      timerange
+    })
+  };
+
   renderCharts() {
     const { reportData } = this.props.data;
     const { graphs } = this.props;
+    let { timerange } = this.state;
 
     let maxValue = 0;
     let packetsPoints = [];
@@ -247,12 +255,37 @@ class QOS extends React.Component {
       points: [min, max]
     });
 
+    if (!timerange) {
+      this.setState({
+        timerange: packetsSeries.range()
+      });
+      timerange = packetsSeries.range();
+    }
+
     return (
       <Resizable>
         <ChartContainer
           titleStyle={{ fill: "#555", fontWeight: 500 }}
-          timeRange={packetsSeries.range()}
+          timeRange={timerange}
+          timeAxisStyle={{
+            ticks: {
+              stroke: "#AAA",
+              opacity: 0.25,
+              "stroke-dasharray": "1,1"
+              // Note: this isn't in camel case because this is
+              // passed into d3's style
+            },
+            values: {
+              fill: "#AAA",
+              "font-size": 12
+            }
+          }}
+          timeAxisAngledLabels={true}
           format="%H:%M:%S"
+          enablePanZoom={true}
+          minDuration={10000}
+          enableDragZoom={true}
+          onTimeRangeChanged={this.handleTimeRangeChange}
           timeAxisTickCount={5}
         >
           <ChartRow height="300">
