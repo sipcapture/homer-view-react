@@ -8,10 +8,6 @@ const initialState = {
   error: null
 };
 
-const handleGetLogs = (state, { payload }) => {
-  return Object.assign({}, ...state, { loading: true, loaded: false });
-};
-
 const handleGetLogsSuccess = (state, { payload }) => {
   return Object.assign({}, ...state, {
     loading: false,

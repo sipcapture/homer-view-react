@@ -10,9 +10,6 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import uuidv1 from "uuid";
 import TableFooter from "@material-ui/core/TableFooter";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import Cookies from "universal-cookie";
 import styles from "./styles";
 import TableHead from "./TableHead";
 

@@ -1,6 +1,5 @@
 import { handleActions } from "redux-actions";
 import { getExportPcapAsync, getExportTxtAsync } from "./actions";
-import { Record } from "immutable";
 
 const initialState = {
   pcap: "",

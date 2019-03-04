@@ -1,13 +1,10 @@
 import { handleActions } from "redux-actions";
 import {
   getQOSAsync,
-  getQOSFail,
-  getQOSSuccess,
   toggleSelection,
   toggleSidSelection
 } from "./actions";
 import formatQOSResponse from "../../normalazers/formatQOSResponse";
-import { Record } from "immutable";
 import _ from "lodash";
 
 const initialState = {
@@ -17,12 +14,7 @@ const initialState = {
   error: null
 };
 
-const handleGetQOSMessages = (state, { payload }) => {
-  return Object.assign({}, ...state, { loading: true, loaded: false });
-};
-
 const handleGetQOSSuccess = (state, { payload }) => {
-  const qoS = _.cloneDeep(payload.data);
   const sortedData = _.orderBy(payload.data, "create_date", "asc");
   return Object.assign({}, ...state, {
     loading: false,

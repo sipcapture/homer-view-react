@@ -5,8 +5,6 @@ import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
-import SwipeableViews from "react-swipeable-views";
-import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import TabContainer from "components/TabContainer/";
 import uuidv1 from "uuid";
@@ -114,12 +112,7 @@ class Modal extends React.Component {
 
   render() {
     const {
-      classes,
-      onClose,
-      selectedValue,
-      theme,
-      msgDetailedData,
-      ...other
+      msgDetailedData
     } = this.props;
     const { value } = this.state;
     return (
