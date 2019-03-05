@@ -11,7 +11,7 @@ const initialState = {
   data: [],
   loading: false,
   loaded: false,
-  error: null
+  error: false
 };
 
 const handleGetMessages = (state, { payload }) => {
@@ -30,7 +30,7 @@ const handleGetMessagesFail = (state, { payload }) => {
   return Object.assign({}, ...state, {
     loading: false,
     loaded: false,
-    error: payload.data
+    error: true
   });
 };
 

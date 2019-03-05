@@ -14,6 +14,11 @@ export const isLogsLoaded = createSelector(
   log => log.loaded
 );
 
+export const isLogsError = createSelector(
+  logs,
+  log => log.error
+);
+
 export const makeSelectLogs = createSelector(
   logs,
   log => log.data

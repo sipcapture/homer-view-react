@@ -6,7 +6,6 @@ import { hot } from "react-hot-loader";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -17,6 +16,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Checkbox from "@material-ui/core/Checkbox";
 import LoadingIndicator from "components/LoadingIndicator";
+import Button from "@material-ui/core/Button";
 
 import { styler } from "react-timeseries-charts";
 
@@ -35,6 +35,7 @@ import {
 } from "react-timeseries-charts";
 
 import { TimeSeries, Index } from "pondjs";
+import Table from "../Messages/Messages";
 
 const defaultProps = {
   qosTab: {},
@@ -52,11 +53,17 @@ const propTypes = {
   graphs: PropTypes.object
 };
 
+const btnStyle = {
+  background: "#3f51b5",
+  textAlign: "left",
+  color: "#fff",
+  marginBottom: "18px",
+  width: "178px"
+};
+
 const chartContainer = {
   padding: "50px"
 };
-
-
 
 const style = {
   value: {
@@ -392,7 +399,7 @@ class QOS extends React.Component {
   }
 
   render() {
-    const { isLoaded } = this.props;
+    const { isLoaded, isError } = this.props;
 
     return (
       <div style={chartContainer} className="chart-container">
@@ -413,9 +420,15 @@ class QOS extends React.Component {
               </Grid>
             </Grid>
           </Grid>
-        ) : (
-          <LoadingIndicator />
-        )}
+        ) : isError ? (
+          <Button
+            variant="contained"
+            style={btnStyle}
+            onClick={this.props.getQOSData}
+          >
+            Reload
+          </Button>
+        ) : <LoadingIndicator />}
       </div>
     );
   }

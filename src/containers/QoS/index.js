@@ -4,6 +4,7 @@ import {
   getQOSData,
   getGraphsData,
   isQOSLoaded,
+  isQOSError,
   makeSelectQOSTab
 } from "./selectors";
 import QoS from "./QoS";
@@ -12,6 +13,7 @@ import { getQOSAsync, toggleSelection, toggleSidSelection } from "./actions";
 const mapStateToProps = createStructuredSelector({
   qosTab: getQOSData,
   isLoaded: isQOSLoaded,
+  isError: isQOSError,
   data: makeSelectQOSTab,
   graphs: getGraphsData
 });

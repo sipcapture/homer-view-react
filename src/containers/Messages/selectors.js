@@ -15,6 +15,11 @@ export const isMessagesLoaded = createSelector(
   msgs => msgs.loaded
 );
 
+export const isMessagesError = createSelector(
+  messages,
+  msgs => msgs.error
+);
+
 export const makeSelectMessages = createSelector(
   messages,
   msgs => msgs

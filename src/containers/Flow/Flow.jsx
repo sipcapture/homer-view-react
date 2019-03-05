@@ -3,6 +3,7 @@ import * as React from "react";
 import Mermaid from "../../components/Mermaid";
 import PropTypes from "prop-types";
 import LoadingIndicator from "components/LoadingIndicator";
+import Button from "@material-ui/core/Button";
 
 const defaultProps = {
   messagesTab: {}
@@ -13,43 +14,13 @@ const propTypes = {
   getFlowMessages: PropTypes.func
 };
 
-function formatData(messages = []) {
-  messages.sort(function(a, b) {
-    return parseInt(a.micro_ts) - parseInt(b.micro_ts);
-  });
-
-  // Create a mermaid diagram
-  let output = "sequenceDiagram\n";
-
-  // Convert HEP events to mermaid rows
-  messages.forEach(set => {
-    if (set.method || set.event) {
-      output +=
-        set.srcIp +
-        "/" +
-        set.srcPort +
-        "->>" +
-        set.dstIp +
-        "/" +
-        set.dstPort +
-        ": " +
-        (set.method || set.event) +
-        "\n";
-    } else {
-      output +=
-        set.srcIp +
-        "/" +
-        set.srcPort +
-        "->>" +
-        set.dstIp +
-        "/" +
-        set.dstPort +
-        ": UNKNOWN\n";
-    }
-  });
-
-  return output;
-}
+const btnStyle = {
+  background: "#3f51b5",
+  textAlign: "left",
+  color: "#fff",
+  marginBottom: "18px",
+  width: "178px"
+};
 
 class Flow extends React.Component {
   static defaultProps = defaultProps;
@@ -62,23 +33,27 @@ class Flow extends React.Component {
 
   render() {
     const {
-      messages: {
-        data: { messages }
-      },
-      isLoaded
+      messages,
+      isLoaded,
+      isError
     } = this.props;
-
-    const content = formatData(messages);
 
     return (
       <div>
-        {isLoaded ? (
+        {isLoaded && messages ? (
           <div>
-            <Mermaid id="test" content={content} />
+            <Mermaid id="test" content={messages} />
           </div>
-        ) : (
-          <LoadingIndicator />
-        )}
+        ) : isError ? (
+          <Button
+            variant="contained"
+            style={btnStyle}
+            onClick={this.props.getFlowMessages}
+          >
+            Reload
+          </Button>
+        ) : <LoadingIndicator />}
+
       </div>
     );
   }

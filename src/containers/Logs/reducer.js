@@ -5,7 +5,7 @@ const initialState = {
   data: [],
   loading: false,
   loaded: false,
-  error: null
+  error: false
 };
 
 const handleGetLogs = (state, { payload }) => {
@@ -24,7 +24,7 @@ const handleGetLogsFail = (state, { payload }) => {
   return Object.assign({}, ...state, {
     loading: false,
     loaded: false,
-    error: payload.data
+    error: true
   });
 };
 
