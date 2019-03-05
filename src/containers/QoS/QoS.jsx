@@ -281,14 +281,14 @@ class QOS extends React.Component {
             }
           }}
           timeAxisAngledLabels={true}
-          format="%H:%M:%S"
           enablePanZoom={true}
-          minDuration={10000}
+          minDuration={200}
+          timeAxisHeight={60}
           enableDragZoom={true}
           onTimeRangeChanged={this.handleTimeRangeChange}
           timeAxisTickCount={5}
         >
-          <ChartRow height="300">
+          <ChartRow height="400">
             <YAxis
               id="value"
               min={0}
