@@ -14,10 +14,16 @@ const propTypes = {
   getFlowMessages: PropTypes.func
 };
 
+const errorStyle = {
+  textAlign: "center",
+  marginTop: "20px"
+};
+
 const btnStyle = {
   background: "#3f51b5",
-  textAlign: "left",
+  textAlign: "center",
   color: "#fff",
+  marginTop: "10px",
   marginBottom: "18px",
   width: "178px"
 };
@@ -45,13 +51,19 @@ class Flow extends React.Component {
             <Mermaid id="test" content={messages} />
           </div>
         ) : isError ? (
-          <Button
-            variant="contained"
-            style={btnStyle}
-            onClick={this.props.getFlowMessages}
-          >
-            Reload
-          </Button>
+          <div style={errorStyle}>
+            <span>
+              Something went wrong
+            </span>
+            <br/>
+            <Button
+              variant="contained"
+              style={btnStyle}
+              onClick={this.props.getFlowMessages}
+            >
+              Reload
+            </Button>
+          </div>
         ) : <LoadingIndicator />}
 
       </div>

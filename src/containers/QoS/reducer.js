@@ -24,6 +24,7 @@ const handleGetQOSMessages = (state, { payload }) => {
 const handleGetQOSSuccess = (state, { payload }) => {
   const qoS = _.cloneDeep(payload.data);
   const sortedData = _.orderBy(payload.data, "create_date", "asc");
+
   return Object.assign({}, ...state, {
     loading: false,
     loaded: true,

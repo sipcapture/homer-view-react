@@ -17,10 +17,16 @@ const propTypes = {
   getTransactionMessages: PropTypes.func
 };
 
+const errorStyle = {
+  textAlign: "center",
+  marginTop: "20px"
+};
+
 const btnStyle = {
   background: "#3f51b5",
-  textAlign: "left",
+  textAlign: "center",
   color: "#fff",
+  marginTop: "10px",
   marginBottom: "18px",
   width: "178px"
 };
@@ -73,13 +79,19 @@ class Messages extends React.Component {
             rowOnClick={this.handleClickRow}
           />
         ) : isError ? (
-          <Button
-            variant="contained"
-            style={btnStyle}
-            onClick={this.props.getTransactionMessages}
-          >
-            Reload
-          </Button>
+          <div style={errorStyle}>
+            <span>
+              Something went wrong
+            </span>
+            <br/>
+            <Button
+              variant="contained"
+              style={btnStyle}
+              onClick={this.props.getTransactionMessages}
+            >
+              Reload
+            </Button>
+          </div>
         ) : <LoadingIndicator />}
 
         {modalOpen ? (

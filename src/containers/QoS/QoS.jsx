@@ -53,10 +53,16 @@ const propTypes = {
   graphs: PropTypes.object
 };
 
+const errorStyle = {
+  textAlign: "center",
+  marginTop: "20px"
+};
+
 const btnStyle = {
   background: "#3f51b5",
-  textAlign: "left",
+  textAlign: "center",
   color: "#fff",
+  marginTop: "10px",
   marginBottom: "18px",
   width: "178px"
 };
@@ -403,7 +409,7 @@ class QOS extends React.Component {
 
     return (
       <div style={chartContainer} className="chart-container">
-        {isLoaded ? (
+        {isLoaded && !isError ? (
           <Grid container spacing={24}>
             <Grid item lg={7} md={7} sm xs>
               <Card>
@@ -421,13 +427,22 @@ class QOS extends React.Component {
             </Grid>
           </Grid>
         ) : isError ? (
-          <Button
-            variant="contained"
-            style={btnStyle}
-            onClick={this.props.getQOSData}
-          >
-            Reload
-          </Button>
+          <div>
+
+            <div style={errorStyle}>
+            <span>
+              Something went wrong
+            </span>
+              <br/>
+              <Button
+                variant="contained"
+                style={btnStyle}
+                onClick={this.props.getQOSData}
+              >
+                Reload
+              </Button>
+            </div>
+          </div>
         ) : <LoadingIndicator />}
       </div>
     );

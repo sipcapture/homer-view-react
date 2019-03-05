@@ -16,10 +16,16 @@ const paddingBottom = {
   padding: "0 0 20px 0"
 };
 
+const errorStyle = {
+  textAlign: "center",
+  marginTop: "20px"
+};
+
 const btnStyle = {
   background: "#3f51b5",
-  textAlign: "left",
+  textAlign: "center",
   color: "#fff",
+  marginTop: "10px",
   marginBottom: "18px",
   width: "178px"
 };
@@ -67,13 +73,19 @@ class Logs extends React.Component {
         {isLoaded ? (
           <div style={padding}>{this.showJson()}</div>
         ) : isError ? (
-          <Button
-            variant="contained"
-            style={btnStyle}
-            onClick={this.props.getQOSData}
-          >
-            Reload
-          </Button>
+          <div style={errorStyle}>
+            <span>
+              Something went wrong
+            </span>
+            <br/>
+            <Button
+              variant="contained"
+              style={btnStyle}
+              onClick={this.props.getLogs}
+            >
+              Reload
+            </Button>
+          </div>
         ) : <LoadingIndicator />}
       </Grid>
     );
