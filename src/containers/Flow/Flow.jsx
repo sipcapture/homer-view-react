@@ -15,7 +15,7 @@ const propTypes = {
 
 function formatData(messages = []) {
   messages.sort(function(a, b) {
-    return parseInt(a.micro_ts) - parseInt(b.micro_ts);
+    return parseInt(a.micro_ts, 10) - parseInt(b.micro_ts, 10);
   });
 
   // Create a mermaid diagram

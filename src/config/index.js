@@ -1,4 +1,3 @@
-const ENV = "DEV";
 const DEBUGGING = true;
 
 const configs = {

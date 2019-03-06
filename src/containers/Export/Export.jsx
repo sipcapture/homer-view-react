@@ -1,7 +1,5 @@
 import React from "react";
-import { render } from "react-dom";
 import PropTypes from "prop-types";
-import { hot } from "react-hot-loader";
 
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -70,7 +68,6 @@ class Export extends React.Component {
   }
 
   getFileName() {
-    const transaction = "call-";
     const tsHms = new Date();
     const date =
       tsHms.getMonth() + 1 + "/" + tsHms.getDate() + "/" + tsHms.getFullYear();
