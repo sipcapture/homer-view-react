@@ -263,7 +263,6 @@ class QOS extends React.Component {
           enablePanZoom={true}
           minDuration={200}
           timeAxisHeight={60}
-          enableDragZoom={true}
           onTimeRangeChanged={this.handleTimeRangeChange}
           timeAxisTickCount={5}
         >
