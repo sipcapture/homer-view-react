@@ -196,8 +196,7 @@ function _aggregateAllStats() {
       ),
       avg: parseInt(
         _reports[label.title][0].values.reduce(
-          (tot, p) => (tot + p.y) / _reports[label.title][0].values.length,
-        )
+          (tot, p) => (tot + p.y) / _reports[label.title][0].values.length, 0)
         , 10
       ),
       max: parseInt(
