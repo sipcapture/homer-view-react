@@ -8,7 +8,7 @@ export function* getLogsDataSaga() {
       url: "call/report/log"
     });
     const logs = response.data;
-    if (response.data.length) {
+    if (response.data.total) {
       yield put(getLogsAsync.success(logs));
     } else {
       yield put(getLogsAsync.fail());
