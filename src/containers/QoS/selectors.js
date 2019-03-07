@@ -9,7 +9,6 @@ const qos = store => {
 export const makeSelectQOSTab = createSelector(
   qos,
   data => {
-    const qoS = _.cloneDeep(data.data);
     const sortedData = _.orderBy(data.data, "create_date", "asc");
     return formatQOSResponse(sortedData);
   }

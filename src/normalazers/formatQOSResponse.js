@@ -1,12 +1,10 @@
 import _ from "lodash";
-import moment from "moment";
 import maybe from "../helpers/maybe";
 
 let _labels = [];
 let _reports = {};
 let _stats = {};
 let reportData = [];
-let bySid = {};
 
 function _prepare(label) {
   if (!_reports[label.title]) {
@@ -20,7 +18,6 @@ export default rawData => {
   _reports = {};
   _stats = {};
   reportData = [];
-  bySid = {};
 
   const data = _.cloneDeep(maybe(rawData));
 
@@ -194,20 +191,20 @@ function _aggregateAllStats() {
       min: parseInt(
         _reports[label.title][0].values.reduce(
           (min, p) => (p.y < min ? p.y : min),
-          _reports[label.title][0].values[0].y
-        )
+          _reports[label.title][0].values[0].y)
+        , 10
       ),
       avg: parseInt(
         _reports[label.title][0].values.reduce(
-          (tot, p) => (tot + p.y) / _reports[label.title][0].values.length,
-          0
-        )
+          (tot, p) => (tot + p.y) / _reports[label.title][0].values.length, 0)
+        , 10
       ),
       max: parseInt(
         _reports[label.title][0].values.reduce(
           (max, p) => (p.y > max ? p.y : max),
           _reports[label.title][0].values[0].y
         )
+        , 10
       )
     };
   });

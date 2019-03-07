@@ -3,7 +3,6 @@ import config from "../config";
 import getAllUrlParams from "./urlParams";
 
 import axios from "axios";
-import qs from 'qs';
 
 export default function fetchData(params) {
   const { url } = params;
@@ -17,10 +16,6 @@ export default function fetchData(params) {
   }
 
   const payload = {
-    // "timestamp":{
-    //   "from":1550707199000,
-    //   "to":1550707799000
-    // },
     timestamp: {
       from: from,
       to: to

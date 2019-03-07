@@ -1,10 +1,8 @@
 import React from "react";
-import { render } from "react-dom";
 import PropTypes from "prop-types";
 import { hot } from "react-hot-loader";
 
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
@@ -13,7 +11,6 @@ import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import Checkbox from "@material-ui/core/Checkbox";
 import LoadingIndicator from "components/LoadingIndicator";
 import Button from "@material-ui/core/Button";
@@ -31,7 +28,6 @@ import {
   Resizable,
   LineChart,
   Baseline,
-  Legend
 } from "react-timeseries-charts";
 
 import { TimeSeries, Index } from "pondjs";
@@ -67,10 +63,6 @@ const btnStyle = {
   width: "178px"
 };
 
-const chartContainer = {
-  padding: "50px"
-};
-
 const style = {
   value: {
     stroke: "#a02c2c",
@@ -82,8 +74,10 @@ const style = {
   }
 };
 
-const statBlock = {
+const statBlock = {};
 
+const chartContainer = {
+  padding: "25px";
 };
 
 const statBlockTitle = {
@@ -223,50 +217,91 @@ class QOS extends React.Component {
     );
   }
 
+
+  handleTimeRangeChange = timerange => {
+    this.setState({
+      timerange
+    })
+  };
+
   renderCharts() {
     const { reportData } = this.props.data;
     const { graphs } = this.props;
+    let { timerange } = this.state;
 
     let maxValue = 0;
     let packetsPoints = [];
 
-    if (reportData[0] && reportData[0].values) {
-      reportData[0].values.forEach(data => {
-        packetsPoints.push([data.x, data.y]);
-      });
+    let max = [0, 0];
+    let min = [0, 0];
+
+
+    for (let key in graphs) {
+      for (let stat in graphs[key].values) {
+        // eslint-disable-next-line
+        graphs[key].values[stat].values.forEach(value => {
+          if (graphs[key].values[stat].selected) {
+            if (value[1] > maxValue) {
+              maxValue = value[1];
+            }
+
+            if (min[0] == 0) {
+              min = value;
+            }
+
+            if (value[0] > max[0]) {
+              max = value;
+            }
+          }
+        });
+      }
     }
 
     const packetsSeries = new TimeSeries({
       name: "Packets",
       columns: ["time", "value"],
-      points: packetsPoints
+      points: [min, max]
     });
 
-    for (let key in graphs) {
-      for (let stat in graphs[key].values) {
-        graphs[key].values[stat].values.forEach(value => {
-          if (graphs[key].values[stat].selected && value[1] > maxValue) {
-            maxValue = value[1];
-          }
-        });
-      }
+    if (!timerange) {
+      this.setState({
+        timerange: packetsSeries.range()
+      });
+      timerange = packetsSeries.range();
     }
 
     return (
       <Resizable>
         <ChartContainer
           titleStyle={{ fill: "#555", fontWeight: 500 }}
-          timeRange={packetsSeries.range()}
-          format="%H:%M:%S"
+          timeRange={timerange}
+          timeAxisStyle={{
+            ticks: {
+              stroke: "#AAA",
+              opacity: 0.25,
+              "stroke-dasharray": "1,1"
+              // Note: this isn't in camel case because this is
+              // passed into d3's style
+            },
+            values: {
+              fill: "#AAA",
+              "font-size": 12
+            }
+          }}
+          timeAxisAngledLabels={true}
+          enablePanZoom={true}
+          minDuration={200}
+          timeAxisHeight={60}
+          onTimeRangeChanged={this.handleTimeRangeChange}
           timeAxisTickCount={5}
         >
-          <ChartRow height="300">
+          <ChartRow height="400">
             <YAxis
               id="value"
               min={0}
               max={maxValue}
               showGrid={true}
-              width="20"
+              width="50"
             />
             {this.renderLineList()}
           </ChartRow>
@@ -293,7 +328,10 @@ class QOS extends React.Component {
 
     const renderData = graphsForms.map((item, index) => {
       return (
-        <Card key={index} style={widthLegend}>
+        <Grid
+          item lg={6} md={6} sm={12} xs={12}
+          key={index} style={widthLegend}>
+          <Card>
           <CardContent>
             <FormControl>
               <FormLabel component="legend">
@@ -342,7 +380,8 @@ class QOS extends React.Component {
               </FormGroup>
             </FormControl>
           </CardContent>
-        </Card>
+          </Card>
+        </Grid>
       );
     });
 
@@ -411,12 +450,12 @@ class QOS extends React.Component {
       <div style={chartContainer} className="chart-container">
         {isLoaded && !isError ? (
           <Grid container spacing={24}>
-            <Grid item lg={7} md={7} sm xs>
+            <Grid item lg={7} md={7} sm xs spacing={24}>
               <Card>
                 <CardContent>{this.renderCharts()}</CardContent>
               </Card>
               <br />
-              <Grid container>
+              <Grid container spacing={24}>
                 {this.renderForm()}
               </Grid>
             </Grid>

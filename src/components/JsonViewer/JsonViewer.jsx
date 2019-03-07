@@ -1,13 +1,8 @@
 import React from "react";
-import { render } from "react-dom";
-import PropTypes from "prop-types";
 import { hot } from "react-hot-loader";
-
-import _ from "lodash";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
 
 const payload = {
   color: "#3f51b5",

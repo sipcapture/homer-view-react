@@ -5,8 +5,6 @@ import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
-import SwipeableViews from "react-swipeable-views";
-import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import TabContainer from "components/TabContainer/";
 import uuidv1 from "uuid";
@@ -21,8 +19,6 @@ const RootModalStyles = {};
 
 const style = {
   display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
   border: "solid 1px #ddd",
   background: "#ffffff"
 };
@@ -30,8 +26,8 @@ const style = {
 const swipeableViewsStyle = {
   overflow: "auto",
   width: "100%",
-  maxHeight: "calc(100% - 70px)",
-  marginTop: "70px"
+  maxHeight: "calc(100% - 106px)",
+  marginTop: "106px"
 };
 
 const modalHeaderMenu = {
@@ -114,12 +110,7 @@ class Modal extends React.Component {
 
   render() {
     const {
-      classes,
-      onClose,
-      selectedValue,
-      theme,
-      msgDetailedData,
-      ...other
+      msgDetailedData
     } = this.props;
     const { value } = this.state;
     return (
