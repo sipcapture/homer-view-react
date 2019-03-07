@@ -9,7 +9,11 @@ export default function fetchData(params) {
   const { serverUrl } = config['DEV'];
   const { from, to, callid } = getAllUrlParams();
 
-  const ids = callid.split(',');
+  let ids = [];
+
+  if (callid) {
+    ids = callid.split(',');
+  }
 
   const payload = {
     timestamp: {

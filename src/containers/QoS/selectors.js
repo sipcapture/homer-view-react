@@ -19,6 +19,11 @@ export const isQOSLoaded = createSelector(
   data => data.loaded
 );
 
+export const isQOSError = createSelector(
+  qos,
+  data => data.error
+);
+
 export const getQOSData = createSelector(
   qos,
   data => data

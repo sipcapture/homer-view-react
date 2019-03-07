@@ -13,6 +13,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import LoadingIndicator from "components/LoadingIndicator";
+import Button from "@material-ui/core/Button";
 
 import { styler } from "react-timeseries-charts";
 
@@ -29,7 +30,8 @@ import {
   Baseline,
 } from "react-timeseries-charts";
 
-import { TimeSeries } from "pondjs";
+import { TimeSeries, Index } from "pondjs";
+import Table from "../Messages/Messages";
 
 const defaultProps = {
   qosTab: {},
@@ -46,6 +48,33 @@ const propTypes = {
   data: PropTypes.object,
   graphs: PropTypes.object
 };
+
+const errorStyle = {
+  textAlign: "center",
+  marginTop: "20px"
+};
+
+const btnStyle = {
+  background: "#3f51b5",
+  textAlign: "center",
+  color: "#fff",
+  marginTop: "10px",
+  marginBottom: "18px",
+  width: "178px"
+};
+
+const style = {
+  value: {
+    stroke: "#a02c2c",
+    opacity: 0.2
+  },
+  line: {
+    stroke: "#a02c2c",
+    strokeWidth: 2
+  }
+};
+
+const statBlock = {};
 
 const chartContainer = {
   padding: "25px"
@@ -415,11 +444,11 @@ class QOS extends React.Component {
   }
 
   render() {
-    const { isLoaded } = this.props;
+    const { isLoaded, isError } = this.props;
 
     return (
       <div style={chartContainer} className="chart-container">
-        {isLoaded ? (
+        {isLoaded && !isError ? (
           <Grid container spacing={24}>
             <Grid item lg={7} md={7} sm xs spacing={24}>
               <Card>
@@ -436,9 +465,24 @@ class QOS extends React.Component {
               </Grid>
             </Grid>
           </Grid>
-        ) : (
-          <LoadingIndicator />
-        )}
+        ) : isError ? (
+          <div>
+
+            <div style={errorStyle}>
+            <span>
+              Something went wrong
+            </span>
+              <br/>
+              <Button
+                variant="contained"
+                style={btnStyle}
+                onClick={this.props.getQOSData}
+              >
+                Reload
+              </Button>
+            </div>
+          </div>
+        ) : <LoadingIndicator />}
       </div>
     );
   }

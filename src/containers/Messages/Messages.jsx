@@ -6,6 +6,7 @@ import _ from "lodash";
 import Table from "../../components/Table";
 import MessageModal from "../../components/MessageModal";
 import LoadingIndicator from "components/LoadingIndicator";
+import Button from "@material-ui/core/Button";
 
 const defaultProps = {
   messagesTab: {}
@@ -14,6 +15,20 @@ const defaultProps = {
 const propTypes = {
   messagesTab: PropTypes.object,
   getTransactionMessages: PropTypes.func
+};
+
+const errorStyle = {
+  textAlign: "center",
+  marginTop: "20px"
+};
+
+const btnStyle = {
+  background: "#3f51b5",
+  textAlign: "center",
+  color: "#fff",
+  marginTop: "10px",
+  marginBottom: "18px",
+  width: "178px"
 };
 
 class Messages extends React.Component {
@@ -26,7 +41,9 @@ class Messages extends React.Component {
   };
 
   componentDidMount() {
-    this.props.getTransactionMessages({});
+    if (!this.props.isLoaded) {
+      this.props.getTransactionMessages({});
+    }
   }
 
   handleClickRow = (event, element) => {
@@ -50,7 +67,7 @@ class Messages extends React.Component {
   render() {
     const {
       messagesTab: { dataTable, dataHead },
-      isLoaded
+      isLoaded, isError
     } = this.props;
     const { modalOpen, msgDetailedData } = this.state;
     return (
@@ -61,9 +78,22 @@ class Messages extends React.Component {
             tableHead={dataHead}
             rowOnClick={this.handleClickRow}
           />
-        ) : (
-          <LoadingIndicator />
-        )}
+        ) : isError ? (
+          <div style={errorStyle}>
+            <span>
+              Something went wrong
+            </span>
+            <br/>
+            <Button
+              variant="contained"
+              style={btnStyle}
+              onClick={this.props.getTransactionMessages}
+            >
+              Reload
+            </Button>
+          </div>
+        ) : <LoadingIndicator />}
+
         {modalOpen ? (
           <MessageModal
             open={modalOpen}

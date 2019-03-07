@@ -1,12 +1,13 @@
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { makeSelectLogs, makeSelectLogsTab, isLogsLoaded } from "./selectors";
+import { makeSelectLogs, makeSelectLogsTab, isLogsLoaded, isLogsError } from "./selectors";
 import Logs from "./Logs";
 import { getLogsAsync } from "./actions";
 
 const mapStateToProps = createStructuredSelector({
   logsTab: makeSelectLogsTab,
   isLoaded: isLogsLoaded,
+  isError: isLogsError,
   logs: makeSelectLogs
 });
 

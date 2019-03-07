@@ -52,7 +52,6 @@ const propTypes = {
   exports: PropTypes.object,
   pcap: PropTypes.string,
   txt: PropTypes.string,
-  getExportProc: PropTypes.func,
   getExportTxt: PropTypes.func
 };
 
@@ -77,8 +76,10 @@ class Export extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getExportPcap();
-    this.props.getExportTxt();
+    if (!this.props.isLoaded) {
+      this.props.getExportPcap();
+      this.props.getExportTxt();
+    }
   }
 
   async downloadPcap() {

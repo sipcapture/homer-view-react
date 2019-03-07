@@ -8,7 +8,12 @@ export function* getQOSDataSaga() {
       url: "call/report/qos"
     });
     const qosdata = response.data;
-    yield put(getQOSAsync.success(qosdata));
+
+    if (qosdata.data.length) {
+      yield put(getQOSAsync.success(qosdata));
+    } else {
+      yield put(getQOSAsync.fail());
+    }
   } catch (err) {
     yield put(getQOSAsync.fail(err));
   }

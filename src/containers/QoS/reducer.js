@@ -11,11 +11,12 @@ const initialState = {
   data: [],
   loading: false,
   loaded: false,
-  error: null
+  error: false
 };
 
 const handleGetQOSSuccess = (state, { payload }) => {
   const sortedData = _.orderBy(payload.data, "create_date", "asc");
+
   return Object.assign({}, ...state, {
     loading: false,
     loaded: true,
@@ -28,7 +29,7 @@ const handleGetQOSFail = (state, { payload }) => {
   return Object.assign({}, ...state, {
     loading: false,
     loaded: false,
-    error: payload.data
+    error: true,
   });
 };
 
