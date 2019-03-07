@@ -77,7 +77,7 @@ const style = {
 const statBlock = {};
 
 const chartContainer = {
-  padding: "25px";
+  padding: "25px"
 };
 
 const statBlockTitle = {
