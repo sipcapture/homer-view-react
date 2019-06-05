@@ -17,6 +17,12 @@ Experimental Stand-Alone React Viewer for HOMER API 7.x
 5. Start the development server `npm run start`
 6. Access the application at http://localhost:3000/
 
+## Configuration for manual start (non docker)
+1. copy the example file from example/view-config.js to src/config/index.js
+2. copy the example/proxy-config.js to proxy/config.js 
+3. open proxy/config.js and configure your API parameters: homer7 API point, username and password
+
+
 ## Docker
 See the [example](https://github.com/sipcapture/homer-view-react/tree/master/example) folder for a working example
 
