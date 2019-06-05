@@ -21,6 +21,7 @@ Experimental Stand-Alone React Viewer for HOMER API 7.x
 1. copy the example file from `example/view-config.js` to `src/config/index.js`
 2. copy the example file from `example/proxy-config.js` to `proxy/config.js` 
 3. open `proxy/config.js` and configure your HOMER API parameters *(API url, username and password)*
+4. start proxy: cd proxy; npm install && npm start
 
 
 ## Docker
