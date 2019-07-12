@@ -34,7 +34,7 @@
     "html-webpack-plugin": "2.29.0",
     "immutable": "^3.8.2",
     "jest": "^23.6.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.13",
     "mermaid": "^8.0.0",
     "moment": "^2.22.2",
     "object-assign": "4.1.1",
