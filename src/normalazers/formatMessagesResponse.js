@@ -91,6 +91,7 @@ function transactionCheck(type) {
   if (parseInt(type, 10) === 86) return { label: "XLOG" };
   if (parseInt(type, 10) === 87) return { label: "MI" };
   if (parseInt(type, 10) === 1) return { label: "SIP" };
+  if (parseInt(type, 10) === 34) return { label: "RTCP" };
   if (parseInt(type, 10) === 100) return { label: "LOG" };
   if (parseInt(type, 10) === 88) return { label: "REST" };
   if (parseInt(type, 10) === 89) return { label: "NET" };
