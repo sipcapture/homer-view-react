@@ -29,7 +29,7 @@ export default function formatData(messages = []) {
         set.dstIp +
         "/" +
         set.dstPort +
-        ": UNKNOWN\n";
+        ": HEP\n";
     }
   });
 

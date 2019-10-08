@@ -7,7 +7,7 @@ export function* getQOSDataSaga() {
     const response = yield call(fetchData, {
       url: "call/report/qos"
     });
-    const qosdata = response.data;
+    const qosdata = response.data.rtcp;
 
     if (qosdata.data.length) {
       yield put(getQOSAsync.success(qosdata));

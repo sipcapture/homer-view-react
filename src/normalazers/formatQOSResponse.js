@@ -20,6 +20,7 @@ export default rawData => {
   reportData = [];
 
   const data = _.cloneDeep(maybe(rawData));
+  console.log(data);
 
   try {
     data.forEach((report, i) => {

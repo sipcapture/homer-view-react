@@ -88,15 +88,16 @@ function eventSelectType(row) {
 }
 
 function transactionCheck(type) {
-  if (parseInt(type, 10) === 86) return { label: "XLOG" };
-  if (parseInt(type, 10) === 87) return { label: "MI" };
-  if (parseInt(type, 10) === 1) return { label: "SIP" };
-  if (parseInt(type, 10) === 34) return { label: "RTCP" };
-  if (parseInt(type, 10) === 100) return { label: "LOG" };
-  if (parseInt(type, 10) === 88) return { label: "REST" };
-  if (parseInt(type, 10) === 89) return { label: "NET" };
-  if (parseInt(type, 10) === 4) return { label: "WebRTC" };
-  return { label: "Unknown" };
+  if (parseInt(type) === 86) return { label: "XLOG" };
+  if (parseInt(type) === 87) return { label: "MI" };
+  if (parseInt(type) === 1) return { label: "SIP" };
+  if (parseInt(type) === 5) return { label: "RTCP" };
+  if (parseInt(type) === 34) return { label: "RTCP" };
+  if (parseInt(type) === 100) return { label: "LOG" };
+  if (parseInt(type) === 88) return { label: "REST" };
+  if (parseInt(type) === 89) return { label: "NET" };
+  if (parseInt(type) === 4) return { label: "WebRTC" };
+  return { label: "HEP" };
 }
 
 function checkAlias(address, aliasObj) {

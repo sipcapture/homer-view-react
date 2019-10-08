@@ -15,6 +15,7 @@ const initialState = {
 };
 
 const handleGetQOSSuccess = (state, { payload }) => {
+  console.log(payload);
   const sortedData = _.orderBy(payload.data, "create_date", "asc");
 
   return Object.assign({}, ...state, {
