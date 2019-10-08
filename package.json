@@ -1,6 +1,6 @@
 {
   "name": "homer-view-react",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.2",
