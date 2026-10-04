@@ -8,7 +8,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import uuidv1 from "uuid";
+import { v1 as uuidv1 } from "uuid";
 import TableFooter from "@material-ui/core/TableFooter";
 import styles from "./styles";
 import TableHead from "./TableHead";
@@ -80,10 +80,10 @@ class EnhancedTable extends React.Component {
                     onClick={event => this.handleClick(event, n)}
                     role="checkbox"
                     tabIndex={-1}
-                    key={uuidv1.v1()}
+                    key={uuidv1()}
                   >
                     {_.map(n, val => (
-                      <TableCell key={uuidv1.v1()} align="left">
+                      <TableCell key={uuidv1()} align="left">
                         {val.label}
                       </TableCell>
                     ))}

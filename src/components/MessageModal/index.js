@@ -7,7 +7,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import Tab from "@material-ui/core/Tab";
 import TabContainer from "components/TabContainer/";
-import uuidv1 from "uuid";
+import { v1 as uuidv1 } from "uuid";
 import { Rnd } from "react-rnd";
 import DetailedMessage from "./_compoents/DetailedMessage";
 import Details from "./_compoents/Details";
@@ -149,12 +149,12 @@ class Modal extends React.Component {
         </AppBar>
         <div index={this.state.value} style={swipeableViewsStyle}>
           {value === 0 ? (
-            <TabContainer key={uuidv1.v1()}>
+            <TabContainer key={uuidv1()}>
               <DetailedMessage detailedData={msgDetailedData} />
             </TabContainer>
           ) : null}
           {value === 1 ? (
-            <TabContainer key={uuidv1.v1()}>
+            <TabContainer key={uuidv1()}>
               <Details tableData={msgDetailedData} />
             </TabContainer>
           ) : null}

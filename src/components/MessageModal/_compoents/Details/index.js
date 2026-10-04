@@ -12,7 +12,7 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import uuidv1 from "uuid";
+import { v1 as uuidv1 } from "uuid";
 
 const styles = theme => ({
   root: {
@@ -43,7 +43,7 @@ class DetailsTab extends React.Component {
       <Table>
         <TableBody>
           {_.map(tableData, (val, key) => (
-            <TableRow key={uuidv1.v1()}>
+            <TableRow key={uuidv1()}>
               <TableCell component="th" scope="row" style={padding}>
                 <strong>{key}</strong>
               </TableCell>

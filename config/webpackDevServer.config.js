@@ -10,6 +10,8 @@ const protocol = process.env.HTTPS === "true" ? "https" : "http";
 const host = process.env.HOST || "0.0.0.0";
 
 module.exports = function(proxy, allowedHost) {
+  const disableFirewall =
+    !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === "true";
   return {
     // WebpackDevServer 2.4.3 introduced a security fix that prevents remote
     // websites from potentially accessing local content through DNS rebinding:
@@ -27,13 +29,17 @@ module.exports = function(proxy, allowedHost) {
     // So we will disable the host check normally, but enable it if you have
     // specified the `proxy` setting. Finally, we let you override it if you
     // really know what you're doing with a special environment variable.
-    disableHostCheck:
-      !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === "true",
+    // Note: The webpack-dev-server v5 equivalent of `disableHostCheck: true`
+    // is `allowedHosts: "all"`; otherwise only the explicit list is allowed.
+    allowedHosts: disableFirewall ? "all" : [allowedHost],
     // Enable gzip compression of generated files.
     compress: true,
     // Silence WebpackDevServer's own logs since they're generally not useful.
     // It will still show compile warnings and errors with this setting.
-    clientLogLevel: "none",
+    client: {
+      logging: "none",
+      overlay: false
+    },
     // By default WebpackDevServer serves physical files from current directory
     // in addition to all the virtual build products that it serves from memory.
     // This is confusing because those files won’t automatically be available in
@@ -48,9 +54,12 @@ module.exports = function(proxy, allowedHost) {
     // for files like `favicon.ico`, `manifest.json`, and libraries that are
     // for some reason broken when imported through Webpack. If you just want to
     // use an image, put it in `src` and `import` it from JavaScript instead.
-    contentBase: paths.appPublic,
-    // By default files from `contentBase` will not trigger a page reload.
-    watchContentBase: true,
+    // (webpack-dev-server v5 renamed `contentBase` to `static`.)
+    static: {
+      directory: paths.appPublic,
+      publicPath: [config.output.publicPath],
+      watch: true
+    },
     // Enable hot reloading server. It will provide /sockjs-node/ endpoint
     // for the WebpackDevServer client so it can learn when the files were
     // updated. The WebpackDevServer client is included as an entry point
@@ -59,37 +68,47 @@ module.exports = function(proxy, allowedHost) {
     hot: true,
     // It is important to tell WebpackDevServer to use the same "root" path
     // as we specified in the config. In development, we always serve from /.
-    publicPath: config.output.publicPath,
+    devMiddleware: {
+      publicPath: config.output.publicPath
+    },
     // WebpackDevServer is noisy by default so we emit custom message instead
-    // by listening to the compiler events with `compiler.plugin` calls above.
-    quiet: true,
+    // by listening to the compiler events with `compiler.hooks.*` calls above.
     // Reportedly, this avoids CPU overload on some systems.
     // https://github.com/facebookincubator/create-react-app/issues/293
     // src/node_modules is not ignored to support absolute imports
     // https://github.com/facebookincubator/create-react-app/issues/1065
-    watchOptions: {
-      ignored: ignoredFiles(paths.appSrc)
+    watchFiles: {
+      paths: [paths.appPublic],
+      options: {
+        ignored: ignoredFiles(paths.appSrc)
+      }
     },
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
     https: protocol === "https",
     host: host,
-    overlay: false,
     historyApiFallback: {
       // Paths with dots should still use the history fallback.
       // See https://github.com/facebookincubator/create-react-app/issues/387.
       disableDotRule: true
     },
-    public: allowedHost,
-    proxy,
-    before(app) {
+    // webpack-dev-server v5 replaced the `before`/`after` hooks with
+    // `setupMiddlewares`. `before` maps to pushing onto the front of the list.
+    setupMiddlewares(middlewares, devServer) {
       // This lets us open files from the runtime error overlay.
-      app.use(errorOverlayMiddleware());
+      middlewares.unshift({
+        name: "error-overlay",
+        middleware: errorOverlayMiddleware()
+      });
       // This service worker file is effectively a 'no-op' that will reset any
       // previous service worker registered for the same host:port combination.
       // We do this in development to avoid hitting the production cache if
       // it used the same host and port.
       // https://github.com/facebookincubator/create-react-app/issues/2272#issuecomment-302832432
-      app.use(noopServiceWorkerMiddleware());
+      middlewares.unshift({
+        name: "noop-service-worker",
+        middleware: noopServiceWorkerMiddleware("/")
+      });
+      return middlewares;
     }
   };
 };

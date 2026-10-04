@@ -16,9 +16,13 @@ class Mermaid extends Component {
   }
 
   componentDidMount() {
-    mermaid.mermaidAPI.render(this.props.id, this.props.content, svg => {
-      this.setState({ svg });
-    });
+    // mermaid >= 9 renders asynchronously and resolves with { svg };
+    // the old callback form was removed.
+    mermaid.mermaidAPI
+      .render(this.props.id, this.props.content)
+      .then(({ svg }) => {
+        this.setState({ svg });
+      });
   }
 
   render() {

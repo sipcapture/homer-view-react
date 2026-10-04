@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import uuidv1 from "uuid";
+import { v1 as uuidv1 } from "uuid";
 import _ from "lodash";
 
 const styles = theme => ({
@@ -21,7 +21,7 @@ function DetailedMSG(props) {
   return (
     <div style={{ padding: 20, wordBreak: "break-word", lineHeight: "0px" }}>
       {_.map(detailedData.raw.split("\n"), (el, i) => (
-        <div key={uuidv1.v1()}>
+        <div key={uuidv1()}>
           <Typography component="p" key={i}>
             {el}
           </Typography>
