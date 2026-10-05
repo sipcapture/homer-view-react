@@ -1,15 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@mui/styles";
+import Typography from "@mui/material/Typography";
 import { v1 as uuidv1 } from "uuid";
 import _ from "lodash";
 
 const styles = theme => ({
   root: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2
+    // MUI v5 dropped the `gutters` mixin and turned `spacing` into a function,
+    // so the v3 `theme.spacing.unit * n` arithmetic is gone.
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2)
   }
 });
 

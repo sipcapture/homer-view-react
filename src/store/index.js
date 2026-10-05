@@ -1,22 +1,18 @@
 import "regenerator-runtime/runtime";
 import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
-import createHistory from "history/createBrowserHistory";
-import { routerMiddleware } from "react-router-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import rootSaga from "./rootSagas";
 import reducers from "./rootReducers";
 
-export const history = createHistory();
-
-const reduxRouterMiddleware = routerMiddleware(history);
-
 const sagaMiddleware = createSagaMiddleware();
 
+// react-router-redux's routerMiddleware/history are gone; the router now
+// keeps its own history inside BrowserRouter (see src/App/index.js).
 const store = createStore(
   reducers,
-  composeWithDevTools(applyMiddleware(sagaMiddleware, reduxRouterMiddleware))
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 
 sagaMiddleware.run(rootSaga);

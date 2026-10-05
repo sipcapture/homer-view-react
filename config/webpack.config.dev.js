@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const InterpolateHtmlPlugin = require("react-dev-utils/InterpolateHtmlPlugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const ModuleScopePlugin = require("react-dev-utils/ModuleScopePlugin");
 const getClientEnvironment = require("./env");
 const paths = require("./paths");
@@ -38,12 +39,10 @@ module.exports = {
     // When you save a file, the client will either apply hot updates (in case
     // of CSS changes), or refresh the page (in case of JS changes). When you
     // make a syntax error, this client will display a syntax error overlay.
-    // Note: instead of the default WebpackDevServer client, we use a custom one
-    // to bring better experience for Create React App users. You can replace
-    // the line below with these two lines if you prefer the stock client:
-    // require.resolve('webpack-dev-server/client') + '?/',
-    // require.resolve('webpack/hot/dev-server'),
-    require.resolve("react-dev-utils/webpackHotDevClient"),
+    // react-refresh needs the dev-server's own HMR client so the plugin can
+    // inject its runtime, so the react-dev-utils client is no longer used.
+    require.resolve("webpack-dev-server/client") + "?/",
+    require.resolve("webpack/hot/dev-server"),
     // Finally, this is your app's code:
     paths.appIndexJs
     // We include the app code last so that if there is a runtime error during
@@ -137,7 +136,9 @@ module.exports = {
               // This is a feature of `babel-loader` for webpack (not Babel itself).
               // It enables caching results in ./node_modules/.cache/babel-loader/
               // directory for faster rebuilds.
-              cacheDirectory: true
+              cacheDirectory: true,
+              // react-refresh replaced react-hot-loader for React fast refresh.
+              plugins: [require.resolve("react-refresh/babel")]
             }
           },
           // "postcss" loader applies autoprefixer to our CSS.
@@ -217,8 +218,11 @@ module.exports = {
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
     new webpack.DefinePlugin(env.stringified),
-    // This is necessary to emit hot updates (currently CSS only):
-    new webpack.HotModuleReplacementPlugin(),
+    // Enables React Fast Refresh (replaces react-hot-loader).
+    // HotModuleReplacementPlugin is added by the plugin itself.
+    new ReactRefreshWebpackPlugin({
+      overlay: false
+    }),
     // Watcher doesn't work well if you mistype casing in a path so we use
     // a plugin that prints an error when you attempt to do this.
     // See https://github.com/facebookincubator/create-react-app/issues/240

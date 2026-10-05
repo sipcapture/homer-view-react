@@ -1,19 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { hot } from "react-hot-loader";
 
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import FormLabel from "@material-ui/core/FormLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import FormLabel from "@mui/material/FormLabel";
+import FormControl from "@mui/material/FormControl";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 import LoadingIndicator from "components/LoadingIndicator";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 
 import { styler } from "react-timeseries-charts";
 
@@ -449,18 +448,18 @@ class QOS extends React.Component {
     return (
       <div style={chartContainer} className="chart-container">
         {isLoaded && !isError ? (
-          <Grid container spacing={24}>
-            <Grid item lg={7} md={7} sm xs spacing={24}>
+          <Grid container spacing={3}>
+            <Grid item lg={7} md={7} sm xs spacing={3}>
               <Card>
                 <CardContent>{this.renderCharts()}</CardContent>
               </Card>
               <br />
-              <Grid container spacing={24}>
+              <Grid container spacing={3}>
                 {this.renderForm()}
               </Grid>
             </Grid>
             <Grid item lg={5} md={5} sm={12} xs={12}>
-              <Grid container spacing={24}>
+              <Grid container spacing={3}>
                 {this.renderStats()}
               </Grid>
             </Grid>
@@ -488,4 +487,4 @@ class QOS extends React.Component {
   }
 }
 
-export default hot(module)(QOS);
+export default QOS;

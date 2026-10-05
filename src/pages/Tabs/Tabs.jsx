@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
-import AppBar from "@material-ui/core/AppBar";
-import MaterialTabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import AppBar from "@mui/material/AppBar";
+import MaterialTabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import Messages from "../../containers/Messages";
 import QOS from "../../containers/QoS";
 import Logs from "../../containers/Logs";

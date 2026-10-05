@@ -6,7 +6,7 @@ import _ from "lodash";
 import Table from "../../components/Table";
 import MessageModal from "../../components/MessageModal";
 import LoadingIndicator from "components/LoadingIndicator";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 
 const defaultProps = {
   messagesTab: {}

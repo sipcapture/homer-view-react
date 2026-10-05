@@ -1,16 +1,19 @@
 import React from "react";
-import { hot } from "react-hot-loader";
 import { Provider } from "react-redux";
-import { ConnectedRouter } from "react-router-redux";
+import { BrowserRouter } from "react-router-dom";
 import Router from "../containers/Router";
-import store, { history } from "../store";
+import store from "../store";
 
+// react-router-redux is unmaintained (and its replacement
+// connected-react-router peers React <= 17), so the router now owns history
+// directly via BrowserRouter. Hot reloading is handled by react-refresh at
+// the webpack level, so the hot(module) wrapper is gone.
 const App = () => (
   <Provider store={store}>
-    <ConnectedRouter history={history}>
+    <BrowserRouter>
       <Router />
-    </ConnectedRouter>
+    </BrowserRouter>
   </Provider>
 );
 
-export default hot(module)(App);
+export default App;

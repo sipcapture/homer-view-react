@@ -1,8 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 
 import App from "./App";
 
 const ROOT = document.getElementById("root");
 
-ReactDOM.render(<App />, ROOT);
+// React 18 replaced ReactDOM.render with the createRoot API.
+createRoot(ROOT).render(<App />);
