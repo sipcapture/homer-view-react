@@ -1,19 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import Typography from "@material-ui/core/Typography";
-import Tab from "@material-ui/core/Tab";
+import { withStyles } from "@mui/styles";
+import MuiDialogTitle from "@mui/material/DialogTitle";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Typography from "@mui/material/Typography";
+import Tab from "@mui/material/Tab";
 import TabContainer from "components/TabContainer/";
-import uuidv1 from "uuid";
+import { v1 as uuidv1 } from "uuid";
 import { Rnd } from "react-rnd";
 import DetailedMessage from "./_compoents/DetailedMessage";
 import Details from "./_compoents/Details";
 
-import AppBar from "@material-ui/core/AppBar";
-import MaterialTabs from "@material-ui/core/Tabs";
+import AppBar from "@mui/material/AppBar";
+import MaterialTabs from "@mui/material/Tabs";
 
 const RootModalStyles = {};
 
@@ -54,12 +54,12 @@ const DialogTitle = withStyles(theme => ({
   root: {
     borderBottom: `1px solid ${theme.palette.divider}`,
     margin: 0,
-    padding: theme.spacing.unit * 2
+    padding: theme.spacing(2)
   },
   closeButton: {
     position: "absolute",
-    right: theme.spacing.unit,
-    top: theme.spacing.unit,
+    right: theme.spacing(1),
+    top: theme.spacing(1),
     color: theme.palette.grey[500],
     padding: "6px"
   }
@@ -149,12 +149,12 @@ class Modal extends React.Component {
         </AppBar>
         <div index={this.state.value} style={swipeableViewsStyle}>
           {value === 0 ? (
-            <TabContainer key={uuidv1.v1()}>
+            <TabContainer key={uuidv1()}>
               <DetailedMessage detailedData={msgDetailedData} />
             </TabContainer>
           ) : null}
           {value === 1 ? (
-            <TabContainer key={uuidv1.v1()}>
+            <TabContainer key={uuidv1()}>
               <Details tableData={msgDetailedData} />
             </TabContainer>
           ) : null}

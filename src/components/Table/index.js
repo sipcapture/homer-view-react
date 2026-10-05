@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@mui/styles";
 import _ from "lodash";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import uuidv1 from "uuid";
-import TableFooter from "@material-ui/core/TableFooter";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { v1 as uuidv1 } from "uuid";
+import TableFooter from "@mui/material/TableFooter";
 import styles from "./styles";
 import TableHead from "./TableHead";
 
@@ -80,10 +80,10 @@ class EnhancedTable extends React.Component {
                     onClick={event => this.handleClick(event, n)}
                     role="checkbox"
                     tabIndex={-1}
-                    key={uuidv1.v1()}
+                    key={uuidv1()}
                   >
                     {_.map(n, val => (
-                      <TableCell key={uuidv1.v1()} align="left">
+                      <TableCell key={uuidv1()} align="left">
                         {val.label}
                       </TableCell>
                     ))}
@@ -113,8 +113,8 @@ class EnhancedTable extends React.Component {
                   SelectProps={{
                     native: true
                   }}
-                  onChangePage={this.handleChangePage}
-                  onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                  onPageChange={this.handleChangePage}
+                  onRowsPerPageChange={this.handleChangeRowsPerPage}
                 />
               </TableRow>
             </TableFooter>

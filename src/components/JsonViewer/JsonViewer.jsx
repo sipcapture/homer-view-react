@@ -1,8 +1,7 @@
 import React from "react";
-import { hot } from "react-hot-loader";
 
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const payload = {
   color: "#3f51b5",
@@ -44,7 +43,7 @@ class JsonViewer extends React.Component {
         <Grid
           container
           direction="row"
-          justify="flex-start"
+          justifyContent="flex-start"
           alignItems="flex-start"
         >
           <Typography style={paddingRight}>{json.srcIp}</Typography>
@@ -71,4 +70,4 @@ class JsonViewer extends React.Component {
   }
 }
 
-export default hot(module)(JsonViewer);
+export default JsonViewer;

@@ -3,7 +3,7 @@ import * as React from "react";
 import Mermaid from "../../components/Mermaid";
 import PropTypes from "prop-types";
 import LoadingIndicator from "components/LoadingIndicator";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 
 const defaultProps = {
   messagesTab: {}

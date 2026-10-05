@@ -70,7 +70,14 @@ choosePort(HOST, DEFAULT_PORT)
     const appName = require(paths.appPackageJson).name;
     const urls = prepareUrls(protocol, HOST, port);
     // Create a webpack compiler that is configured with custom messages.
-    const compiler = createCompiler(webpack, config, appName, urls, useYarn);
+    // react-dev-utils v12 takes a single options object here.
+    const compiler = createCompiler({
+      appName,
+      config,
+      urls,
+      useYarn,
+      webpack
+    });
     // Load proxy config
     const proxySetting = require(paths.appPackageJson).proxy;
     const proxyConfig = prepareProxy(proxySetting, paths.appPublic);
@@ -79,9 +86,11 @@ choosePort(HOST, DEFAULT_PORT)
       proxyConfig,
       urls.lanUrlForConfig
     );
-    const devServer = new WebpackDevServer(compiler, serverConfig);
-    // Launch WebpackDevServer.
-    devServer.listen(port, HOST, err => {
+    // webpack-dev-server v5 exposes a static `start()` factory that creates
+    // and launches the server; the v2 `new WebpackDevServer(...).listen()`
+    // constructor form is gone.
+    const devServer = new WebpackDevServer(serverConfig, compiler);
+    devServer.startCallback(err => {
       if (err) {
         return console.log(err);
       }
@@ -94,7 +103,7 @@ choosePort(HOST, DEFAULT_PORT)
 
     ["SIGINT", "SIGTERM"].forEach(function(sig) {
       process.on(sig, function() {
-        devServer.close();
+        devServer.stop();
         process.exit();
       });
     });

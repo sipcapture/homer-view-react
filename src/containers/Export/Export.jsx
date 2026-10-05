@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 const FileSaver = require("file-saver");
 
@@ -103,13 +103,13 @@ class Export extends React.Component {
         <Grid
           container
           direction="row"
-          justify="space-around"
+          justifyContent="space-around"
           style={btnsCenter}
         >
           <Grid
             container
             direction="column"
-            justify="flex-end"
+            justifyContent="flex-end"
             alignItems="flex-end"
             style={widthBlockBtn}
           >
@@ -131,7 +131,7 @@ class Export extends React.Component {
           <Grid
             container
             direction="column"
-            justify="flex-start"
+            justifyContent="flex-start"
             alignItems="flex-start"
             style={widthBlockBtn}
           >

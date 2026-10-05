@@ -1,5 +1,7 @@
 import { all, spawn } from "redux-saga/effects";
-import sagaChannel from "entities/sagaChannelsAndCommon";
+// Relative import: the bare "entities/..." form now resolves to the npm
+// `entities` package under webpack 5 instead of this project's src/entities/.
+import sagaChannel from "../entities/sagaChannelsAndCommon";
 import messagesSaga from "../containers/Messages/sagas";
 import qosSaga from "../containers/QoS/sagas";
 import flowSaga from "../containers/Flow/sagas";

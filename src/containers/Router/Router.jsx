@@ -1,16 +1,18 @@
 import * as React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import routes from "config/routes";
 import Tabs from "../../pages/Tabs";
 import "./styles.scss";
 
 const bc = "app";
 
+// react-router v6 renamed Switch -> Routes and replaced component={X}
+// with element={<X />}.
 const Router = () => (
   <div className={bc}>
-    <Switch>
-      <Route exact path={routes.root} component={Tabs} />
-    </Switch>
+    <Routes>
+      <Route path={routes.root} element={<Tabs />} />
+    </Routes>
   </div>
 );
 
