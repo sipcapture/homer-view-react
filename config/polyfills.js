@@ -21,4 +21,14 @@ Object.assign = require("object-assign");
 // We don't polyfill it in the browser--this is user's responsibility.
 if (process.env.NODE_ENV === "test") {
   require("raf").polyfill(global);
+
+  // react-router v7 reads TextEncoder at import time, and jsdom does not
+  // provide it. Node's own implementation is a drop-in replacement.
+  const { TextEncoder, TextDecoder } = require("util");
+  if (typeof global.TextEncoder === "undefined") {
+    global.TextEncoder = TextEncoder;
+  }
+  if (typeof global.TextDecoder === "undefined") {
+    global.TextDecoder = TextDecoder;
+  }
 }
