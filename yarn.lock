@@ -4021,6 +4021,11 @@ commander@^14.0.3:
   resolved "https://registry.npmjs.org/commander/-/commander-14.0.3.tgz"
   integrity sha512-H+y0Jo/T1RZ9qPP4Eh1pkcQcLRglraJaSLoyOtHxu6AapkjWVCy2Sit1QQ4x3Dng8qDlSsZEet7g5Pq06MvTgw==
 
+commander@^15.0.0:
+  version "15.0.0"
+  resolved "https://registry.npmjs.org/commander/-/commander-15.0.0.tgz"
+  integrity sha512-z67u4ZhzCL/Tydu1lJARtEZYWbWaN7oYLHbsuzocr6y4N6WZAagG3RQ4FW61V1/0+jImpj293XfrcYnd1qxtPg==
+
 commander@^2.20.0:
   version "2.20.3"
   resolved "https://registry.npmjs.org/commander/-/commander-2.20.3.tgz"
@@ -7444,12 +7449,12 @@ just-curry-it@^3.1.0:
   resolved "https://registry.npmjs.org/just-curry-it/-/just-curry-it-3.2.1.tgz"
   integrity sha512-Q8206k8pTY7krW32cdmPsP+DqqLgWx/hYPSj9/+7SYqSqz7UuwPbfSe07lQtvuuaVyiSJveXk0E5RydOuWwsEg==
 
-katex@^0.16.9:
-  version "0.16.47"
-  resolved "https://registry.npmjs.org/katex/-/katex-0.16.47.tgz"
-  integrity sha512-Eeo8Ys1doU1z+x8AZsPpQu+p/QcZBI5PeOo7QGQdy2x2m0MU/hYagBbGOmXwr5KVbEfVuWv9LpnQWeehogurjg==
+katex@^0.18.2:
+  version "0.18.10"
+  resolved "https://registry.npmjs.org/katex/-/katex-0.18.10.tgz"
+  integrity sha512-/B6p9eY9DX7aHBfpkHdpirDTZ5QH9xTwL9y837PWuzuv41O5jFdqNQwVQEQsimY0/iVNkwBY4+4hMfhQ7d4Dbw==
   dependencies:
-    commander "^8.3.0"
+    commander "^15.0.0"
 
 keyv@^4.5.3:
   version "4.5.4"
