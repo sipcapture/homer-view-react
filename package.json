@@ -22,7 +22,7 @@
     "react-redux": "^9.2.0",
     "react-rnd": "^10.5.3",
     "react-router-dom": "^7.18.0",
-    "react-timeseries-charts": "0.15.2",
+    "react-timeseries-charts": "0.15.5",
     "redux": "^5.0.1",
     "redux-actions": "^2.4.0",
     "redux-immutable": "^4.0.0",
