@@ -153,13 +153,17 @@
     "sockjs": {
       "uuid": "^11.1.1"
     },
-    "katex": "^0.18.2"
+    "katex": "^0.18.2",
+    "merge": "^2.1.1",
+    "d3-color": "^3.1.0"
   },
   "engines": {
     "node": ">=22"
   },
   "resolutions": {
     "uuid": "11.1.1",
-    "katex": "^0.18.2"
+    "katex": "^0.18.2",
+    "merge": "^2.1.1",
+    "d3-color": "^3.1.0"
   }
 }
