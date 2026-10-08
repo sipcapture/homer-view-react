@@ -34,11 +34,17 @@ jar.setCookie(homercookie, apiSess, function(error, cookie) {});
         FUNCTIONS
 **********************/
 
+var logAuth = function(username){
+    if (!debug) return;
+    // log the user only, never the password
+    console.log('Auth request for user: ' + username);
+}
+
 var authCache = false;
 var getAuthCookie = function(setCookie){
     if(authCache) return;
     var auth = JSON.stringify({ "username": apiUser, "password": apiPass, "auth_type": "local" });
-    if (debug) console.log(auth);
+    logAuth(apiUser);
     if (setCookie) jar.setCookie(setCookie, apiSess, function(error, cookie) {});
     request({
           uri: apiSess,
@@ -73,7 +79,7 @@ var getAuthJWT = function(setCookie){
     if(authCache) return;
     var auth = { "username": apiUser, "password": apiPass};
 
-    if (debug) console.log(auth);
+    logAuth(apiUser);
     var headers = {
       "Authorization" : homerToken,
       "Content-Type" : "application/json;charset=UTF-8"

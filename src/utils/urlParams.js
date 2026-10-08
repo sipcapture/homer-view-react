@@ -3,7 +3,8 @@ export default function getAllUrlParams(url) {
   var queryString = url ? url.split("?")[1] : window.location.search.slice(1);
 
   // we'll store the parameters here
-  var obj = {};
+  // prototype-less, so no query key can reach Object.prototype
+  var obj = Object.create(null);
 
   // if query string exists
   if (queryString) {
@@ -29,6 +30,16 @@ export default function getAllUrlParams(url) {
       if (paramName.match(/\[(\d+)?\]$/)) {
         // create key if it doesn't exist
         var key = paramName.replace(/\[(\d+)?\]/, "");
+
+        // never let a crafted key reach Object.prototype
+        if (
+          key === "__proto__" ||
+          key === "constructor" ||
+          key === "prototype"
+        ) {
+          continue;
+        }
+
         if (!obj[key]) obj[key] = [];
 
         // if it's an indexed array e.g. colors[2]
